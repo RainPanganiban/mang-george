@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
+    private SpriteRenderer spriteRenderer;
 
     private Transform player;
 
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
         slider.maxValue = maxHealth;
         slider.value = currentHealth;
         attackTimer = attackInterval;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -63,8 +65,7 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
-        Debug.Log("Boss is attacking!");
-
+        
         switch (currentPhase)
         {
             case 1:
@@ -95,6 +96,9 @@ public class Enemy : MonoBehaviour
 
     void SpreadShot()
     {
+
+        spriteRenderer.color = Color.blue;
+        
         if (bulletPrefab != null && firePoint != null)
         {
             Vector3 spawnPosition = player.position + new Vector3(0, 10f, 0);
@@ -119,7 +123,9 @@ public class Enemy : MonoBehaviour
         float angleStep = 360f / numBullets;
         float startAngle = Random.Range(0f, 360f);
 
-        Vector3 randomPosition = player.position + new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
+        spriteRenderer.color = Color.red;
+
+        Vector3 randomPosition = player.position + new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0);
 
         for (int i = 0; i < numBullets; i++)
         {
