@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,12 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private Transform player;
+    private Rigidbody2D rb;
+
+    [Header("Jump Settings")]
+    public float jumpForce = 5f;
+    public float minJumpTime = 1f;
+    public float maxJumpTime = 3f;
 
     void Start()
     {
@@ -29,6 +36,9 @@ public class Enemy : MonoBehaviour
         attackTimer = attackInterval;
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = GetComponent<Rigidbody2D>();
+
+        StartCoroutine(RandomJump());
     }
 
     void Update()
@@ -65,7 +75,6 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
-        
         switch (currentPhase)
         {
             case 1:
@@ -96,9 +105,8 @@ public class Enemy : MonoBehaviour
 
     void SpreadShot()
     {
-
         spriteRenderer.color = Color.blue;
-        
+
         if (bulletPrefab != null && firePoint != null)
         {
             Vector3 spawnPosition = player.position + new Vector3(0, 10f, 0);
@@ -156,5 +164,14 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy defeated!");
         Destroy(gameObject);
+    }
+
+    IEnumerator RandomJump()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(minJumpTime, maxJumpTime));
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
     }
 }
