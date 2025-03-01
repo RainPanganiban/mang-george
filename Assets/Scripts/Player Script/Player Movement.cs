@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        playerHealth = PlayerStats.Instance.maxHealth;
+        moveSpeed = PlayerStats.Instance.moveSpeed;
+        dashCooldown = PlayerStats.Instance.dashCooldown;
+        
+        
         currentHealth = playerHealth;
         slider.maxValue = playerHealth;
         slider.value = currentHealth;

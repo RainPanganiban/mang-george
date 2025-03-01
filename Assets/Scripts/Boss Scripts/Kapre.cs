@@ -156,5 +156,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy defeated!");
         Destroy(gameObject);
+        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+
     }
 }
