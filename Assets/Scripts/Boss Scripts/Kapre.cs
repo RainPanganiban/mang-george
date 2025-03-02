@@ -1,32 +1,31 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
     [Header("Health Settings")]
-    public int maxHealth = 100;
-    private int currentHealth;
+    public int maxHealth = 100; 
+    private int currentHealth; 
     public Slider slider;
 
     [Header("Attack Settings")]
-    public float attackInterval = 1.5f;
+    public float attackInterval = 1.5f; 
     private float attackTimer;
     public GameObject bulletPrefab;
     public Transform firePoint;
-    public float bulletSpeed = 5f;
+    public float bulletSpeed = 5f; 
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
-    private SpriteRenderer spriteRenderer;
 
     private Transform player;
-    private Rigidbody2D rb;
 
-    [Header("Jump Settings")]
-    public float jumpForce = 5f;
-    public float minJumpTime = 1f;
-    public float maxJumpTime = 3f;
+    [Header("Teleport Settings")]
+    public float teleportInterval = 3f;
+    public float minX = -7f, maxX = 7f, centerX = 0f; 
+    public float groundY = -4.227f; 
+    private bool isTeleporting = false;
 
     void Start()
     {
@@ -34,17 +33,40 @@ public class Enemy : MonoBehaviour
         slider.maxValue = maxHealth;
         slider.value = currentHealth;
         attackTimer = attackInterval;
-        spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = GetComponent<Rigidbody2D>();
 
-        StartCoroutine(RandomJump());
+        
+        StartCoroutine(TeleportRoutine());
     }
 
     void Update()
     {
         HandlePhases();
         HandleAttacks();
+    }
+
+    IEnumerator TeleportRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(teleportInterval);
+            Teleport();
+        }
+    }
+
+    void Teleport()
+    {
+        if (isTeleporting) return;
+        isTeleporting = true;
+
+        
+        float[] possiblePositions = { minX, centerX, maxX };
+        float newX = possiblePositions[Random.Range(0, possiblePositions.Length)];
+
+        
+        transform.position = new Vector3(newX, groundY, 0);
+
+        isTeleporting = false;
     }
 
     void HandlePhases()
@@ -105,8 +127,6 @@ public class Enemy : MonoBehaviour
 
     void SpreadShot()
     {
-        spriteRenderer.color = Color.blue;
-
         if (bulletPrefab != null && firePoint != null)
         {
             Vector3 spawnPosition = player.position + new Vector3(0, 10f, 0);
@@ -130,8 +150,6 @@ public class Enemy : MonoBehaviour
         int numBullets = 8;
         float angleStep = 360f / numBullets;
         float startAngle = Random.Range(0f, 360f);
-
-        spriteRenderer.color = Color.red;
 
         Vector3 randomPosition = player.position + new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0);
 
@@ -164,14 +182,5 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy defeated!");
         Destroy(gameObject);
-    }
-
-    IEnumerator RandomJump()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(Random.Range(minJumpTime, maxJumpTime));
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
     }
 }

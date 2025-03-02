@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-
-    public int damage = 20;
+    public int damage = 10;
 
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
@@ -14,6 +13,7 @@ public class EnemyBullet : MonoBehaviour
         if (player != null)
         {
             player.TakeDamage(damage);
+            Destroy(gameObject); // Destroy the bullet after hitting the player
         }
     }
 }
