@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement; // Needed to load the next level
+using TMPro;
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -14,9 +15,9 @@ public class UpgradeManager : MonoBehaviour
 
     public void ShowUpgradeOptions()
     {
-        upgradePanel.SetActive(true); // Show the panel
+        upgradePanel.SetActive(true); // Show the upgrade panel
 
-        // Select 3 random upgrades
+        // Shuffle and select 3 unique upgrades
         List<string> selectedUpgrades = new List<string>();
         while (selectedUpgrades.Count < 3)
         {
@@ -31,9 +32,20 @@ public class UpgradeManager : MonoBehaviour
         for (int i = 0; i < upgradeButtons.Length; i++)
         {
             string upgradeType = selectedUpgrades[i];
-            upgradeButtons[i].GetComponentInChildren<Text>().text = upgradeType; // Display upgrade name
+
+            // Find the button's Text component and set the upgrade name
+            TextMeshProUGUI buttonText = upgradeButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
+            {
+                buttonText.text = upgradeType; // Display upgrade name on the button
+            }
+            else
+            {
+                Debug.LogError("Text component not found on button: " + upgradeButtons[i].name);
+            }
+
             upgradeButtons[i].onClick.RemoveAllListeners(); // Clear old listeners
-            upgradeButtons[i].onClick.AddListener(() => SelectUpgrade(upgradeType)); // Add new listener
+            upgradeButtons[i].onClick.AddListener(() => SelectUpgrade(upgradeType)); // Assign upgrade function
         }
     }
 

@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
-        Debug.Log("Player has taken damage!");
 
         if (currentHealth <= 0)
         {
@@ -150,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Player has been killed!");
+
         Destroy(gameObject);
     }
 }

@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
     public int currentHealth;
     public float moveSpeed = 5f;
     public float dashCooldown = 2f;
-    public float damage = 10f;
+    public float damageMultiplier = 1.0f;
 
     void Awake()
     {
@@ -31,12 +31,15 @@ public class PlayerStats : MonoBehaviour
 
     public void ApplyUpgrade(string upgradeType)
     {
+
+        Debug.Log("Applying Upgrade: " + upgradeType);
+
         // Applies the upgrade based on type
         switch (upgradeType)
         {
             case "Health":
                 maxHealth += 20; // Increase max HP
-                currentHealth += 20; // Heal player
+                currentHealth = maxHealth; // Heal player
                 break;
             case "Speed":
                 moveSpeed += 1.5f; // Increase movement speed
@@ -45,8 +48,10 @@ public class PlayerStats : MonoBehaviour
                 dashCooldown -= 0.5f; // Reduce dash cooldown
                 break;
             case "Damage":
-                damage += 5; // Increase damage output
+                damageMultiplier += 0.5f; // Increase damage output
                 break;
         }
+
+        Debug.Log("New Stats -> Health: " + maxHealth + ", Speed: " + moveSpeed + ", Dash Cooldown: " + dashCooldown + ", Damage Multiplier: " + damageMultiplier);
     }
 }
