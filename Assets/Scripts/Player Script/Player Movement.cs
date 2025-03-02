@@ -28,6 +28,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
+        moveSpeed = PlayerStats.Instance.moveSpeed;
+        dashCooldown = PlayerStats.Instance.dashCooldown;
+        currentHealth = PlayerStats.Instance.currentHealth;
+
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = playerHealth;

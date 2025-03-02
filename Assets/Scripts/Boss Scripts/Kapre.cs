@@ -154,7 +154,9 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Enemy defeated!");
+        
         Destroy(gameObject);
+        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+       
     }
 }
