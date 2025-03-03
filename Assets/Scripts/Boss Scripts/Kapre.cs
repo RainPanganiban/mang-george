@@ -174,8 +174,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
-        Debug.Log("Enemy took damage! Current Health: " + currentHealth);
-
+       
         if (currentHealth <= 0)
         {
             Die();
@@ -184,7 +183,9 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Enemy defeated!");
+        
         Destroy(gameObject);
+        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+       
     }
 }

@@ -28,6 +28,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
+        moveSpeed = PlayerStats.Instance.moveSpeed;
+        dashCooldown = PlayerStats.Instance.dashCooldown;
+        currentHealth = PlayerStats.Instance.currentHealth;
+
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = playerHealth;
@@ -135,7 +140,6 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
-        Debug.Log("Player has taken damage!");
 
         if (currentHealth <= 0)
         {
@@ -145,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Player has been killed!");
+
         Destroy(gameObject);
     }
 }
