@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     public int currentPhase = 1;
 
     private Transform player;
+    private SpriteRenderer spriteRenderer;
 
     [Header("Teleport Settings")]
     public float teleportInterval = 3f;
@@ -34,8 +35,8 @@ public class Enemy : MonoBehaviour
         slider.value = currentHealth;
         attackTimer = attackInterval;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
-        
         StartCoroutine(TeleportRoutine());
     }
 
@@ -74,14 +75,17 @@ public class Enemy : MonoBehaviour
         if (currentHealth > 60)
         {
             currentPhase = 1;
+            spriteRenderer.color = Color.white;
         }
         else if (currentHealth > 30)
         {
             currentPhase = 2;
+            spriteRenderer.color = Color.blue;
         }
         else
         {
             currentPhase = 3;
+            spriteRenderer.color = Color.red;
         }
     }
 
