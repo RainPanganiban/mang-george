@@ -7,7 +7,7 @@ public class Damage : MonoBehaviour
 {
 
     public int damage = 10;
-    private int finalDamage;
+    public int finalDamage;
 
 
     private void Start()
