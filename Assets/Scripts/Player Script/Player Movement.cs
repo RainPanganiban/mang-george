@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0;
 
         rb.velocity = new Vector2(lastMoveDirection * dashSpeed, rb.velocity.y);
-        StartCoroutine(BlinkEffect());
+        //StartCoroutine(BlinkEffect());
         yield return new WaitForSeconds(dashTime);
 
         rb.gravityScale = originalGravity;
