@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private bool isGrounded;
     private bool isDashing;
     private bool isInvincible = false;
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = PlayerStats.Instance.currentHealth;
 
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = playerHealth;
         slider.maxValue = playerHealth;
@@ -59,6 +62,7 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         float moveInput = Input.GetAxis("Horizontal");
+        
 
         if (moveInput != 0)
         {
@@ -68,6 +72,7 @@ public class PlayerController : MonoBehaviour
         if (!isDashing)
         {
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
         }
     }
 
