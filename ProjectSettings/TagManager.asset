@@ -43,9 +43,33 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: entities1
+  - name: bg-1
     uniqueID: 2874309761
     locked: 0
-  - name: entities2
+  - name: bg-2
     uniqueID: 3947755823
+    locked: 0
+  - name: bg-3
+    uniqueID: 45964633
+    locked: 0
+  - name: bg-4
+    uniqueID: 2131039607
+    locked: 0
+  - name: bg-5
+    uniqueID: 3132802589
+    locked: 0
+  - name: bg-6
+    uniqueID: 1243442255
+    locked: 0
+  - name: ground
+    uniqueID: 2322979357
+    locked: 0
+  - name: players-enemies
+    uniqueID: 3053072541
+    locked: 0
+  - name: foreground-floor
+    uniqueID: 1074496483
+    locked: 0
+  - name: foreground(close to cam)
+    uniqueID: 630779985
     locked: 0
