@@ -51,10 +51,7 @@ public class PlayerController : MonoBehaviour
         Jump();
         UpdateDashCooldown();
 
-        if (!isGrounded && rb.velocity.y == 0)
-        {
-            animator.SetBool("isJumping", true);  // Keep jump animation when falling
-        }
+        animator.SetFloat("yVelocity", rb.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space) && canDash && !isDashing)
         {
