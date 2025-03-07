@@ -51,6 +51,11 @@ public class PlayerController : MonoBehaviour
         Jump();
         UpdateDashCooldown();
 
+        if (!isGrounded && rb.velocity.y == 0)
+        {
+            animator.SetBool("isJumping", true);  // Keep jump animation when falling
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && canDash && !isDashing)
         {
             canDash = false;
@@ -71,6 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
             animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+            animator.SetFloat("yVelocity", rb.velocity.y);
         }
     }
 
@@ -80,6 +86,12 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
+
+            if (!animator.GetBool("isJumping")) // Set only if it's not already playing
+            {
+                animator.SetBool("isJumping", true);
+            }
+
         }
     }
 
@@ -136,6 +148,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("isJumping", false);
+
         }
     }
 
