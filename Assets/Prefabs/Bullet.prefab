@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5491030152484031449}
   - component: {fileID: 1737088050917519148}
   - component: {fileID: 446260109683155867}
-  - component: {fileID: 323011507983258088}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -31,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: -0.004, z: 0}
-  m_LocalScale: {x: 0.48227862, y: 0.48227862, z: 1.2056966}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1.2056966}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,15 +73,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1241894755
+  m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: 68e9e6688645e81428895140d9f99e78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f26f6e3b55b995040bfa706dcf422197, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 35.079998, y: 24.802656}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -163,15 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
---- !u!114 &323011507983258088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547877642714037347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7fa8e65a2350e4ead659023f7bdf45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  lifetime: 3
+  finalDamage: 0
