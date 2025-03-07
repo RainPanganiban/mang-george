@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = playerHealth;
         slider.maxValue = playerHealth;
         slider.value = currentHealth;
@@ -67,7 +66,6 @@ public class PlayerController : MonoBehaviour
         if (moveInput != 0)
         {
             lastMoveDirection = moveInput;
-            spriteRenderer.flipX = moveInput < 0;
         }
         if (!isDashing)
         {
