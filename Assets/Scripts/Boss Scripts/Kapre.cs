@@ -5,38 +5,39 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
     [Header("Health Settings")]
-    public int maxHealth = 100; 
-    private int currentHealth; 
+    public int maxHealth = 100;
+    private int currentHealth;
     public Slider slider;
 
     [Header("Attack Settings")]
-    public float attackInterval = 1.5f; 
+    public float attackInterval = 1.5f;
     private float attackTimer;
     public GameObject bulletPrefab;
     public Transform firePoint;
-    public float bulletSpeed = 5f; 
+    public float bulletSpeed = 5f;
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
+    private Animator animator; // Animator reference
 
     [Header("Teleport Settings")]
     public float teleportInterval = 3f;
-    public float minX = -7f, maxX = 7f, centerX = 0f; 
-    public float groundY = -4.227f; 
+    public float minX = -7f, maxX = 7f, centerX = 0f;
+    public float groundY = -4.227f;
     private bool isTeleporting = false;
 
     void Start()
     {
-
         currentHealth = maxHealth;
         slider.maxValue = maxHealth;
         slider.value = currentHealth;
         attackTimer = attackInterval;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>(); // Initialize the Animator
 
         StartCoroutine(TeleportRoutine());
     }
@@ -51,7 +52,6 @@ public class Enemy : MonoBehaviour
     void FacePlayer()
     {
         if (player == null) return;
-
         spriteRenderer.flipX = player.position.x > transform.position.x;
     }
 
@@ -69,13 +69,10 @@ public class Enemy : MonoBehaviour
         if (isTeleporting) return;
         isTeleporting = true;
 
-        
         float[] possiblePositions = { minX, centerX, maxX };
         float newX = possiblePositions[Random.Range(0, possiblePositions.Length)];
 
-        
         transform.position = new Vector3(newX, groundY, 0);
-
         isTeleporting = false;
     }
 
@@ -83,13 +80,21 @@ public class Enemy : MonoBehaviour
     {
         if (currentHealth > 60)
         {
-            currentPhase = 1;
-            spriteRenderer.color = Color.white;
+            if (currentPhase != 1) // Only update if phase changes
+            {
+                currentPhase = 1;
+                spriteRenderer.color = Color.white;
+                animator.SetInteger("Phase", 1); // Update Animator
+            }
         }
         else if (currentHealth > 30)
         {
-            currentPhase = 2;
-            spriteRenderer.color = Color.blue;
+            if (currentPhase != 2) // Only update if phase changes
+            {
+                currentPhase = 2;
+                spriteRenderer.color = Color.white;
+                animator.SetInteger("Phase", 2); // Update Animator
+            }
         }
     }
 
@@ -105,6 +110,19 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
+        if (animator != null)
+        {
+            animator.SetBool("isAttacking", true); // Set attack animation to true
+        }
+
+        // Start attack animation and delay shooting bullets to sync
+        StartCoroutine(PerformAttackAfterDelay(0.3f));
+    }
+
+    IEnumerator PerformAttackAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         switch (currentPhase)
         {
             case 1:
@@ -114,6 +132,9 @@ public class Enemy : MonoBehaviour
                 SpreadShot();
                 break;
         }
+
+        yield return new WaitForSeconds(0.2f); //  Small delay before stopping animation
+        animator.SetBool("isAttacking", false); // Stop attack animation
     }
 
     void HomingShot()
@@ -154,7 +175,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
-       
+
         if (currentHealth <= 0)
         {
             Die();
@@ -163,9 +184,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        
         Destroy(gameObject);
         FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
-       
     }
 }
