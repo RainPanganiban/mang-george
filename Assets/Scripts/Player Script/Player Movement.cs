@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public Slider slider;
     public Slider dashSlider;
 
+    private TrailRenderer trailRenderer;
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
     private Animator animator;
     private bool isGrounded;
     private bool isDashing;
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         dashCooldown = PlayerStats.Instance.dashCooldown;
         currentHealth = PlayerStats.Instance.currentHealth;
 
+        trailRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHealth = playerHealth;
@@ -96,6 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         isInvincible = true;
+        trailRenderer.enabled = true;
         GetComponent<Collider2D>().enabled = false;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
@@ -109,6 +111,11 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
         GetComponent<Collider2D>().enabled = true;
 
+        yield return new WaitForSeconds(0.1f);
+
+        trailRenderer.Clear();
+        trailRenderer.enabled = false;
+
         dashCooldownTimer = 0;
         while (dashCooldownTimer < dashCooldown)
         {
@@ -117,6 +124,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         canDash = true;
+
     }
 
     void UpdateDashCooldown()
