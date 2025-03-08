@@ -45,6 +45,14 @@ public class Enemy : MonoBehaviour
     {
         HandlePhases();
         HandleAttacks();
+        FacePlayer();
+    }
+
+    void FacePlayer()
+    {
+        if (player == null) return;
+
+        spriteRenderer.flipX = player.position.x > transform.position.x;
     }
 
     IEnumerator TeleportRoutine()
@@ -83,11 +91,6 @@ public class Enemy : MonoBehaviour
             currentPhase = 2;
             spriteRenderer.color = Color.blue;
         }
-        else
-        {
-            currentPhase = 3;
-            spriteRenderer.color = Color.red;
-        }
     }
 
     void HandleAttacks()
@@ -109,9 +112,6 @@ public class Enemy : MonoBehaviour
                 break;
             case 2:
                 SpreadShot();
-                break;
-            case 3:
-                SpiralShot();
                 break;
         }
     }
@@ -147,27 +147,6 @@ public class Enemy : MonoBehaviour
 
                 Destroy(bullet, 5f);
             }
-        }
-    }
-
-    void SpiralShot()
-    {
-        int numBullets = 8;
-        float angleStep = 360f / numBullets;
-        float startAngle = Random.Range(0f, 360f);
-
-        Vector3 randomPosition = player.position + new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0);
-
-        for (int i = 0; i < numBullets; i++)
-        {
-            float angle = startAngle + (angleStep * i);
-            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-
-            GameObject bullet = Instantiate(bulletPrefab, randomPosition, Quaternion.identity);
-            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-            bulletRb.velocity = direction * bulletSpeed;
-
-            Destroy(bullet, 5f);
         }
     }
 
