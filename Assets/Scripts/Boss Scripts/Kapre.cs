@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
                 animator.SetInteger("Phase", 1); // Update Animator
             }
         }
-        else if (currentHealth > 30)
+        else if (currentHealth > 50)
         {
             if (currentPhase != 2) // Only update if phase changes
             {
@@ -175,11 +175,14 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
+        spriteRenderer.color = Color.red;
 
         if (currentHealth <= 0)
         {
             Die();
         }
+
+        spriteRenderer.color = Color.white;
     }
 
     void Die()
