@@ -20,14 +20,17 @@ public class Damage : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy")) // Check if it hits an enemy
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+
+        if (damageable != null)
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage);
-            Destroy(gameObject); // Destroy bullet on impact
+            damageable.TakeDamage(damage);
+            Destroy(gameObject);
         }
-        else if (!collision.CompareTag("Player")) // Ignore player collision
+        else if (!collision.CompareTag("Player")) // Prevents bullets from hitting the player
         {
             Destroy(gameObject);
         }
     }
+
 }
