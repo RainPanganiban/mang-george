@@ -24,12 +24,6 @@ public class Manananggal : MonoBehaviour, IDamageable
     private Animator animator;
     private Color originalColor;
 
-    [Header("Teleport Settings")]
-    public float teleportInterval = 3f;
-    public float minX = -7f, maxX = 7f, centerX = 0f;
-    public float groundY = -4.227f;
-    private bool isTeleporting = false;
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -41,7 +35,6 @@ public class Manananggal : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         originalColor = spriteRenderer.color;
 
-        StartCoroutine(TeleportRoutine());
     }
 
     void Update()
@@ -57,26 +50,6 @@ public class Manananggal : MonoBehaviour, IDamageable
         spriteRenderer.flipX = player.position.x > transform.position.x;
     }
 
-    IEnumerator TeleportRoutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(teleportInterval);
-            Teleport();
-        }
-    }
-
-    void Teleport()
-    {
-        if (isTeleporting) return;
-        isTeleporting = true;
-
-        float[] possiblePositions = { minX, centerX, maxX };
-        float newX = possiblePositions[Random.Range(0, possiblePositions.Length)];
-
-        transform.position = new Vector3(newX, groundY, 0);
-        isTeleporting = false;
-    }
 
     void HandlePhases()
     {
@@ -126,10 +99,10 @@ public class Manananggal : MonoBehaviour, IDamageable
         switch (currentPhase)
         {
             case 1:
-                HomingShot();
+                HomingPaniki();
                 break;
             case 2:
-                SpreadShot();
+                Airburst();
                 break;
         }
 
@@ -137,12 +110,12 @@ public class Manananggal : MonoBehaviour, IDamageable
         animator.SetBool("isAttacking", false);
     }
 
-    void HomingShot()
+    void HomingPaniki()
     {
         
     }
 
-    void SpreadShot()
+    void Airburst()
     {
         if (bulletPrefab != null && firePoint != null)
         {
@@ -150,7 +123,6 @@ public class Manananggal : MonoBehaviour, IDamageable
         }
     }
 
-    // Implementing the TakeDamage method from IDamageable
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
