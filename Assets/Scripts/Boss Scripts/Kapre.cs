@@ -78,22 +78,23 @@ public class Enemy : MonoBehaviour
 
     void HandlePhases()
     {
-        if (currentHealth > 60)
+        if (currentHealth > 50) // Phase 1 (HP 100 to 50)
         {
-            if (currentPhase != 1) // Only update if phase changes
+            if (currentPhase != 1)
             {
                 currentPhase = 1;
                 spriteRenderer.color = Color.white;
-                animator.SetInteger("Phase", 1); // Update Animator
+                animator.SetInteger("Phase", 1);
             }
         }
-        else if (currentHealth > 50)
+        else // Phase 2 (HP 50 and below)
         {
-            if (currentPhase != 2) // Only update if phase changes
+            if (currentPhase != 2)
             {
                 currentPhase = 2;
                 spriteRenderer.color = Color.white;
-                animator.SetInteger("Phase", 2); // Update Animator
+                animator.SetInteger("Phase", 2);
+                animator.Play("2nd_Attack"); // Ensure Phase 2 animation plays
             }
         }
     }
