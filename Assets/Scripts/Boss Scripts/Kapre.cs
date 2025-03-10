@@ -21,7 +21,8 @@ public class Enemy : MonoBehaviour
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
-    private Animator animator; // Animator reference
+    private Animator animator;
+    private Color originalColor;
 
     [Header("Teleport Settings")]
     public float teleportInterval = 3f;
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>(); // Initialize the Animator
+        originalColor = spriteRenderer.color;
 
         StartCoroutine(TeleportRoutine());
     }
@@ -83,7 +85,6 @@ public class Enemy : MonoBehaviour
             if (currentPhase != 1)
             {
                 currentPhase = 1;
-                spriteRenderer.color = Color.white;
                 animator.SetInteger("Phase", 1);
             }
         }
@@ -92,9 +93,8 @@ public class Enemy : MonoBehaviour
             if (currentPhase != 2)
             {
                 currentPhase = 2;
-                spriteRenderer.color = Color.white;
                 animator.SetInteger("Phase", 2);
-                animator.Play("2nd_Attack"); // Ensure Phase 2 animation plays
+                animator.Play("2nd_Attack");
             }
         }
     }
@@ -176,19 +176,28 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
         slider.value = currentHealth;
-        spriteRenderer.color = Color.red;
+
+        StartCoroutine(Flashred());
 
         if (currentHealth <= 0)
         {
             Die();
         }
 
-        spriteRenderer.color = Color.white;
+       
+    }
+
+    IEnumerator Flashred()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.07f);
+        spriteRenderer.color = originalColor;
     }
 
     void Die()
     {
         Destroy(gameObject);
         FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+
     }
 }

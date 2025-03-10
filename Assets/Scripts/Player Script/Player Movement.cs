@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private TrailRenderer trailRenderer;
     private Rigidbody2D rb;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private bool isGrounded;
     private bool isDashing;
     private bool isDead = false;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private bool canDash = true;
     private float lastMoveDirection = 1f;
     private float dashCooldownTimer;
+    private Color originalColor;
 
     void Start()
     {
@@ -39,12 +41,15 @@ public class PlayerController : MonoBehaviour
         trailRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         currentHealth = playerHealth;
         slider.maxValue = playerHealth;
         slider.value = currentHealth;
         dashSlider.maxValue = dashCooldown;
         dashSlider.value = dashCooldown;
         dashCooldownTimer = dashCooldown;
+        originalColor = spriteRenderer.color;
     }
 
     void Update()
@@ -104,7 +109,6 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0;
 
         rb.velocity = new Vector2(lastMoveDirection * dashSpeed, rb.velocity.y);
-        //StartCoroutine(BlinkEffect());
         yield return new WaitForSeconds(dashTime);
 
         rb.gravityScale = originalGravity;
@@ -136,19 +140,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator BlinkEffect()
-    {
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
-
-        while (isInvincible)
-        {
-            sprite.enabled = false;
-            yield return new WaitForSeconds(0.1f);
-            sprite.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Enemy"))
@@ -164,10 +155,19 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
         slider.value = currentHealth;
 
+        StartCoroutine(Flashred());
+
         if (currentHealth <= 0)
         {
             Die();
         }
+    }
+
+    IEnumerator Flashred()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.07f);
+        spriteRenderer.color = originalColor;
     }
 
     void Die()
