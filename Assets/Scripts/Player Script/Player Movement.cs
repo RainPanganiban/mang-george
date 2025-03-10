@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isGrounded;
     private bool isDashing;
+    private bool isDead = false;
     private bool isInvincible = false;
     private bool canDash = true;
     private float lastMoveDirection = 1f;
@@ -171,7 +172,21 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return; // Prevent multiple triggers
+        isDead = true;
 
-        Destroy(gameObject);
+        // Set Animator to play Death animation
+        animator.SetTrigger("isDead");
+
+        // Disable player movement & actions
+        GetComponent<PlayerController>().enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Stops movement
+
+        // Destroy the child object "Weapon"
+        Transform weaponTransform = transform.Find("Weapon");
+        if (weaponTransform != null)
+        {
+            Destroy(weaponTransform.gameObject);
+        }
     }
 }
