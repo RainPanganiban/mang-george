@@ -678,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   slider: {fileID: 1398757324}
-  attackInterval: 3
+  attackInterval: 2
   bulletPrefab: {fileID: 7212796675561394986, guid: dd47350e1ae120748b82e19ca7323ffc, type: 3}
   firePoint: {fileID: 1448340758}
   bulletSpeed: 20
@@ -3475,8 +3475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 2129674290}
   bulletPrefab: {fileID: 1547877642714037347, guid: 8c92dddfdaff93f42a1429ab3e27e169, type: 3}
-  fireRate: 0.2
-  bulletSpeed: 10
+  fireRate: 0.5
+  bulletSpeed: 20
 --- !u!212 &1462523050
 SpriteRenderer:
   m_ObjectHideFlags: 0

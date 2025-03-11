@@ -99,10 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9084ed8e9bc803546acac839ebdf1f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  wanderTime: 2
+  speed: 15
+  wanderTime: 0.8
   hoverTime: 0.8
-  swoopSpeed: 20
+  swoopSpeed: 30
 --- !u!50 &828593809410842435
 Rigidbody2D:
   serializedVersion: 4

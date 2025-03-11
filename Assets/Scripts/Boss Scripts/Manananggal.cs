@@ -22,7 +22,7 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
-    //private Animator animator;
+    private Animator animator;
     private Color originalColor;
 
     void Start()
@@ -33,7 +33,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         attackTimer = attackInterval;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         originalColor = spriteRenderer.color;
 
     }
@@ -59,7 +59,7 @@ public class Manananggal : MonoBehaviour, IDamageable
             if (currentPhase != 1)
             {
                 currentPhase = 1;
-                //animator.SetInteger("Phase", 1);
+                animator.SetInteger("Phase", 1);
             }
         }
         else
@@ -67,8 +67,8 @@ public class Manananggal : MonoBehaviour, IDamageable
             if (currentPhase != 2)
             {
                 currentPhase = 2;
-                //animator.SetInteger("Phase", 2);
-                //animator.Play("2nd_Attack");
+                animator.SetInteger("Phase", 2);
+                animator.Play("2nd_Attack");
             }
         }
     }
@@ -85,10 +85,10 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     void Attack()
     {
-        /*if (animator != null)
+        if (animator != null)
         {
             animator.SetBool("isAttacking", true);
-        }*/
+        }
 
         StartCoroutine(PerformAttackAfterDelay(0.3f));
     }
@@ -108,7 +108,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         }
 
         yield return new WaitForSeconds(0.2f);
-        //animator.SetBool("isAttacking", false);
+        animator.SetBool("isAttacking", false);
     }
 
     void HomingPaniki()
