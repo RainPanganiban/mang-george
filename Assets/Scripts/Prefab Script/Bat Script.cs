@@ -4,72 +4,77 @@ using System.Collections;
 public class Bat : MonoBehaviour
 {
     private Transform target;
-    public float speed = 5f; // Increased speed
+    private Manananggal boss;
+    public float speed = 2f;
     private bool isAttacking = false;
+    private bool isWandering = true;
+    private Vector2 originalPosition;
 
-    public float wanderDuration = 1.5f; // Shorter wandering phase
-    public float wanderRange = 2.5f; // Slightly larger wander range
-    private Vector2 wanderTarget;
+    public float wanderTime = 1f;
+    public float hoverTime = 0.5f;
+    public float swoopSpeed = 6f;
 
-    void Start()
-    {
-        StartCoroutine(WanderBeforeAttack());
-    }
-
-    public void Initialize(Transform playerTarget)
+    public void Initialize(Transform playerTarget, Vector3 spawnPos, Manananggal bossRef)
     {
         target = playerTarget;
-    }
-
-    void Update()
-    {
-        if (!isAttacking)
-        {
-            // Move randomly during wander phase
-            transform.position = Vector2.MoveTowards(transform.position, wanderTarget, speed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, wanderTarget) < 0.1f)
-            {
-                SetNewWanderTarget();
-            }
-        }
-        else if (target != null)
-        {
-            // Home in on the player after wandering
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        }
+        boss = bossRef;
+        originalPosition = spawnPos;
+        StartCoroutine(WanderBeforeAttack());
     }
 
     IEnumerator WanderBeforeAttack()
     {
         float elapsedTime = 0f;
-        while (elapsedTime < wanderDuration)
+        while (elapsedTime < wanderTime)
         {
-            SetNewWanderTarget();
-            yield return new WaitForSeconds(0.4f); // Change direction more frequently
-            elapsedTime += 0.4f;
+            Vector2 wanderTarget = new Vector2(
+                originalPosition.x + Random.Range(-5f, 5f),
+                originalPosition.y + Random.Range(-0.3f, 5f)
+            );
+
+            while (Vector2.Distance(transform.position, wanderTarget) > 0.1f)
+            {
+                if (!isWandering) yield break;
+                transform.position = Vector2.MoveTowards(transform.position, wanderTarget, speed * Time.deltaTime);
+                yield return null;
+            }
+
+            elapsedTime += 0.3f;
+            yield return new WaitForSeconds(0.3f);
         }
-        isAttacking = true; // Start homing in on the player
+
+        isWandering = false;
+        yield return new WaitForSeconds(hoverTime);
+        isAttacking = true;
     }
 
-    void SetNewWanderTarget()
+    void Update()
     {
-        wanderTarget = new Vector2(
-            transform.position.x + Random.Range(-wanderRange, wanderRange),
-            transform.position.y + Random.Range(-wanderRange, wanderRange)
-        );
+        if (isAttacking && target != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, swoopSpeed * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            // Deal damage to the player if needed
             collision.GetComponent<PlayerController>().TakeDamage(10);
-            Destroy(gameObject); // Destroy the bat on impact
+            DestroyBat();
         }
         else if (collision.CompareTag("Bullet")) // If the player shoots it
         {
-            Destroy(gameObject);
+            DestroyBat();
         }
+    }
+
+    void DestroyBat()
+    {
+        if (boss != null)
+        {
+            boss.OnBatDestroyed(); // Notify Manananggal
+        }
+        Destroy(gameObject);
     }
 }

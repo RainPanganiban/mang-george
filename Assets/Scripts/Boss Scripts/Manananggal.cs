@@ -15,6 +15,7 @@ public class Manananggal : MonoBehaviour, IDamageable
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 5f;
+    private int activeBats = 0;
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
@@ -112,8 +113,10 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     void HomingPaniki()
     {
+        if (activeBats > 0) return; // Don't spawn if bats are still active
+
         int batCount = 3;
-        float spawnOffsetY = 1.5f;
+        float spawnOffsetY = 3f; // Always above Manananggal
         float spawnOffsetX = 1f;
 
         if (bulletPrefab != null && firePoint != null && player != null)
@@ -129,11 +132,18 @@ public class Manananggal : MonoBehaviour, IDamageable
                 Bat batScript = bat.GetComponent<Bat>();
                 if (batScript != null)
                 {
-                    batScript.Initialize(player); // Only passing one argument now
+                    batScript.Initialize(player, spawnPosition, this);
+                    activeBats++; // Increase active bat count
                 }
             }
         }
     }
+
+    public void OnBatDestroyed()
+    {
+        activeBats--; // Reduce count
+    }
+
 
     void Airburst()
     {
