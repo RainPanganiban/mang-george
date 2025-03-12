@@ -33,7 +33,8 @@ Transform:
   m_LocalPosition: {x: 2.67, y: -3.56, z: -0.0026230596}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 149204323420818172}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8469324527484167539
@@ -194,8 +195,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  slider: {fileID: 0}
   ascendHeight: 6
   ascendSpeed: 5
   moveSpeed: 15
   moveRange: 10
+  bloodProjectilePrefab: {fileID: 6814994103328594910, guid: 9e538541dbe05194c9ffe33c528408f3, type: 3}
+  bloodSpawnPoint: {fileID: 0}
+  bloodRainInterval: 0.2
+  bloodRainAmount: 5
+  attackCooldown: 5
+  wingAttackRange: 3
+  wingAttackDamage: 10
+  knockbackForce: 5
+--- !u!1 &9108526384817552637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 149204323420818172}
+  m_Layer: 0
+  m_Name: Firepoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &149204323420818172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108526384817552637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1525807588354428766}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
