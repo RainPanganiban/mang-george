@@ -19,11 +19,17 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
+    private bool isTransitioning = false;
+
+    [Header("Phase 2 Transition")]
+    public GameObject upperBodyPrefab; // Prefab for the flying upper body
+    public GameObject lowerBodyPrefab; // Prefab for the stationary lower body
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Color originalColor;
+    private bool isInvincible = false;
 
     void Start()
     {
@@ -40,8 +46,11 @@ public class Manananggal : MonoBehaviour, IDamageable
     void Update()
     {
         HandlePhases();
-        HandleAttacks();
-        FacePlayer();
+        if (!isTransitioning)
+        {
+            HandleAttacks();
+            FacePlayer();
+        }
     }
 
     void FacePlayer()
@@ -65,10 +74,25 @@ public class Manananggal : MonoBehaviour, IDamageable
             if (currentPhase != 2)
             {
                 currentPhase = 2;
-                animator.SetInteger("Phase", 2);
-                animator.Play("2nd_Attack");
+                StartCoroutine(StartPhase2Transition());
             }
         }
+    }
+
+    IEnumerator StartPhase2Transition()
+    {
+        isInvincible = true;
+
+        animator.SetTrigger("Split"); // Play splitting animation
+
+        yield return new WaitForSeconds(2f);
+
+        // Disable full-body sprite
+        gameObject.SetActive(false);
+
+        // Instantiate Upper & Lower Body
+        Instantiate(upperBodyPrefab, transform.position, Quaternion.identity);
+        Instantiate(lowerBodyPrefab, transform.position, Quaternion.identity);
     }
 
     void HandleAttacks()
@@ -93,13 +117,8 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     IEnumerator SummonBatsAfterAnimation()
     {
-        // Wait for the animation to finish before summoning bats
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-
-        // Now summon the bats
         HomingPaniki();
-
-        // Set attacking back to false after summoning
         animator.SetBool("isAttacking", false);
     }
 
@@ -108,7 +127,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         if (activeBats > 0) return; // Don't spawn if bats are still active
 
         int batCount = 3;
-        float spawnOffsetY = 3f; // Always above Manananggal
+        float spawnOffsetY = 3f;
         float spawnOffsetX = 1f;
 
         if (bulletPrefab != null && firePoint != null && player != null)
@@ -125,7 +144,7 @@ public class Manananggal : MonoBehaviour, IDamageable
                 if (batScript != null)
                 {
                     batScript.Initialize(player, spawnPosition, this);
-                    activeBats++; // Increase active bat count
+                    activeBats++;
                 }
             }
         }
@@ -133,7 +152,7 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     public void OnBatDestroyed()
     {
-        activeBats--; // Reduce count when a bat is destroyed
+        activeBats--;
     }
 
     void Airburst()
@@ -146,6 +165,8 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        if (isInvincible) return;
+
         currentHealth -= damage;
         slider.value = currentHealth;
 
