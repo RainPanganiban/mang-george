@@ -35,7 +35,6 @@ public class Manananggal : MonoBehaviour, IDamageable
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         originalColor = spriteRenderer.color;
-
     }
 
     void Update()
@@ -50,7 +49,6 @@ public class Manananggal : MonoBehaviour, IDamageable
         if (player == null) return;
         spriteRenderer.flipX = player.position.x > transform.position.x;
     }
-
 
     void HandlePhases()
     {
@@ -76,7 +74,7 @@ public class Manananggal : MonoBehaviour, IDamageable
     void HandleAttacks()
     {
         attackTimer -= Time.deltaTime;
-        if (attackTimer <= 0)
+        if (attackTimer <= 0 && activeBats == 0) // Ensures bats are gone before summoning new ones
         {
             Attack();
             attackTimer = attackInterval;
@@ -87,27 +85,21 @@ public class Manananggal : MonoBehaviour, IDamageable
     {
         if (animator != null)
         {
-            animator.SetBool("isAttacking", true);
+            animator.SetTrigger("Bat Summon"); // Play summon animation
         }
 
-        StartCoroutine(PerformAttackAfterDelay(0.3f));
+        StartCoroutine(SummonBatsAfterAnimation());
     }
 
-    IEnumerator PerformAttackAfterDelay(float delay)
+    IEnumerator SummonBatsAfterAnimation()
     {
-        yield return new WaitForSeconds(delay);
+        // Wait for the animation to finish before summoning bats
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        switch (currentPhase)
-        {
-            case 1:
-                HomingPaniki();
-                break;
-            case 2:
-                Airburst();
-                break;
-        }
+        // Now summon the bats
+        HomingPaniki();
 
-        yield return new WaitForSeconds(0.2f);
+        // Set attacking back to false after summoning
         animator.SetBool("isAttacking", false);
     }
 
@@ -141,15 +133,14 @@ public class Manananggal : MonoBehaviour, IDamageable
 
     public void OnBatDestroyed()
     {
-        activeBats--; // Reduce count
+        activeBats--; // Reduce count when a bat is destroyed
     }
-
 
     void Airburst()
     {
         if (bulletPrefab != null && firePoint != null)
         {
-            
+
         }
     }
 
