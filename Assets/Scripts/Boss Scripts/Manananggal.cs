@@ -22,8 +22,7 @@ public class Manananggal : MonoBehaviour, IDamageable
     private bool isTransitioning = false;
 
     [Header("Phase 2 Transition")]
-    public GameObject upperBodyPrefab; // Prefab for the flying upper body
-    public GameObject lowerBodyPrefab; // Prefab for the stationary lower body
+    public GameObject lowerBodyObject; // Lower body stays in the scene
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -90,15 +89,46 @@ public class Manananggal : MonoBehaviour, IDamageable
         // Disable full-body sprite
         gameObject.SetActive(false);
 
-        // Instantiate Upper & Lower Body
-        Instantiate(upperBodyPrefab, transform.position, Quaternion.identity);
-        Instantiate(lowerBodyPrefab, transform.position, Quaternion.identity);
+        // Create the upper body dynamically
+        SpawnUpperBody();
+
+        // Activate the lower body (if it's already in the scene)
+        if (lowerBodyObject != null)
+        {
+            lowerBodyObject.SetActive(true);
+            lowerBodyObject.transform.position = transform.position;
+        }
+    }
+
+    void SpawnUpperBody()
+    {
+        // Create a new GameObject in the scene
+        GameObject upperBody = new GameObject("ManananggalUpperBody");
+
+        // Set position above current body
+        upperBody.transform.position = transform.position + new Vector3(0, 2, 0);
+
+        // Add components
+        SpriteRenderer upperSprite = upperBody.AddComponent<SpriteRenderer>();
+        Animator upperAnimator = upperBody.AddComponent<Animator>();
+        Rigidbody2D rb = upperBody.AddComponent<Rigidbody2D>();
+        ManananggalUpperBody upperScript = upperBody.AddComponent<ManananggalUpperBody>();
+
+        // Assign properties
+        upperSprite.sprite = this.GetComponent<SpriteRenderer>().sprite; // Copy the sprite
+        upperSprite.sortingOrder = 5; // Ensure it's rendered above other objects
+        rb.gravityScale = 0; // No gravity for flying enemy
+        rb.freezeRotation = true; // Prevent rotation
+
+        // Assign values to the script
+        upperScript.maxHealth = 50;
+        upperScript.bloodProjectilePrefab = bulletPrefab; // Assign blood attack
     }
 
     void HandleAttacks()
     {
         attackTimer -= Time.deltaTime;
-        if (attackTimer <= 0 && activeBats == 0) // Ensures bats are gone before summoning new ones
+        if (attackTimer <= 0 && activeBats == 0)
         {
             Attack();
             attackTimer = attackInterval;
@@ -153,14 +183,6 @@ public class Manananggal : MonoBehaviour, IDamageable
     public void OnBatDestroyed()
     {
         activeBats--;
-    }
-
-    void Airburst()
-    {
-        if (bulletPrefab != null && firePoint != null)
-        {
-
-        }
     }
 
     public void TakeDamage(int damage)

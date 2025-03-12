@@ -11,6 +11,9 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
+    [Header("UI Elements")]
+    public Slider bossHealthSlider; // Boss Health Bar
+
     [Header("Movement Settings")]
     public float ascendHeight = 5f;
     public float ascendSpeed = 2f;
@@ -21,17 +24,20 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     private float randomOffset;
 
     [Header("Attack Settings")]
-    public GameObject bloodProjectilePrefab;  // Prefab for falling blood drops
-    public Transform bloodSpawnPoint;         // Where the blood projectiles spawn
-    public float bloodRainInterval = 0.2f;    // Delay between blood drops
-    public int bloodRainAmount = 5;           // Number of blood projectiles per attack
-
-    public float attackCooldown = 5f;         // Time between attacks
+    public GameObject bloodProjectilePrefab;
+    public Transform bloodSpawnPoint;
+    public float bloodRainInterval = 0.2f;
+    public int bloodRainAmount = 5;
+    public float attackCooldown = 5f;
     private bool canAttack = true;
 
-    public float wingAttackRange = 3f;        // Range of the wing attack
-    public int wingAttackDamage = 10;         // Damage of the wing attack
-    public float knockbackForce = 5f;         // Knockback force for the player
+    [Header("Wing Attack Settings")]
+    public GameObject windPrefab; // Assign this in the Inspector
+    public Transform windSpawnPoint;
+
+    public float wingAttackRange = 3f;
+    public int wingAttackDamage = 10;
+    public float knockbackForce = 5f;
 
     void Start()
     {
@@ -48,7 +54,17 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
         randomOffset = Random.Range(0f, Mathf.PI * 2f);
 
-        // Start the attack cycle
+        // Initialize health bar
+        if (bossHealthSlider != null)
+        {
+            bossHealthSlider.maxValue = maxHealth;
+            bossHealthSlider.value = maxHealth;
+        }
+        else
+        {
+            Debug.LogWarning("Boss Health Slider not assigned!");
+        }
+
         StartCoroutine(AttackLoop());
     }
 
@@ -97,6 +113,13 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        // Update health bar
+        if (bossHealthSlider != null)
+        {
+            bossHealthSlider.value = currentHealth;
+        }
+
         StartCoroutine(FlashRed());
 
         if (currentHealth <= 0)
@@ -115,9 +138,9 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     void Die()
     {
         Destroy(gameObject);
+        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
     }
 
-    // Attack Loop - Triggers random attack every few seconds
     IEnumerator AttackLoop()
     {
         while (true)
@@ -127,12 +150,11 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         }
     }
 
-    // Picks a random attack
     void PerformRandomAttack()
     {
         if (!canAttack) return;
 
-        int randomAttack = Random.Range(0, 2);  // 0 = Blood Rain, 1 = Wing Attack
+        int randomAttack = Random.Range(0, 2);
 
         if (randomAttack == 0)
         {
@@ -144,57 +166,45 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         }
     }
 
-    // Blood Rain Attack
     IEnumerator BloodRainAttack()
     {
         canAttack = false;
         Debug.Log("Manananggal is using Blood Rain!");
 
-        // Define the spawn range relative to the player
-        float spawnWidth = 6f; // Total width the projectiles will spawn across
-        int projectileCount = bloodRainAmount; // Number of blood projectiles
-        float spacing = spawnWidth / (projectileCount - 1); // Space between each projectile
+        float spawnWidth = 6f;
+        int projectileCount = bloodRainAmount;
+        float spacing = spawnWidth / (projectileCount - 1);
 
         for (int i = 0; i < projectileCount; i++)
         {
-            // Calculate spawn position (evenly spaced across X)
-            float xOffset = -spawnWidth / 2 + i * spacing; // Left to right spread
+            float xOffset = -spawnWidth / 2 + i * spacing;
             Vector3 spawnPosition = new Vector3(player.position.x + xOffset, bloodSpawnPoint.position.y, 0);
-
-            // Spawn the projectile
             Instantiate(bloodProjectilePrefab, spawnPosition, Quaternion.identity);
-
             yield return new WaitForSeconds(bloodRainInterval);
         }
 
         canAttack = true;
     }
 
-    // Wing Attack
     void WingAttack()
     {
         canAttack = false;
         Debug.Log("Manananggal is using Wing Attack!");
-
-        // Play animation
         animator.SetTrigger("WingAttack");
 
-        // Check if player is within range
-        if (player != null && Vector3.Distance(transform.position, player.position) <= wingAttackRange)
-        {
-            // Apply damage (assuming player has a TakeDamage function)
-            player.GetComponent<IDamageable>()?.TakeDamage(wingAttackDamage);
+        // Determine attack direction
+        Vector2 attackDirection = (player.position.x > transform.position.x) ? Vector2.right : Vector2.left;
 
-            // Apply knockback
-            Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-            if (playerRb != null)
-            {
-                Vector2 knockbackDirection = (player.position - transform.position).normalized;
-                playerRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-            }
+        // Spawn the Wind Gust
+        GameObject wind = Instantiate(windPrefab, windSpawnPoint.position, Quaternion.identity);
+
+        // Initialize wind movement
+        WindProjectile windScript = wind.GetComponent<WindProjectile>();
+        if (windScript != null)
+        {
+            windScript.Initialize(attackDirection);
         }
 
-        // Cooldown before next attack
         StartCoroutine(ResetAttackCooldown());
     }
 
