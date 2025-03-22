@@ -830,6 +830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450426122}
   - component: {fileID: 450426123}
+  - component: {fileID: 450426124}
   m_Layer: 0
   m_Name: CLOUD (1)
   m_TagString: Untagged
@@ -904,6 +905,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &450426124
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450426121}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 45a701297e803444ba2f2c47705feaf9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &486108031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1148,6 +1170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 535565650}
   - component: {fileID: 535565651}
+  - component: {fileID: 535565652}
   m_Layer: 0
   m_Name: TREE (1)
   m_TagString: Untagged
@@ -1165,7 +1188,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.67, y: -0.61, z: 0.06947189}
-  m_LocalScale: {x: -0.96894103, y: 1, z: 1}
+  m_LocalScale: {x: -0.968941, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1599961827}
@@ -1222,6 +1245,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &535565652
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535565649}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c9c629bed24a5a840a456ff29b49596b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &565182661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,6 +1609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 829641986}
   - component: {fileID: 829641987}
+  - component: {fileID: 829641988}
   m_Layer: 0
   m_Name: BUSH (2)
   m_TagString: Untagged
@@ -1639,6 +1684,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &829641988
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829641985}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0028ad3f290ced84ca818d7bc7c51031, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &847419557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 896018473}
   - component: {fileID: 896018474}
+  - component: {fileID: 896018475}
   m_Layer: 0
   m_Name: GRASS
   m_TagString: Untagged
@@ -1807,6 +1874,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &896018475
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896018472}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c324bb54ad4bb1c419f60f9123ce1f36, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &915075890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,6 +1989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 922340195}
   - component: {fileID: 922340196}
+  - component: {fileID: 922340197}
   m_Layer: 0
   m_Name: BUSH (3)
   m_TagString: Untagged
@@ -1918,7 +2007,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.53, y: -5.1, z: 0.06947189}
-  m_LocalScale: {x: -1.9101623, y: 1.1844765, z: 1}
+  m_LocalScale: {x: -1.910162, y: 1.1844765, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1599961827}
@@ -1975,6 +2064,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &922340197
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922340194}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c69ddb713d0c36747a27dc1ae490dbdb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1019664501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1042429569}
   - component: {fileID: 1042429570}
+  - component: {fileID: 1042429571}
   m_Layer: 0
   m_Name: GRASS (5)
   m_TagString: Untagged
@@ -2242,6 +2353,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1042429571
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042429568}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6bf414a6c3522c8438d978a8790c82ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1068492565 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1563746980399907784, guid: 46f5157a3e453a04292ec927df2d67c2, type: 3}
@@ -2279,8 +2411,8 @@ Transform:
   m_GameObject: {fileID: 1072126673}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.07, y: -3.81, z: 0.06947189}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.12, y: -3.81, z: 0.06947189}
+  m_LocalScale: {x: 1, y: 1.105636, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1599961827}
@@ -2924,6 +3056,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 344746707}
     m_Modifications:
+    - target: {fileID: 501961772189473993, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 501961772189473993, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.g
+      value: 0.0018941243
+      objectReference: {fileID: 0}
+    - target: {fileID: 501961772189473993, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.a
+      value: 0.6745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1168527026882825045, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_Value
       value: 0.346
@@ -3002,11 +3162,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -768
+      value: -765
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 478
+      value: 437
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3119,6 +3279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353472604}
   - component: {fileID: 1353472605}
+  - component: {fileID: 1353472606}
   m_Layer: 0
   m_Name: BUSH (4)
   m_TagString: Untagged
@@ -3136,7 +3297,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 13.5, y: -5.08, z: 0.06947189}
-  m_LocalScale: {x: 1.910162, y: 1.1844765, z: 1}
+  m_LocalScale: {x: 1.910162, y: 1.184476, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1599961827}
@@ -3193,6 +3354,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1353472606
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353472603}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2af76bc89f2f5254c9b2734a0085e951, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1389419301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3207,7 +3389,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 501961772189473993, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_Color.g
-      value: 0.53106546
+      value: 0.46391106
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8873648390074558319, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_Name
@@ -3247,7 +3445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 300
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3283,11 +3481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -442
+      value: -815
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 478
+      value: 373.3
       objectReference: {fileID: 0}
     - target: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3995,6 +4193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1798395885}
   - component: {fileID: 1798395886}
+  - component: {fileID: 1798395887}
   m_Layer: 0
   m_Name: TREE
   m_TagString: Untagged
@@ -4010,13 +4209,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798395884}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.004188755, w: 0.9999913}
   m_LocalPosition: {x: -1.12, y: -0.67, z: 0.06947189}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1599961827}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.48}
 --- !u!212 &1798395886
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4069,6 +4268,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1798395887
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798395884}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 849541e1fc1fe934abc909e1973ca2a9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1864617981
 GameObject:
   m_ObjectHideFlags: 0
@@ -4147,6 +4367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1865369845}
   - component: {fileID: 1865369846}
+  - component: {fileID: 1865369847}
   m_Layer: 0
   m_Name: CLOUD
   m_TagString: Untagged
@@ -4221,6 +4442,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1865369847
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865369844}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 176028b30dfd1c944915d31cdd959b80, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1914212729
 GameObject:
   m_ObjectHideFlags: 0
@@ -4329,8 +4571,8 @@ Transform:
   m_GameObject: {fileID: 1984176726}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.25, y: -3.77, z: 0.06947189}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.3, y: -3.73, z: 0.06947189}
+  m_LocalScale: {x: 1, y: 1.105636, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1599961827}
@@ -5013,6 +5255,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 344746707}
     m_Modifications:
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.a
+      value: 0.68235296
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558599665234529392, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1168527026882825045, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
       propertyPath: m_Value
       value: 0.56
