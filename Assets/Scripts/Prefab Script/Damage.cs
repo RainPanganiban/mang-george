@@ -10,9 +10,18 @@ public class Damage : MonoBehaviour
     public float lifetime = 3f;
     public int finalDamage;
 
+    private Animator animator;
+
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
+        {
+            animator.SetTrigger("Fire");
+        }
+        
         Destroy(gameObject, lifetime);
         finalDamage = Mathf.RoundToInt(damage * PlayerStats.Instance.damageMultiplier);
 
