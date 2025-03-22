@@ -9,10 +9,29 @@ public class Bat : MonoBehaviour
     private bool isAttacking = false;
     private bool isWandering = true;
     private Vector2 originalPosition;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     public float wanderTime = 1f;
     public float hoverTime = 0.5f;
     public float swoopSpeed = 6f;
+
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+         if (animator == null)
+        {
+            animator.SetTrigger("Fire");
+        }
+    }
+
+    void FacePlayer()
+    {
+        spriteRenderer.flipX = target.position.x > transform.position.x;
+    }
 
     public void Initialize(Transform playerTarget, Vector3 spawnPos, Manananggal bossRef)
     {
@@ -28,8 +47,8 @@ public class Bat : MonoBehaviour
         while (elapsedTime < wanderTime)
         {
             Vector2 wanderTarget = new Vector2(
-                originalPosition.x + Random.Range(-5f, 5f),
-                originalPosition.y + Random.Range(-0.3f, 5f)
+                originalPosition.x + Random.Range(-15f, 5f),
+                originalPosition.y + Random.Range(-0.5f, 7f)
             );
 
             while (Vector2.Distance(transform.position, wanderTarget) > 0.1f)
@@ -54,6 +73,8 @@ public class Bat : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, swoopSpeed * Time.deltaTime);
         }
+
+        FacePlayer();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5938764895369154858}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0020877016, w: 0.99999785}
   m_LocalPosition: {x: 0, y: 0, z: 0.002760809}
   m_LocalScale: {x: 2.8571427, y: 2.8571427, z: 1}
   m_ConstrainProportionsScale: 0
@@ -47,9 +47,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.537
+  m_FalloffIntensity: 0.521
   m_Color: {r: 0.7735849, g: 0, b: 0.73391396, a: 1}
-  m_Intensity: 2.52
+  m_Intensity: 3.94
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 9d30fab5e3830b40
@@ -70,8 +70,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.54
-  m_PointLightOuterRadius: 0.79
+  m_PointLightInnerRadius: 0.43868503
+  m_PointLightOuterRadius: 0.9452233
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 3924699794082979405}
   - component: {fileID: 828593809410842435}
   - component: {fileID: 3948802652519869797}
+  - component: {fileID: 5533646914015203133}
   m_Layer: 0
   m_Name: Bat Prefab
   m_TagString: Enemy Bullet
@@ -248,3 +249,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.67
+--- !u!95 &5533646914015203133
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212796675561394986}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d96fea8ee983d5e43bd769049992a4f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

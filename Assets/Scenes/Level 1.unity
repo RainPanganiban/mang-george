@@ -681,7 +681,7 @@ MonoBehaviour:
   attackInterval: 2
   bulletPrefab: {fileID: 7212796675561394986, guid: dd47350e1ae120748b82e19ca7323ffc, type: 3}
   firePoint: {fileID: 1448340758}
-  bulletSpeed: 20
+  bulletSpeed: 5
   currentPhase: 1
   lowerBodyObject: {fileID: 6445006871960144582}
 --- !u!1 &344746703
@@ -3706,7 +3706,7 @@ MonoBehaviour:
   firePoint: {fileID: 2129674290}
   bulletPrefab: {fileID: 1547877642714037347, guid: 8c92dddfdaff93f42a1429ab3e27e169, type: 3}
   fireRate: 0.4
-  bulletSpeed: 10
+  bulletSpeed: 15
 --- !u!212 &1462523050
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5104,8 +5104,8 @@ MonoBehaviour:
   bossHealthSlider: {fileID: 1398757324}
   ascendHeight: 7
   ascendSpeed: 7
-  moveSpeed: 20
-  moveRange: 15
+  moveSpeed: 18
+  moveRange: 13
   bloodProjectilePrefab: {fileID: 6814994103328594910, guid: 9e538541dbe05194c9ffe33c528408f3, type: 3}
   bloodSpawnPoint: {fileID: 5148186146231194653}
   bloodRainInterval: 0.5
