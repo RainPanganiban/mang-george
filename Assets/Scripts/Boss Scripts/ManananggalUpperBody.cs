@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class ManananggalUpperBody : MonoBehaviour, IDamageable
 {
@@ -19,6 +20,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     public float ascendSpeed = 2f;
     public float moveSpeed = 2f;
     public float moveRange = 3f;
+    public bool canMove = true;
 
     private bool hasAscended = false;
     private float randomOffset;
@@ -32,12 +34,13 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     private bool canAttack = true;
 
     [Header("Wing Attack Settings")]
-    public GameObject windPrefab; // Assign this in the Inspector
+    public GameObject windPrefab;
     public Transform windSpawnPoint;
 
     public float wingAttackRange = 3f;
     public int wingAttackDamage = 10;
     public float knockbackForce = 5f;
+
 
     void Start()
     {
@@ -162,7 +165,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         }
         else
         {
-            WingAttack();
+            StartCoroutine(WingAttack());
         }
     }
 
@@ -185,11 +188,19 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         canAttack = true;
     }
 
-    void WingAttack()
+    IEnumerator WingAttack()
     {
+        Debug.Log("WingAttack function called!");
+
         canAttack = false;
-        Debug.Log("Manananggal is using Wing Attack!");
+        canMove = false; // Stop movement
+
+        Debug.Log("Wing Attack");
         animator.SetTrigger("WingAttack");
+        Debug.Log("WingAttack animation triggered!");
+
+        // Wait until the animation reaches the right frame to spawn the Wind Gust
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 0.5f);
 
         // Determine attack direction
         Vector2 attackDirection = (player.position.x > transform.position.x) ? Vector2.right : Vector2.left;
@@ -203,6 +214,11 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         {
             windScript.Initialize(attackDirection);
         }
+
+        // Wait for the attack animation to fully finish before allowing movement
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 0.5f);
+
+        canMove = true; // Allow movement again
 
         StartCoroutine(ResetAttackCooldown());
     }

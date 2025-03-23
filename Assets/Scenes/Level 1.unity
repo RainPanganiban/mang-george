@@ -5287,6 +5287,7 @@ MonoBehaviour:
   ascendSpeed: 7
   moveSpeed: 18
   moveRange: 13
+  canMove: 1
   bloodProjectilePrefab: {fileID: 6814994103328594910, guid: 9e538541dbe05194c9ffe33c528408f3, type: 3}
   bloodSpawnPoint: {fileID: 5148186146231194653}
   bloodRainInterval: 0.5
