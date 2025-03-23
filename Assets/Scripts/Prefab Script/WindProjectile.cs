@@ -31,7 +31,7 @@ public class WindProjectile : MonoBehaviour
             PlayerController player = collision.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.TakeDamage(20);
+                player.TakeDamage(15);
             }
 
             // Apply knockback
