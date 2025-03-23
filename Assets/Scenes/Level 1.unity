@@ -5291,13 +5291,13 @@ MonoBehaviour:
   bloodProjectilePrefab: {fileID: 6814994103328594910, guid: 9e538541dbe05194c9ffe33c528408f3, type: 3}
   bloodSpawnPoint: {fileID: 5148186146231194653}
   bloodRainInterval: 0.5
-  bloodRainAmount: 10
-  attackCooldown: 2
+  bloodRainAmount: 15
+  attackCooldown: 0.8
   windPrefab: {fileID: 7473544952845594010, guid: 84443ff8dd30f3e449f5ea6534d3152f, type: 3}
   windSpawnPoint: {fileID: 416615353}
   wingAttackRange: 15
   wingAttackDamage: 10
-  knockbackForce: 5
+  knockbackForce: 15
 --- !u!50 &2485509851794459125
 Rigidbody2D:
   serializedVersion: 4

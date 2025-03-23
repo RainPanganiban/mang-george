@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 
 public class ManananggalUpperBody : MonoBehaviour, IDamageable
 {
-    public int maxHealth = 50;
+    public int maxHealth = 100;
     private int currentHealth;
     private Animator animator;
     private Transform player;
@@ -44,7 +44,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = 50;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         animator = GetComponent<Animator>();
@@ -56,7 +56,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         if (bossHealthSlider != null)
         {
             bossHealthSlider.maxValue = maxHealth;
-            bossHealthSlider.value = maxHealth;
+            bossHealthSlider.value = currentHealth;
         }
 
         StartCoroutine(AttackLoop());
@@ -112,8 +112,8 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
         // Get camera bounds
         float halfWidth = cam.orthographicSize * cam.aspect; // Half of the screen width
-        float minX = cam.transform.position.x - halfWidth + 3f; // Add some padding
-        float maxX = cam.transform.position.x + halfWidth - 3f;
+        float minX = cam.transform.position.x - halfWidth + 1f; // Add some padding
+        float maxX = cam.transform.position.x + halfWidth - 1f;
 
         // Clamp position to stay within screen bounds
         targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
@@ -202,29 +202,36 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         Debug.Log("WingAttack function called!");
 
         canAttack = false;
-        canMove = false; // Stop movement
+        canMove = false; // Stop movement during attack
 
         Debug.Log("Wing Attack");
         animator.SetTrigger("WingAttack");
         Debug.Log("WingAttack animation triggered!");
 
-        // Wait until the animation reaches the right frame to spawn the Wind Gust
+        // Wait for half of the animation before spawning the wind attack
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 0.5f);
 
-        // Determine attack direction
-        Vector2 attackDirection = (player.position.x > transform.position.x) ? Vector2.right : Vector2.left;
+        if (player == null)
+        {
+            canMove = true;
+            canAttack = true;
+            yield break;
+        }
+
+        // Get the player's position at the moment of attack
+        Vector3 targetPosition = player.position;
 
         // Spawn the Wind Gust
         GameObject wind = Instantiate(windPrefab, windSpawnPoint.position, Quaternion.identity);
 
-        // Initialize wind movement
+        // Initialize wind movement with an accurate direction
         WindProjectile windScript = wind.GetComponent<WindProjectile>();
         if (windScript != null)
         {
-            windScript.Initialize(attackDirection);
+            windScript.Initialize(targetPosition);
         }
 
-        // Wait for the attack animation to fully finish before allowing movement
+        // Wait for the rest of the animation to complete before allowing movement
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 0.5f);
 
         canMove = true; // Allow movement again
