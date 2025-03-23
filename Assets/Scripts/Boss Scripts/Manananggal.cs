@@ -22,7 +22,8 @@ public class Manananggal : MonoBehaviour, IDamageable
     private bool isTransitioning = false;
 
     [Header("Phase 2 Transition")]
-    public GameObject lowerBodyObject; // Lower body stays in the scene
+    public GameObject upperBodyObject; // Lower body stays in the scene
+    public GameObject lowerBodyObject;
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -89,41 +90,20 @@ public class Manananggal : MonoBehaviour, IDamageable
         // Disable full-body sprite
         gameObject.SetActive(false);
 
-        // Create the upper body dynamically
-        SpawnUpperBody();
 
         // Activate the lower body (if it's already in the scene)
-        if (lowerBodyObject != null)
+        if (upperBodyObject != null)
+        {
+            upperBodyObject.SetActive(true);
+            upperBodyObject.transform.position = transform.position;
+        }
+        if (lowerBodyObject != null) 
         {
             lowerBodyObject.SetActive(true);
             lowerBodyObject.transform.position = transform.position;
         }
     }
 
-    void SpawnUpperBody()
-    {
-        // Create a new GameObject in the scene
-        GameObject upperBody = new GameObject("ManananggalUpperBody");
-
-        // Set position above current body
-        upperBody.transform.position = transform.position + new Vector3(0, 2, 0);
-
-        // Add components
-        SpriteRenderer upperSprite = upperBody.AddComponent<SpriteRenderer>();
-        Animator upperAnimator = upperBody.AddComponent<Animator>();
-        Rigidbody2D rb = upperBody.AddComponent<Rigidbody2D>();
-        ManananggalUpperBody upperScript = upperBody.AddComponent<ManananggalUpperBody>();
-
-        // Assign properties
-        upperSprite.sprite = this.GetComponent<SpriteRenderer>().sprite; // Copy the sprite
-        upperSprite.sortingOrder = 5; // Ensure it's rendered above other objects
-        rb.gravityScale = 0; // No gravity for flying enemy
-        rb.freezeRotation = true; // Prevent rotation
-
-        // Assign values to the script
-        upperScript.maxHealth = 50;
-        upperScript.bloodProjectilePrefab = bulletPrefab; // Assign blood attack
-    }
 
     void HandleAttacks()
     {
