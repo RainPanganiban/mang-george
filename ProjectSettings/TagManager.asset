@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - Bullet
+  - Enemy Bullet
   layers:
   - Default
   - TransparentFX
@@ -61,8 +63,17 @@ TagManager:
   - name: bg-6
     uniqueID: 1243442255
     locked: 0
+  - name: bg-7
+    uniqueID: 1881808225
+    locked: 0
+  - name: bg-8
+    uniqueID: 2866148385
+    locked: 0
   - name: ground
     uniqueID: 2322979357
+    locked: 0
+  - name: foreground
+    uniqueID: 3386491325
     locked: 0
   - name: players-enemies
     uniqueID: 3053072541
@@ -72,4 +83,7 @@ TagManager:
     locked: 0
   - name: foreground(close to cam)
     uniqueID: 630779985
+    locked: 0
+  - name: foreground(closer to cam)
+    uniqueID: 1156112687
     locked: 0

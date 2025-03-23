@@ -10,9 +10,18 @@ public class Damage : MonoBehaviour
     public float lifetime = 3f;
     public int finalDamage;
 
+    private Animator animator;
+
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
+        {
+            animator.SetTrigger("Fire");
+        }
+        
         Destroy(gameObject, lifetime);
         finalDamage = Mathf.RoundToInt(damage * PlayerStats.Instance.damageMultiplier);
 
@@ -20,14 +29,17 @@ public class Damage : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy")) // Check if it hits an enemy
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+
+        if (damageable != null)
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage);
-            Destroy(gameObject); // Destroy bullet on impact
+            damageable.TakeDamage(damage);
+            Destroy(gameObject);
         }
-        else if (!collision.CompareTag("Player")) // Ignore player collision
+        else if (!collision.CompareTag("Player")) // Prevents bullets from hitting the player
         {
             Destroy(gameObject);
         }
     }
+
 }

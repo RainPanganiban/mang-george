@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isDashing;
     private bool isDead = false;
-    private bool isInvincible = false;
+    public bool isInvincible = false;
     private bool canDash = true;
     private float lastMoveDirection = 1f;
     private float dashCooldownTimer;
