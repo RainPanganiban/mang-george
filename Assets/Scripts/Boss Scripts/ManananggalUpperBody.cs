@@ -182,15 +182,23 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     {
         canAttack = false;
 
-        float spawnWidth = 15f;
+        float spawnWidth = 20f; // Increase spawn width for more randomness
         int projectileCount = bloodRainAmount;
-        float spacing = spawnWidth / (projectileCount - 1);
+        float spawnHeightOffset = 7f; // Increase spawn height
+        float minX = player.position.x - spawnWidth / 2;
+        float maxX = player.position.x + spawnWidth / 2;
+        float minY = bloodSpawnPoint.position.y + spawnHeightOffset; // Higher spawn
 
         for (int i = 0; i < projectileCount; i++)
         {
-            float xOffset = -spawnWidth / 2 + i * spacing;
-            Vector3 spawnPosition = new Vector3(player.position.x + xOffset, bloodSpawnPoint.position.y, 0);
+            // Randomize the X position within the range
+            float randomX = Random.Range(minX, maxX);
+            // Randomize the Y position slightly for variety
+            float randomY = Random.Range(minY, minY + 2f);
+
+            Vector3 spawnPosition = new Vector3(randomX, randomY, 0);
             Instantiate(bloodProjectilePrefab, spawnPosition, Quaternion.identity);
+
             yield return new WaitForSeconds(bloodRainInterval);
         }
 
