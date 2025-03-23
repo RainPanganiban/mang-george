@@ -22,14 +22,19 @@ public class Bat : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-         if (animator == null)
+        if (animator == null)
         {
-            animator.SetTrigger("Fire");
+            Debug.LogError("Animator is missing from the Bat!");
+            return;
         }
+
+        animator.SetTrigger("Fire"); // Initial fire animation (if needed)
     }
 
     void FacePlayer()
     {
+        if (target == null) return;
+
         spriteRenderer.flipX = target.position.x > transform.position.x;
     }
 
@@ -64,6 +69,12 @@ public class Bat : MonoBehaviour
 
         isWandering = false;
         yield return new WaitForSeconds(hoverTime);
+
+        // **Trigger the Swoop animation before attacking**
+        animator.SetTrigger("Swoop");
+
+        yield return new WaitForSeconds(0.2f); // Small delay before attack starts
+
         isAttacking = true;
     }
 

@@ -199,17 +199,14 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
     IEnumerator WingAttack()
     {
-        Debug.Log("WingAttack function called!");
-
+      
         canAttack = false;
         canMove = false; // Stop movement during attack
 
-        Debug.Log("Wing Attack");
         animator.SetTrigger("WingAttack");
-        Debug.Log("WingAttack animation triggered!");
 
         // Wait for half of the animation before spawning the wind attack
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         if (player == null)
         {
@@ -232,7 +229,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         }
 
         // Wait for the rest of the animation to complete before allowing movement
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         canMove = true; // Allow movement again
 
