@@ -169,9 +169,8 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     IEnumerator BloodRainAttack()
     {
         canAttack = false;
-        Debug.Log("Manananggal is using Blood Rain!");
 
-        float spawnWidth = 6f;
+        float spawnWidth = 15f;
         int projectileCount = bloodRainAmount;
         float spacing = spawnWidth / (projectileCount - 1);
 

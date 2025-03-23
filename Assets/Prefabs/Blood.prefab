@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1801562305973403914}
   - component: {fileID: 1070280488677635408}
   - component: {fileID: 813351279722288607}
+  - component: {fileID: 2377115007769755813}
   m_Layer: 0
   m_Name: Blood
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.97441685, y: 0.4215909, z: -0.02153621}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -118,9 +119,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008846641, y: 0}
   serializedVersion: 2
-  m_Radius: 0.94
+  m_Radius: 0.64807785
 --- !u!50 &813351279722288607
 Rigidbody2D:
   serializedVersion: 4
@@ -148,3 +149,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &2377115007769755813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814994103328594910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5782a9692c80b4145a9631cd2c5bfb29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
