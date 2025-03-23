@@ -50,11 +50,6 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        if (player == null)
-        {
-            Debug.LogError("Player not found! Make sure the player has the 'Player' tag.");
-        }
-
         randomOffset = Random.Range(0f, Mathf.PI * 2f);
 
         // Initialize health bar
@@ -63,16 +58,14 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
             bossHealthSlider.maxValue = maxHealth;
             bossHealthSlider.value = maxHealth;
         }
-        else
-        {
-            Debug.LogWarning("Boss Health Slider not assigned!");
-        }
 
         StartCoroutine(AttackLoop());
     }
 
     void Update()
     {
+        if (!canMove) return;
+
         if (!hasAscended)
         {
             AscendAbovePlayer();
@@ -106,12 +99,28 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
     void MoveRandomlyAbovePlayer()
     {
-        if (player == null) return;
+        Camera cam = Camera.main;
+        if (cam == null) return;
 
+        // Get the screen's center position in world coordinates
+        Vector3 screenCenter = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.7f, 0));
+        screenCenter.z = 0;
+
+        // Movement oscillation
         float xOffset = Mathf.Sin(Time.time + randomOffset) * moveRange;
-        Vector3 targetPosition = new Vector3(player.position.x + xOffset, transform.position.y, transform.position.z);
+        Vector3 targetPosition = new Vector3(screenCenter.x + xOffset, screenCenter.y, transform.position.z);
+
+        // Get camera bounds
+        float halfWidth = cam.orthographicSize * cam.aspect; // Half of the screen width
+        float minX = cam.transform.position.x - halfWidth + 3f; // Add some padding
+        float maxX = cam.transform.position.x + halfWidth - 3f;
+
+        // Clamp position to stay within screen bounds
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
+
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
     }
+
 
     public void TakeDamage(int damage)
     {
