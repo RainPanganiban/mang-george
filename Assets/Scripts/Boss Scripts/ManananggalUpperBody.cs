@@ -41,7 +41,6 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     public int wingAttackDamage = 10;
     public float knockbackForce = 5f;
 
-
     void Start()
     {
         currentHealth = 50;
@@ -52,7 +51,6 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
         randomOffset = Random.Range(0f, Mathf.PI * 2f);
 
-        // Initialize health bar
         if (bossHealthSlider != null)
         {
             bossHealthSlider.maxValue = maxHealth;
@@ -102,31 +100,25 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         Camera cam = Camera.main;
         if (cam == null) return;
 
-        // Get the screen's center position in world coordinates
         Vector3 screenCenter = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.7f, 0));
         screenCenter.z = 0;
 
-        // Movement oscillation
         float xOffset = Mathf.Sin(Time.time + randomOffset) * moveRange;
         Vector3 targetPosition = new Vector3(screenCenter.x + xOffset, screenCenter.y, transform.position.z);
 
-        // Get camera bounds
-        float halfWidth = cam.orthographicSize * cam.aspect; // Half of the screen width
-        float minX = cam.transform.position.x - halfWidth + 1f; // Add some padding
+        float halfWidth = cam.orthographicSize * cam.aspect;
+        float minX = cam.transform.position.x - halfWidth + 1f;
         float maxX = cam.transform.position.x + halfWidth - 1f;
 
-        // Clamp position to stay within screen bounds
         targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
     }
 
-
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
-        // Update health bar
         if (bossHealthSlider != null)
         {
             bossHealthSlider.value = currentHealth;
@@ -174,7 +166,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         }
         else
         {
-            StartCoroutine(WingAttack());
+            WingAttack();
         }
     }
 
@@ -182,65 +174,47 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     {
         canAttack = false;
 
-        float spawnWidth = 20f; // Increase spawn width for more randomness
+        float spawnWidth = 20f;
         int projectileCount = bloodRainAmount;
-        float spawnHeightOffset = 7f; // Increase spawn height
+        float spawnHeightOffset = 7f;
         float minX = player.position.x - spawnWidth / 2;
         float maxX = player.position.x + spawnWidth / 2;
-        float minY = bloodSpawnPoint.position.y + spawnHeightOffset; // Higher spawn
+        float minY = bloodSpawnPoint.position.y + spawnHeightOffset;
 
         for (int i = 0; i < projectileCount; i++)
         {
-            // Randomize the X position within the range
             float randomX = Random.Range(minX, maxX);
-            // Randomize the Y position slightly for variety
             float randomY = Random.Range(minY, minY + 2f);
-
             Vector3 spawnPosition = new Vector3(randomX, randomY, 0);
             Instantiate(bloodProjectilePrefab, spawnPosition, Quaternion.identity);
-
             yield return new WaitForSeconds(bloodRainInterval);
         }
 
         canAttack = true;
     }
 
-    IEnumerator WingAttack()
+    public void WingAttack()
     {
-      
+        if (!canAttack || player == null) return;
+
         canAttack = false;
-        canMove = false; // Stop movement during attack
-
+        canMove = false;
         animator.SetTrigger("WingAttack");
+    }
 
-        // Wait for half of the animation before spawning the wind attack
-        yield return new WaitForSeconds(0.1f);
+    public void TriggerWingAttack()
+    {
+        if (player == null) return;
 
-        if (player == null)
-        {
-            canMove = true;
-            canAttack = true;
-            yield break;
-        }
-
-        // Get the player's position at the moment of attack
         Vector3 targetPosition = player.position;
-
-        // Spawn the Wind Gust
         GameObject wind = Instantiate(windPrefab, windSpawnPoint.position, Quaternion.identity);
-
-        // Initialize wind movement with an accurate direction
         WindProjectile windScript = wind.GetComponent<WindProjectile>();
         if (windScript != null)
         {
             windScript.Initialize(targetPosition);
         }
 
-        // Wait for the rest of the animation to complete before allowing movement
-        yield return new WaitForSeconds(0.2f);
-
-        canMove = true; // Allow movement again
-
+        canMove = true;
         StartCoroutine(ResetAttackCooldown());
     }
 
