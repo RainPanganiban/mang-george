@@ -12489,6 +12489,8 @@ GameObject:
   - component: {fileID: 1361774801}
   - component: {fileID: 1361774800}
   - component: {fileID: 1361774799}
+  - component: {fileID: 1361774803}
+  - component: {fileID: 1361774804}
   m_Layer: 0
   m_Name: Tikbalang
   m_TagString: Enemy
@@ -12532,7 +12534,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 18.781641, y: 31.019999}
+    oldSize: {x: 17.12, y: 30.83708}
     newSize: {x: 9.57, y: 12.73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -12609,7 +12611,7 @@ SpriteRenderer:
   m_SortingLayerID: -1241894755
   m_SortingLayer: 11
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 12bf33c4917c12d40afd702b3b081421, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b5f9a96ffd45bf4c85054e63a82ff21, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12636,6 +12638,46 @@ Transform:
   - {fileID: 663586841}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1361774803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361774796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87515bda49124a847a6648589cd0ffe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  slider: {fileID: 1491939069}
+  attackInterval: 1.5
+  bulletPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  bulletSpeed: 5
+  currentPhase: 1
+--- !u!95 &1361774804
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361774796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd4a716aad2317b43bbba521013e52e8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1381277959
 GameObject:
   m_ObjectHideFlags: 0
@@ -13104,6 +13146,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9150300838177281529, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
   m_PrefabInstance: {fileID: 633542894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1491939069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1168527026882825045, guid: 066703787f760df4f8a00ffc6f6e5f61, type: 3}
+  m_PrefabInstance: {fileID: 633542894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1529282900
 GameObject:
   m_ObjectHideFlags: 0
