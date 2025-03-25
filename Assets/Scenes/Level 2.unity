@@ -12653,9 +12653,9 @@ MonoBehaviour:
   maxHealth: 100
   slider: {fileID: 1491939069}
   attackInterval: 1.5
-  bulletPrefab: {fileID: 0}
-  firePoint: {fileID: 0}
-  bulletSpeed: 5
+  spearPrefab: {fileID: 7473544952845594010, guid: 84443ff8dd30f3e449f5ea6534d3152f, type: 3}
+  firePoint: {fileID: 663586841}
+  spearSpeed: 7
   currentPhase: 1
 --- !u!95 &1361774804
 Animator:

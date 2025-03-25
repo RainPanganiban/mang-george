@@ -58,6 +58,8 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.firingSound);
+
         // Calculate the shooting direction
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f; // Ensure it's in 2D space

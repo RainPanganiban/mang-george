@@ -5,7 +5,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour , IDamageable
 {
     [Header("Health Settings")]
-    public int maxHealth = 100;
+    public int maxHealth = 50;
     private int currentHealth;
     public Slider slider;
 
@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour , IDamageable
     void Start()
     {
         currentHealth = maxHealth;
-        slider.maxValue = maxHealth;
+        slider.maxValue = 50;
         slider.value = currentHealth;
         attackTimer = attackInterval;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour , IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 50) // Phase 1 (HP 100 to 50)
+        if (currentHealth > 25) // Phase 1 (HP 100 to 50)
         {
             if (currentPhase != 1)
             {

@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class Tikbalang : MonoBehaviour, IDamageable
 {
     [Header("Health Settings")]
-    public int maxHealth = 100;
+    public int maxHealth = 150;
     private int currentHealth;
     public Slider slider;
 
     [Header("Attack Settings")]
     public float attackInterval = 1.5f;
     private float attackTimer;
-    public GameObject bulletPrefab;
+    public GameObject spearPrefab;
     public Transform firePoint;
-    public float bulletSpeed = 5f;
+    public float spearSpeed = 7f;
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
@@ -77,15 +77,25 @@ public class Tikbalang : MonoBehaviour, IDamageable
     void HandleAttacks()
     {
         attackTimer -= Time.deltaTime;
+        if (attackTimer <= 0)
         {
-            Attack();
+            animator.SetTrigger("ThrowSpear"); // Trigger animation
             attackTimer = attackInterval;
         }
     }
 
-    void Attack()
+    // This function is triggered via an animation event
+    public void ThrowSpear()
     {
+        if (player == null) return;
 
+        GameObject spear = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody2D rb = spear.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            Vector2 direction = (player.position - firePoint.position).normalized;
+            rb.velocity = direction * spearSpeed;
+        }
     }
 
     public void TakeDamage(int damage)

@@ -70,7 +70,6 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         float moveInput = Input.GetAxis("Horizontal");
-        
 
         if (moveInput != 0)
         {
@@ -90,6 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.jump);
 
             if (!animator.GetBool("isJumping")) // Set only if it's not already playing
             {
@@ -104,6 +104,8 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         isInvincible = true;
         trailRenderer.enabled = true;
+        AudioManager.Instance.SFXsource.volume = 0.3f;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.dash);
         GetComponent<Collider2D>().enabled = false;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
@@ -157,11 +159,17 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(Flashred());
 
+        // Create an array of hurt sounds and randomly pick one
+        AudioClip[] hurtSounds = { AudioManager.Instance.hurt1, AudioManager.Instance.hurt2, AudioManager.Instance.hurt3 };
+        int randomIndex = UnityEngine.Random.Range(0, hurtSounds.Length); // Fixed: Explicit namespace
+        AudioManager.Instance.PlaySFX(hurtSounds[randomIndex]); // Play the random sound
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+
 
     IEnumerator Flashred()
     {

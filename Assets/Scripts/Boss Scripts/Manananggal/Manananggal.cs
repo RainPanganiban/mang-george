@@ -22,7 +22,7 @@ public class Manananggal : MonoBehaviour, IDamageable
     private bool isTransitioning = false;
 
     [Header("Phase 2 Transition")]
-    public GameObject upperBodyObject; // Lower body stays in the scene
+    public GameObject upperBodyObject;
     public GameObject lowerBodyObject;
 
     private Transform player;

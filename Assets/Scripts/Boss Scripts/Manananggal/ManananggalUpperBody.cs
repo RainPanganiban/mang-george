@@ -53,8 +53,8 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
         if (bossHealthSlider != null)
         {
-            bossHealthSlider.maxValue = maxHealth;
-            bossHealthSlider.value = currentHealth;
+            bossHealthSlider.maxValue = 100;
+            bossHealthSlider.value = 50;
         }
 
         StartCoroutine(AttackLoop());

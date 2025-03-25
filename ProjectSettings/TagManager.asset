@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bullet
   - Enemy Bullet
+  - Audio
   layers:
   - Default
   - TransparentFX
