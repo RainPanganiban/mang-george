@@ -6211,7 +6211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 663586841}
   m_Layer: 0
-  m_Name: FirePoint
+  m_Name: Spear Firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6226,7 +6226,7 @@ Transform:
   m_GameObject: {fileID: 663586840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -1.2, z: 0}
+  m_LocalPosition: {x: -3.48, y: 3.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6995,6 +6995,71 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &921787574
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3895060480294578578, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.23553833
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.58321273
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.043845538
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978388412307743008, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: musicVolume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: backgroundMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 41fbd855e439de649b07f9df3d21714c, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b034b96d023c2344397c17363f4e060c, type: 3}
 --- !u!1 &947749178
 GameObject:
   m_ObjectHideFlags: 0
@@ -12650,10 +12715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87515bda49124a847a6648589cd0ffe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 150
   slider: {fileID: 1491939069}
   attackInterval: 1.5
-  spearPrefab: {fileID: 7473544952845594010, guid: 84443ff8dd30f3e449f5ea6534d3152f, type: 3}
+  spearPrefab: {fileID: 1874372603307792636, guid: 8404f42eadb2b214a8932262535484aa, type: 3}
   firePoint: {fileID: 663586841}
   spearSpeed: 7
   currentPhase: 1
@@ -19707,6 +19772,7 @@ SceneRoots:
   - {fileID: 1394766360}
   - {fileID: 710650162}
   - {fileID: 95009688}
+  - {fileID: 921787574}
   - {fileID: 277729396}
   - {fileID: 1972559478}
   - {fileID: 1145585537}

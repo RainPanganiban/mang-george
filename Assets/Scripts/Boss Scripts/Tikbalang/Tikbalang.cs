@@ -26,6 +26,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
     private Animator animator;
     private Color originalColor;
     private bool isInvincible = false;
+    private Rigidbody2D rb;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         originalColor = spriteRenderer.color;
     }
 
@@ -85,17 +87,17 @@ public class Tikbalang : MonoBehaviour, IDamageable
     }
 
     // This function is triggered via an animation event
-    public void ThrowSpear()
+    void ThrowSpear()
     {
-        if (player == null) return;
-
-        GameObject spear = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody2D rb = spear.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (player == null)
         {
-            Vector2 direction = (player.position - firePoint.position).normalized;
-            rb.velocity = direction * spearSpeed;
+            Debug.LogError("Player reference missing in Boss script!");
+            return;
         }
+
+        Vector2 playerPredictedPosition = player.transform.position; // Get player's position at throw time
+        GameObject spearInstance = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
+        spearInstance.GetComponent<Spear>().ThrowSpear(playerPredictedPosition);
     }
 
     public void TakeDamage(int damage)

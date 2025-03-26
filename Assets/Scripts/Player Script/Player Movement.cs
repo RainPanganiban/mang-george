@@ -180,10 +180,9 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        if (isDead) return; // Prevent multiple triggers
+        if (isDead) return;
         isDead = true;
 
-        // Set Animator to play Death animation
         animator.SetTrigger("isDead");
 
         // Disable player movement & actions
