@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private float lastMoveDirection = 1f;
     private float dashCooldownTimer;
     private Color originalColor;
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         currentHealth = playerHealth;
         slider.maxValue = playerHealth;
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.jump);
+            audioManager.PlaySFX(audioManager.jump);
 
             if (!animator.GetBool("isJumping")) // Set only if it's not already playing
             {
@@ -104,8 +106,7 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         isInvincible = true;
         trailRenderer.enabled = true;
-        AudioManager.Instance.SFXsource.volume = 0.3f;
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.dash);
+        audioManager.PlaySFX(audioManager.dash);
         GetComponent<Collider2D>().enabled = false;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
@@ -159,10 +160,9 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(Flashred());
 
-        // Create an array of hurt sounds and randomly pick one
-        AudioClip[] hurtSounds = { AudioManager.Instance.hurt1, AudioManager.Instance.hurt2, AudioManager.Instance.hurt3 };
-        int randomIndex = UnityEngine.Random.Range(0, hurtSounds.Length); // Fixed: Explicit namespace
-        AudioManager.Instance.PlaySFX(hurtSounds[randomIndex]); // Play the random sound
+        AudioClip[] hurtSounds = { audioManager.hurt1, audioManager.hurt2, audioManager.hurt3 };
+        int randomIndex = UnityEngine.Random.Range(0, hurtSounds.Length);
+        audioManager.PlaySFX(hurtSounds[randomIndex]);
 
         if (currentHealth <= 0)
         {

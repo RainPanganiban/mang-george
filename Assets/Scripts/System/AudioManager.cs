@@ -1,55 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance { get; private set; }
-
     [Header("Audio Source")]
-    [SerializeField] public AudioSource musicSource;
-    [SerializeField] public AudioSource SFXsource;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource SFXsource;
 
     [Header("Music")]
     public AudioClip backgroundMusic;
-    public float musicVolume = 0.2f;
+    [Range(0f, 1f)] public float musicVolume = 0.2f;
 
     [Header("Player Sound FX")]
     public AudioClip death;
     public AudioClip firingSound;
-    public AudioClip dashSound;
     public AudioClip jump;
     public AudioClip dash;
     public AudioClip hurt1;
     public AudioClip hurt2;
     public AudioClip hurt3;
-    public float sfxVolume = 1.0f;
+    [Range(0f, 1f)] public float sfxVolume = 1.0f;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    [Header("Enemy Sound FX")]
+    public AudioClip attackingSound;
+    public AudioClip transition;
+    public AudioClip deathEnemy;
+    public AudioClip intro;
+    [Range(0f, 1f)] public float enemySFXVolume = 1.0f;
 
     private void Start()
     {
-        musicSource.volume = musicVolume;
-        musicSource.clip = backgroundMusic;
-        musicSource.loop = true;
-        musicSource.Play();
+        if (backgroundMusic != null)
+        {
+            musicSource.clip = backgroundMusic;
+            musicSource.volume = musicVolume;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
     }
 
     public void PlaySFX(AudioClip clip)
     {
-        SFXsource.PlayOneShot(clip);
+        if (clip != null)
+        {
+            SFXsource.PlayOneShot(clip, sfxVolume);
+        }
     }
 
+    public void PlayEnemySFX(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            SFXsource.PlayOneShot(clip, enemySFXVolume);
+        }
+    }
 }
-

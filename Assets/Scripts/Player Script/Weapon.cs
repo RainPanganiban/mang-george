@@ -12,14 +12,17 @@ public class Weapon : MonoBehaviour
     private Transform player;
     private SpriteRenderer playerSprite;
     private Vector3 originalWeaponPosition;
+    private AudioManager audioManager;
 
     void Start()
     {
         weaponSprite = GetComponent<SpriteRenderer>();
-        player = transform.parent; // Assuming Weapon is a child of Player
+        player = transform.parent;
         playerSprite = player.GetComponent<SpriteRenderer>();
 
-        originalWeaponPosition = transform.localPosition; // Store the default weapon position
+        audioManager = FindObjectOfType<AudioManager>();
+
+        originalWeaponPosition = transform.localPosition;
     }
 
     void Update()
@@ -58,7 +61,7 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.firingSound);
+        audioManager.PlaySFX(audioManager.firingSound);
 
         // Calculate the shooting direction
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

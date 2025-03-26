@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour , IDamageable
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Color originalColor;
+    private AudioManager audioManager;
 
     [Header("Teleport Settings")]
     public float teleportInterval = 3f;
@@ -36,12 +37,15 @@ public class Enemy : MonoBehaviour , IDamageable
         slider.maxValue = 50;
         slider.value = currentHealth;
         attackTimer = attackInterval;
+       
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>(); // Initialize the Animator
+        animator = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
         originalColor = spriteRenderer.color;
 
         StartCoroutine(TeleportRoutine());
+        audioManager.PlayEnemySFX(audioManager.intro);
     }
 
     void Update()
@@ -95,6 +99,7 @@ public class Enemy : MonoBehaviour , IDamageable
                 currentPhase = 2;
                 animator.SetInteger("Phase", 2);
                 animator.Play("2nd_Attack");
+                audioManager.PlayEnemySFX(audioManager.transition);
             }
         }
     }
@@ -196,8 +201,24 @@ public class Enemy : MonoBehaviour , IDamageable
 
     void Die()
     {
-        Destroy(gameObject);
-        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+        audioManager.PlayEnemySFX(audioManager.deathEnemy);
+
+        StartCoroutine(HandleDeathSequence());
 
     }
+
+    IEnumerator HandleDeathSequence()
+    {
+        
+        yield return new WaitForSeconds(2f);
+        
+        UpgradeManager upgradeManager = FindAnyObjectByType<UpgradeManager>();
+        if (upgradeManager != null)
+        {
+            upgradeManager.ShowUpgradeOptions();
+        }
+
+        Destroy(gameObject);
+    }
+
 }
