@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour , IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 25) // Phase 1 (HP 100 to 50)
+        if (currentHealth > 25)
         {
             if (currentPhase != 1)
             {
@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour , IDamageable
                 animator.SetInteger("Phase", 1);
             }
         }
-        else // Phase 2 (HP 50 and below)
+        else
         {
             if (currentPhase != 2)
             {
@@ -118,10 +118,10 @@ public class Enemy : MonoBehaviour , IDamageable
     {
         if (animator != null)
         {
-            animator.SetBool("isAttacking", true); // Set attack animation to true
+            animator.SetBool("isAttacking", true);
         }
 
-        // Start attack animation and delay shooting bullets to sync
+
         StartCoroutine(PerformAttackAfterDelay(0.3f));
     }
 
@@ -139,8 +139,8 @@ public class Enemy : MonoBehaviour , IDamageable
                 break;
         }
 
-        yield return new WaitForSeconds(0.2f); //  Small delay before stopping animation
-        animator.SetBool("isAttacking", false); // Stop attack animation
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("isAttacking", false);
     }
 
     void HomingShot()
@@ -202,6 +202,7 @@ public class Enemy : MonoBehaviour , IDamageable
     void Die()
     {
         audioManager.PlayEnemySFX(audioManager.deathEnemy);
+        GetComponent<Enemy>().enabled = false;
 
         StartCoroutine(HandleDeathSequence());
 
