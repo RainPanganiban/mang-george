@@ -6,7 +6,7 @@ public class Manananggal : MonoBehaviour, IDamageable
 {
     [Header("Health Settings")]
     public int maxHealth = 100;
-    private int currentHealth;
+    private float currentHealth;
     public Slider slider;
 
     [Header("Attack Settings")]
@@ -165,7 +165,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         activeBats--;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isInvincible) return;
 

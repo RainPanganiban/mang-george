@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour , IDamageable
 {
     [Header("Health Settings")]
     public int maxHealth = 50;
-    private int currentHealth;
+    private float currentHealth;
     public Slider slider;
 
     [Header("Attack Settings")]
@@ -177,7 +177,7 @@ public class Enemy : MonoBehaviour , IDamageable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         slider.value = currentHealth;

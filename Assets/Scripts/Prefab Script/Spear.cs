@@ -1,102 +1,127 @@
 using UnityEngine;
+using System.Collections;
 
 public class Spear : MonoBehaviour
 {
-    public float throwForce = 10f;
-    public float gravityScale = 2f;
     private Rigidbody2D rb;
+    private Collider2D spearCollider;
     private bool hasLanded = false;
+    private bool isHazard = false;
 
-    [Header("Hazard Settings")]
-    public GameObject landingIndicatorPrefab; // Landing indicator prefab
-    private GameObject landingIndicatorInstance;
-    public float hazardDuration = 3f; // How long the spear stays before disappearing
-    private bool isHazardous = false;
+    public GameObject impactEffect;
+    public GameObject landingIndicatorPrefab;
+    public int damageBeforeLanding = 15;
+    public int hazardDamage = 1;
+    public float hazardDamageInterval = 0.2f;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = gravityScale;
+        spearCollider = GetComponent<Collider2D>();
+
+        if (rb == null)
+            Debug.LogError("Rigidbody2D is missing on the spear!");
+        if (spearCollider == null)
+            Debug.LogError("Collider2D is missing on the spear!");
     }
 
-    public void ThrowSpear(Vector2 predictedPosition)
+    public void ThrowSpear(Vector2 targetPosition, float height)
     {
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D is missing on the spear!");
-            return;
-        }
+        rb.gravityScale = 1;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        spearCollider.isTrigger = false; // Enable physical collision before landing
 
-        // Show the prediction indicator
-        ShowLandingIndicator(predictedPosition);
-
-        // Calculate throw velocity using physics formula
         Vector2 startPos = transform.position;
-        Vector2 targetPos = predictedPosition;
+        float gravity = Mathf.Abs(Physics2D.gravity.y) * rb.gravityScale;
 
-        float timeToTarget = Mathf.Abs(targetPos.x - startPos.x) / throwForce;
-        float verticalVelocity = (targetPos.y - startPos.y + 0.5f * Mathf.Abs(Physics2D.gravity.y) * timeToTarget * timeToTarget) / timeToTarget;
+        float timeToApex = Mathf.Sqrt(2 * height / gravity);
+        float totalTime = timeToApex + Mathf.Sqrt(2 * (height - (targetPosition.y - startPos.y)) / gravity);
 
-        // Set velocity
-        rb.velocity = new Vector2(Mathf.Sign(targetPos.x - startPos.x) * throwForce, verticalVelocity);
+        float vx = (targetPosition.x - startPos.x) / totalTime;
+        float vy = Mathf.Sqrt(2 * gravity * height);
+
+        rb.velocity = new Vector2(vx, vy);
+
+        ShowLandingIndicator(targetPosition);
     }
 
     void Update()
     {
-        if (!hasLanded)
-        {
-            RotateTowardsVelocity();
-        }
-    }
-
-    void RotateTowardsVelocity()
-    {
-        if (rb.velocity.magnitude > 0.1f)
+        if (!hasLanded && rb.velocity.magnitude > 0.1f)
         {
             float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
 
-    void ShowLandingIndicator(Vector2 position)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        landingIndicatorInstance = Instantiate(landingIndicatorPrefab, position, Quaternion.identity);
-        Destroy(landingIndicatorInstance, 1.5f);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!hasLanded)
         {
-            StickIntoGround();
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                // Deal 15 damage on direct hit and destroy the spear
+                PlayerController playerHealth = collision.gameObject.GetComponent<PlayerController>();
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(damageBeforeLanding);
+                }
+                Destroy(gameObject);
+            }
+            else if (collision.gameObject.CompareTag("Ground"))
+            {
+                // Land on ground and become a hazard
+                hasLanded = true;
+                rb.velocity = Vector2.zero;
+                rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.gravityScale = 0;
+                rb.freezeRotation = true;
+
+                isHazard = true;
+
+                // Change collider to trigger so player can walk through
+                spearCollider.isTrigger = true;
+                gameObject.layer = LayerMask.NameToLayer("Hazard");
+
+                if (impactEffect != null)
+                    Instantiate(impactEffect, transform.position, Quaternion.identity);
+
+                if (landingIndicatorPrefab != null)
+                    Destroy(landingIndicatorPrefab);
+
+                // Destroy the spear after 2 seconds
+                Invoke(nameof(DestroySpear), 2f);
+            }
         }
     }
 
-    void StickIntoGround()
+    private float nextDamageTime = 0f;
+
+    void OnTriggerStay2D(Collider2D other)
     {
-        hasLanded = true;
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
-        rb.simulated = false;
-
-        // Make it a hazard
-        isHazardous = true;
-        GetComponent<BoxCollider2D>().enabled = true;
-
-        // Remove spear after a while
-        Invoke(nameof(RemoveSpear), hazardDuration);
+        if (isHazard && other.CompareTag("Player") && Time.time >= nextDamageTime)
+        {
+            PlayerController playerHealth = other.GetComponent<PlayerController>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(hazardDamage);
+                nextDamageTime = Time.time + hazardDamageInterval; // Apply cooldown
+            }
+        }
     }
 
-    void RemoveSpear()
+    void DestroySpear()
     {
+        isHazard = false;
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void ShowLandingIndicator(Vector2 position)
     {
-        if (isHazardous && other.CompareTag("Player"))
+        if (landingIndicatorPrefab != null)
         {
-            other.GetComponent<PlayerController>().TakeDamage(10);
+            GameObject indicator = Instantiate(landingIndicatorPrefab, position, Quaternion.identity);
+            Destroy(indicator, 1.5f);
         }
     }
 }

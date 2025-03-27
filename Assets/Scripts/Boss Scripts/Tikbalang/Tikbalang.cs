@@ -7,7 +7,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
 {
     [Header("Health Settings")]
     public int maxHealth = 150;
-    private int currentHealth;
+    private float currentHealth;
     public Slider slider;
 
     [Header("Attack Settings")]
@@ -15,7 +15,9 @@ public class Tikbalang : MonoBehaviour, IDamageable
     private float attackTimer;
     public GameObject spearPrefab;
     public Transform firePoint;
+    public float throwForce = 12f;
     public float spearSpeed = 7f;
+    public float throwHeight = 4f;
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
@@ -87,22 +89,32 @@ public class Tikbalang : MonoBehaviour, IDamageable
     }
 
     // This function is triggered via an animation event
-    void ThrowSpear()
+    public void ThrowSpear()
     {
-        if (player == null)
+        if (spearPrefab == null || player == null)
         {
-            Debug.LogError("Player reference missing in Boss script!");
+            Debug.LogError("Spear Prefab or Player is missing!");
             return;
         }
 
-        Vector2 playerPredictedPosition = player.transform.position; // Get player's position at throw time
-        GameObject spearInstance = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
-        spearInstance.GetComponent<Spear>().ThrowSpear(playerPredictedPosition);
+        Vector2 playerPosition = (Vector2)player.transform.position + new Vector2(0.5f, 0);
+        float throwHeight = 3f; // Adjust for arc
+
+        Debug.DrawLine(firePoint.position, playerPosition, Color.red, 2f); // Debug target location
+
+        GameObject spear = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
+        Spear spearScript = spear.GetComponent<Spear>();
+
+        if (spearScript != null)
+        {
+            spearScript.ThrowSpear(playerPosition, throwHeight);
+        }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isInvincible) return;
+        Debug.Log("Damge taken is" + damage);
 
         currentHealth -= damage;
         slider.value = currentHealth;

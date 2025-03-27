@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 public class ManananggalUpperBody : MonoBehaviour, IDamageable
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    private float currentHealth;
     private Animator animator;
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -115,7 +115,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
 

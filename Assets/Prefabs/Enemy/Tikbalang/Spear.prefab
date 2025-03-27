@@ -52,7 +52,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2147483649
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -171,7 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f116365719e9e724193a24bcb0192e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 10
-  gravityScale: 2
-  landingIndicatorPrefab: {fileID: 6814994103328594910, guid: 9e538541dbe05194c9ffe33c528408f3, type: 3}
-  hazardDuration: 3
+  impactEffect: {fileID: 0}
+  landingIndicatorPrefab: {fileID: 0}
+  damage: 1

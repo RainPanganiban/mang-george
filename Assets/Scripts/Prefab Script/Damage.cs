@@ -6,7 +6,7 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
 
-    public int damage = 10;
+    public float damage = 10;
     public float lifetime = 3f;
     public int finalDamage;
 

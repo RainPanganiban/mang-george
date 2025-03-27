@@ -939,7 +939,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.8862746, g: 0.9960785, b: 0.79215693, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.25
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 000000002ff94deb595dbd027715057f1dc6baba4f6c1d4a611d2a7021f4d5aa1dda758abdc1d9c99d30fab5e3830b4051f098252fe1e844817c52ab
@@ -6857,7 +6857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 500166832}
   bulletPrefab: {fileID: 1547877642714037347, guid: 8c92dddfdaff93f42a1429ab3e27e169, type: 3}
-  fireRate: 0.4
+  fireRate: 0.2
   bulletSpeed: 15
 --- !u!212 &881341167
 SpriteRenderer:
@@ -7993,8 +7993,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.18823531, g: 0.41960788, b: 0.47058827, a: 0.33333334}
-      maxColor: {r: 0.8235295, g: 0.9294118, b: 0.69803923, a: 0.21960784}
+      minColor: {r: 0.2901961, g: 0.5803922, b: 0.68235296, a: 0.101960786}
+      maxColor: {r: 0.9960785, g: 0.9960785, b: 0.9058824, a: 0.101960786}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -12720,7 +12720,9 @@ MonoBehaviour:
   attackInterval: 1.5
   spearPrefab: {fileID: 1874372603307792636, guid: 8404f42eadb2b214a8932262535484aa, type: 3}
   firePoint: {fileID: 663586841}
+  throwForce: 12
   spearSpeed: 7
+  throwHeight: 4
   currentPhase: 1
 --- !u!95 &1361774804
 Animator:

@@ -3767,7 +3767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 2129674290}
   bulletPrefab: {fileID: 1547877642714037347, guid: 8c92dddfdaff93f42a1429ab3e27e169, type: 3}
-  fireRate: 0.4
+  fireRate: 0.2
   bulletSpeed: 15
 --- !u!212 &1462523050
 SpriteRenderer:
