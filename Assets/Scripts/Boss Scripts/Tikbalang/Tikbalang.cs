@@ -97,8 +97,8 @@ public class Tikbalang : MonoBehaviour, IDamageable
             return;
         }
 
-        Vector2 playerPosition = (Vector2)player.transform.position + new Vector2(0.5f, 0);
-        float throwHeight = 3f; // Adjust for arc
+        Vector2 playerPosition = (Vector2)player.transform.position + new Vector2(1.2f, 0);
+        float throwHeight = 5f; // Adjust for arc
 
         Debug.DrawLine(firePoint.position, playerPosition, Color.red, 2f); // Debug target location
 

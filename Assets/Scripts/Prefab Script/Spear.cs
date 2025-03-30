@@ -8,8 +8,6 @@ public class Spear : MonoBehaviour
     private bool hasLanded = false;
     private bool isHazard = false;
 
-    public GameObject impactEffect;
-    public GameObject landingIndicatorPrefab;
     public int damageBeforeLanding = 15;
     public int hazardDamage = 1;
     public float hazardDamageInterval = 0.2f;
@@ -19,10 +17,6 @@ public class Spear : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spearCollider = GetComponent<Collider2D>();
 
-        if (rb == null)
-            Debug.LogError("Rigidbody2D is missing on the spear!");
-        if (spearCollider == null)
-            Debug.LogError("Collider2D is missing on the spear!");
     }
 
     public void ThrowSpear(Vector2 targetPosition, float height)
@@ -41,8 +35,6 @@ public class Spear : MonoBehaviour
         float vy = Mathf.Sqrt(2 * gravity * height);
 
         rb.velocity = new Vector2(vx, vy);
-
-        ShowLandingIndicator(targetPosition);
     }
 
     void Update()
@@ -83,12 +75,6 @@ public class Spear : MonoBehaviour
                 spearCollider.isTrigger = true;
                 gameObject.layer = LayerMask.NameToLayer("Hazard");
 
-                if (impactEffect != null)
-                    Instantiate(impactEffect, transform.position, Quaternion.identity);
-
-                if (landingIndicatorPrefab != null)
-                    Destroy(landingIndicatorPrefab);
-
                 // Destroy the spear after 2 seconds
                 Invoke(nameof(DestroySpear), 2f);
             }
@@ -114,14 +100,5 @@ public class Spear : MonoBehaviour
     {
         isHazard = false;
         Destroy(gameObject);
-    }
-
-    void ShowLandingIndicator(Vector2 position)
-    {
-        if (landingIndicatorPrefab != null)
-        {
-            GameObject indicator = Instantiate(landingIndicatorPrefab, position, Quaternion.identity);
-            Destroy(indicator, 1.5f);
-        }
     }
 }

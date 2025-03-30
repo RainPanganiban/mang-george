@@ -171,6 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f116365719e9e724193a24bcb0192e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactEffect: {fileID: 0}
-  landingIndicatorPrefab: {fileID: 0}
-  damage: 1
+  damageBeforeLanding: 15
+  hazardDamage: 3
+  hazardDamageInterval: 0.2
