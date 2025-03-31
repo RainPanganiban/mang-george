@@ -12600,7 +12600,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 17.12, y: 30.83708}
-    newSize: {x: 9.57, y: 12.73}
+    newSize: {x: 17.12, y: 30.83708}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -12681,7 +12681,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9.57, y: 12.73}
+  m_Size: {x: 17.12, y: 30.83708}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -12719,6 +12719,7 @@ MonoBehaviour:
   slider: {fileID: 1491939069}
   attackInterval: 1.5
   spearPrefab: {fileID: 1874372603307792636, guid: 8404f42eadb2b214a8932262535484aa, type: 3}
+  rockPrefab: {fileID: 7914627262643082635, guid: a79a888e499648c4fa4aaf124ce7390e, type: 3}
   firePoint: {fileID: 663586841}
   throwForce: 12
   spearSpeed: 7

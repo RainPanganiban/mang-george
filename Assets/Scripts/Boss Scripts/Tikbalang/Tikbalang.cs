@@ -11,9 +11,12 @@ public class Tikbalang : MonoBehaviour, IDamageable
     public Slider slider;
 
     [Header("Attack Settings")]
-    public float attackInterval = 1.5f;
+    public float attackInterval = 2f;
     private float attackTimer;
+
+    [Header("Phase 1")]
     public GameObject spearPrefab;
+    public GameObject rockPrefab;
     public Transform firePoint;
     public float throwForce = 12f;
     public float spearSpeed = 7f;
@@ -66,7 +69,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
             if (currentPhase != 1)
             {
                 currentPhase = 1;
-                animator.SetInteger("Phase", 1);
+                animator.SetInteger("Phase", currentPhase);
             }
         }
         else
@@ -74,6 +77,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
             if (currentPhase != 2)
             {
                 currentPhase = 2;
+                animator.SetInteger("Phase", currentPhase);
             }
         }
     }
@@ -83,7 +87,17 @@ public class Tikbalang : MonoBehaviour, IDamageable
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            animator.SetTrigger("ThrowSpear"); // Trigger animation
+            int attackChoice = Random.Range(0, 2); // Randomly choose between the two attacks
+
+            if (attackChoice == 0)
+            {
+                animator.SetTrigger("ThrowSpear");
+            }
+            else
+            {
+                animator.SetTrigger("Stomp");
+            }
+
             attackTimer = attackInterval;
         }
     }
@@ -91,12 +105,6 @@ public class Tikbalang : MonoBehaviour, IDamageable
     // This function is triggered via an animation event
     public void ThrowSpear()
     {
-        if (spearPrefab == null || player == null)
-        {
-            Debug.LogError("Spear Prefab or Player is missing!");
-            return;
-        }
-
         Vector2 playerPosition = (Vector2)player.transform.position + new Vector2(1.2f, 0);
         float throwHeight = 5f; // Adjust for arc
 
@@ -111,10 +119,15 @@ public class Tikbalang : MonoBehaviour, IDamageable
         }
     }
 
+    public void StompAttack()
+    {
+        Vector2 spawnPosition = new Vector2(player.position.x, player.position.y + 0.5f);
+        Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
+    }
+
     public void TakeDamage(float damage)
     {
         if (isInvincible) return;
-        Debug.Log("Damge taken is" + damage);
 
         currentHealth -= damage;
         slider.value = currentHealth;
