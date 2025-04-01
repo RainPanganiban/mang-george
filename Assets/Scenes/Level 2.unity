@@ -1193,7 +1193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 500166832}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6210,7 +6210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 663586841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spear Firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6820,7 +6820,7 @@ GameObject:
   - component: {fileID: 881341165}
   - component: {fileID: 881341167}
   - component: {fileID: 881341166}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7049,8 +7049,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: musicVolume
-      value: 0
+      value: 0.493
       objectReference: {fileID: 0}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: attackingSound1
+      value: 
+      objectReference: {fileID: 8300000, guid: 0dc7d0b440dad184dae7a6fa2bbb885a, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: attackingSound2
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f9135d3c237e574d9afc5f3c7fa2776, type: 3}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: backgroundMusic
       value: 
@@ -7476,7 +7484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1166319694
 Transform:
   m_ObjectHideFlags: 0
@@ -7644,7 +7652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1315364049
 Transform:
   m_ObjectHideFlags: 0
@@ -12556,7 +12564,7 @@ GameObject:
   - component: {fileID: 1361774799}
   - component: {fileID: 1361774803}
   - component: {fileID: 1361774804}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tikbalang
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -18924,7 +18932,7 @@ GameObject:
   - component: {fileID: 1906859550}
   - component: {fileID: 1906859549}
   - component: {fileID: 1906859548}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -19462,6 +19470,7 @@ GameObject:
   - component: {fileID: 2002782721}
   - component: {fileID: 2002782720}
   - component: {fileID: 2002782719}
+  - component: {fileID: 2002782723}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -19587,6 +19596,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2002782723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002782718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6068f8526841f914b90b6ce933a45d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2051113515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1997239830626190158, guid: 46f5157a3e453a04292ec927df2d67c2, type: 3}

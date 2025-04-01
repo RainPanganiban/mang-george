@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     public float dashCooldown = 2f;
 
     [Header("Health Settings")]
-    public int playerHealth = 100;
-    private int currentHealth;
+    public float playerHealth = 100;
+    private float currentHealth;
     public Slider slider;
     public Slider dashSlider;
 
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         slider.value = currentHealth;

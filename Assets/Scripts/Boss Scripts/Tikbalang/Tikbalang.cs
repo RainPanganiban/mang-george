@@ -11,7 +11,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
     public Slider slider;
 
     [Header("Attack Settings")]
-    public float attackInterval = 2f;
+    public float attackInterval = 5f;
     private float attackTimer;
 
     [Header("Phase 1")]
@@ -32,6 +32,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
     private Color originalColor;
     private bool isInvincible = false;
     private Rigidbody2D rb;
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -43,6 +44,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        audioManager = FindObjectOfType<AudioManager>();
         originalColor = spriteRenderer.color;
     }
 
@@ -108,8 +110,6 @@ public class Tikbalang : MonoBehaviour, IDamageable
         Vector2 playerPosition = (Vector2)player.transform.position + new Vector2(1.2f, 0);
         float throwHeight = 5f; // Adjust for arc
 
-        Debug.DrawLine(firePoint.position, playerPosition, Color.red, 2f); // Debug target location
-
         GameObject spear = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
         Spear spearScript = spear.GetComponent<Spear>();
 
@@ -117,12 +117,23 @@ public class Tikbalang : MonoBehaviour, IDamageable
         {
             spearScript.ThrowSpear(playerPosition, throwHeight);
         }
+
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
     }
 
     public void StompAttack()
     {
-        Vector2 spawnPosition = new Vector2(player.position.x, player.position.y + 0.5f);
+        float groundY = -4f; // Set this to the fixed Y position of the ground
+        Vector2 spawnPosition = new Vector2(player.position.x, groundY);
         Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
+
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+        if (cameraShake != null)
+        {
+            StartCoroutine(cameraShake.Shake(0.2f, 0.2f)); // Adjust shake duration & intensity
+        }
+
+        audioManager.PlayEnemySFX(audioManager.attackingSound2);
     }
 
     public void TakeDamage(float damage)

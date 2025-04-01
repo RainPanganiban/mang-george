@@ -6,11 +6,11 @@ public class SpikeyRock : MonoBehaviour
 {
     public float damage = 10f;
     public bool canDealDamage = false;
-    private Collider2D rockCollider;
+    private PolygonCollider2D rockCollider;
 
     void Start()
     {
-        rockCollider = GetComponent<Collider2D>();
+        rockCollider = GetComponent<PolygonCollider2D>();
         rockCollider.enabled = false;
     }
 
@@ -23,9 +23,10 @@ public class SpikeyRock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (canDealDamage && collision.CompareTag("Player"))
         {
-            IDamageable player = collision.GetComponent<IDamageable>();
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
                 player.TakeDamage(damage);

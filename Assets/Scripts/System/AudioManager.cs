@@ -21,7 +21,11 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float sfxVolume = 1.0f;
 
     [Header("Enemy Sound FX")]
-    public AudioClip attackingSound;
+    public AudioClip attackingSound1;
+    public AudioClip attackingSound2;
+    public AudioClip attackingSound3;
+    public AudioClip attackingSound5;
+    public AudioClip attackingSound6;
     public AudioClip transition;
     public AudioClip deathEnemy;
     public AudioClip intro;

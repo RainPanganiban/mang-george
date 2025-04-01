@@ -76,7 +76,7 @@ public class Spear : MonoBehaviour
                 gameObject.layer = LayerMask.NameToLayer("Hazard");
 
                 // Destroy the spear after 2 seconds
-                Invoke(nameof(DestroySpear), 2f);
+                Invoke(nameof(DestroySpear), 4f);
             }
         }
     }
