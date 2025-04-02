@@ -12726,12 +12726,15 @@ MonoBehaviour:
   maxHealth: 150
   slider: {fileID: 1491939069}
   attackInterval: 1.5
+  attackCooldownTime: 1
   spearPrefab: {fileID: 1874372603307792636, guid: 8404f42eadb2b214a8932262535484aa, type: 3}
   rockPrefab: {fileID: 7914627262643082635, guid: a79a888e499648c4fa4aaf124ce7390e, type: 3}
   firePoint: {fileID: 663586841}
   throwForce: 12
   spearSpeed: 7
   throwHeight: 4
+  chargeSpeed: 12
+  chargeDuration: 1.5
   currentPhase: 1
 --- !u!95 &1361774804
 Animator:

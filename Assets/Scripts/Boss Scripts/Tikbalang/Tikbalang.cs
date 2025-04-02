@@ -13,6 +13,9 @@ public class Tikbalang : MonoBehaviour, IDamageable
     [Header("Attack Settings")]
     public float attackInterval = 5f;
     private float attackTimer;
+    public float attackCooldownTime = 2f; // Cooldown time between attacks
+    private bool canAttack = true; // Controls whether the boss can attack
+    private int lastAttackChoice = -1;
 
     [Header("Phase 1")]
     public GameObject spearPrefab;
@@ -21,6 +24,12 @@ public class Tikbalang : MonoBehaviour, IDamageable
     public float throwForce = 12f;
     public float spearSpeed = 7f;
     public float throwHeight = 4f;
+
+    [Header("Phase 2")]
+    private bool isCharging = false;
+    private Vector2 chargeDirection;
+    public float chargeSpeed = 12f;
+    public float chargeDuration = 1.5f;
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
@@ -66,49 +75,124 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 50)
+        if (currentHealth > 100)
         {
             if (currentPhase != 1)
             {
                 currentPhase = 1;
                 animator.SetInteger("Phase", currentPhase);
+                Debug.Log("Entered Phase 1");
             }
         }
-        else
+        else if (currentHealth > 50)
         {
             if (currentPhase != 2)
             {
                 currentPhase = 2;
                 animator.SetInteger("Phase", currentPhase);
+                Debug.Log("Entered Phase 2");
+            }
+        }
+        else
+        {
+            if (currentPhase != 3)
+            {
+                currentPhase = 3;
+                animator.SetInteger("Phase", currentPhase);
+                Debug.Log("Entered Phase 3");
             }
         }
     }
 
     void HandleAttacks()
     {
+        if (!canAttack) return;
+
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            int attackChoice = Random.Range(0, 2); // Randomly choose between the two attacks
+            int attackChoice;
 
-            if (attackChoice == 0)
+            switch (currentPhase)
             {
-                animator.SetTrigger("ThrowSpear");
-            }
-            else
-            {
-                animator.SetTrigger("Stomp");
+                case 1: // Phase 1 Attacks
+                    if (Random.value < 0.7f)
+                    {
+                        attackChoice = (lastAttackChoice == 0) ? 1 : 0;
+                    }
+                    else
+                    {
+                        attackChoice = lastAttackChoice;
+                    }
+
+                    lastAttackChoice = attackChoice;
+
+                    if (attackChoice == 0)
+                    {
+                        animator.SetTrigger("ThrowSpear");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Stomp");
+                    }
+                    break;
+
+                case 2: // Phase 2 Attacks (Placeholder)
+                    animator.SetTrigger("Run Indicator"); 
+                    break;
+
+                case 3: // Phase 3 Attacks (Placeholder)
+                    Debug.Log("Phase 3 Attack Placeholder");
+                    animator.SetTrigger("Phase3Attack");
+                    break;
             }
 
             attackTimer = attackInterval;
+            canAttack = false;
+            StartCoroutine(AttackCooldown());
         }
     }
 
-    // This function is triggered via an animation event
+    public void StartChargeAttack()
+    {
+        animator.SetTrigger("Running");
+        Debug.Log("Tikbalang preparing to charge...");
+    }
+
+    public void ChargeMovement()
+    {
+        // This function is triggered by the "Running" animation event
+        Debug.Log("Tikbalang is charging!");
+
+        isCharging = true;
+        chargeDirection = (player.position.x > transform.position.x) ? Vector2.right : Vector2.left;
+
+        // Start moving Tikbalang
+        rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, rb.velocity.y);
+
+        // Set a timer to end the charge
+        Invoke(nameof(EndChargeAttack), chargeDuration);
+    }
+
+    public void EndChargeAttack()
+    {
+        // This function is triggered by the "Charge End" animation event or timer
+        Debug.Log("Tikbalang finished charging.");
+
+        isCharging = false;
+        rb.velocity = Vector2.zero; // Stop movement
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldownTime);
+        canAttack = true;
+    }
+
     public void ThrowSpear()
     {
         Vector2 playerPosition = (Vector2)player.transform.position + new Vector2(1.2f, 0);
-        float throwHeight = 5f; // Adjust for arc
+        float throwHeight = 5f;
 
         GameObject spear = Instantiate(spearPrefab, firePoint.position, Quaternion.identity);
         Spear spearScript = spear.GetComponent<Spear>();
@@ -123,14 +207,14 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     public void StompAttack()
     {
-        float groundY = -4f; // Set this to the fixed Y position of the ground
+        float groundY = -4f;
         Vector2 spawnPosition = new Vector2(player.position.x, groundY);
         Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
 
         CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
         if (cameraShake != null)
         {
-            StartCoroutine(cameraShake.Shake(0.2f, 0.2f)); // Adjust shake duration & intensity
+            StartCoroutine(cameraShake.Shake(0.2f, 0.2f));
         }
 
         audioManager.PlayEnemySFX(audioManager.attackingSound2);
