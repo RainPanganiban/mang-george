@@ -12735,7 +12735,7 @@ MonoBehaviour:
   throwHeight: 4
   chargeSpeed: 12
   chargeDuration: 1.5
-  currentPhase: 1
+  currentPhase: 2
 --- !u!95 &1361774804
 Animator:
   serializedVersion: 5

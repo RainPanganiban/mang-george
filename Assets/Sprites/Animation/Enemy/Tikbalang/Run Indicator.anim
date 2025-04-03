@@ -110,7 +110,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.3333334
-    functionName: ChargeMovement
+    functionName: StartChargeAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

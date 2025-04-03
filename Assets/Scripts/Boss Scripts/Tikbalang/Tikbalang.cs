@@ -137,8 +137,26 @@ public class Tikbalang : MonoBehaviour, IDamageable
                     }
                     break;
 
-                case 2: // Phase 2 Attacks (Placeholder)
-                    animator.SetTrigger("Run Indicator"); 
+                case 2: // Phase 2 Attacks (Placeholder)                    
+                    if (Random.value < 0.7f)
+                    {
+                        attackChoice = (lastAttackChoice == 0) ? 1 : 0;
+                    }
+                    else
+                    {
+                        attackChoice = lastAttackChoice;
+                    }
+
+                    lastAttackChoice = attackChoice;
+
+                    if (attackChoice == 0)
+                    {
+                        animator.SetTrigger("Run Indicator");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Jump");
+                    }
                     break;
 
                 case 3: // Phase 3 Attacks (Placeholder)
@@ -155,32 +173,115 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     public void StartChargeAttack()
     {
-        animator.SetTrigger("Running");
+        animator.SetBool("isCharging", true);
         Debug.Log("Tikbalang preparing to charge...");
     }
 
     public void ChargeMovement()
     {
-        // This function is triggered by the "Running" animation event
         Debug.Log("Tikbalang is charging!");
 
-        isCharging = true;
-        chargeDirection = (player.position.x > transform.position.x) ? Vector2.right : Vector2.left;
+        // Unfreeze movement but keep rotation frozen
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        // Start moving Tikbalang
+        isCharging = true;
+        chargeDirection = (spriteRenderer.flipX) ? Vector2.right : Vector2.left; // Charge in the direction it's facing
+
+        // Set charge velocity
         rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, rb.velocity.y);
 
-        // Set a timer to end the charge
-        Invoke(nameof(EndChargeAttack), chargeDuration);
+        // Start checking for the screen edge
+        StartCoroutine(CheckForEdge());
     }
 
-    public void EndChargeAttack()
+    private IEnumerator CheckForEdge()
     {
-        // This function is triggered by the "Charge End" animation event or timer
-        Debug.Log("Tikbalang finished charging.");
+        while (isCharging)
+        {
+            // Get screen edges in world coordinates
+            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x + 1f;  // Buffer to prevent sticking
+            float rightEdge = Camera.main.ViewportToWorldPoint(Vector3.one).x - 1f;
+
+            // Stop charging if it reaches an edge
+            if ((chargeDirection.x > 0 && transform.position.x >= rightEdge) ||
+                (chargeDirection.x < 0 && transform.position.x <= leftEdge))
+            {
+                StopCharge(); // Stop movement
+                yield break;  // Exit the coroutine
+            }
+
+            yield return null; // Wait for the next frame
+        }
+    }
+
+    void StopCharge()
+    {
+        Debug.Log("Tikbalang reached the edge and stopped!");
 
         isCharging = false;
         rb.velocity = Vector2.zero; // Stop movement
+        animator.SetBool("isCharging", false);
+        // Face the player
+        spriteRenderer.flipX = player.position.x > transform.position.x;
+    }
+
+    public void JumpAttack()
+    {
+        Debug.Log("Tikbalang is performing a Jump Attack!");
+
+        isCharging = false; // Stop charging if already moving
+        rb.velocity = Vector2.zero; // Stop movement before jumping
+
+        // Unfreeze Y-axis to allow jumping
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Apply upward force for jumping
+        rb.velocity = new Vector2(0, 20f); // Adjust jump height as needed
+
+        // Wait 1 second in mid-air, then land on the player
+        StartCoroutine(LandOnPlayer());
+    }
+
+    IEnumerator LandOnPlayer()
+    {
+        yield return new WaitForSeconds(1f); // Stay off-screen for suspense
+
+        if (player == null) yield break;
+
+        // Target player’s position
+        Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
+
+        // Land with force
+        rb.velocity = new Vector2(0, -20f); // Fast downward movement
+
+        yield return new WaitForSeconds(0.5f); // Small delay before shockwave
+
+        // Spawn shockwave attack
+        SpawnShockwave();
+    }
+
+    public void SpawnShockwave()
+    {
+        Debug.Log("Tikbalang is sending out a shockwave!");
+
+        float rockSpeed = 5f; // Adjust speed as needed
+        int numRocks = 5; // How many rocks in each direction
+        float spacing = 0.5f; // Spacing between each rock
+
+        for (int i = 0; i < numRocks; i++)
+        {
+            // Spawn leftward rocks
+            GameObject leftRock = Instantiate(rockPrefab, transform.position, Quaternion.identity);
+            leftRock.GetComponent<Rigidbody2D>().velocity = Vector2.left * rockSpeed;
+
+            // Spawn rightward rocks
+            GameObject rightRock = Instantiate(rockPrefab, transform.position, Quaternion.identity);
+            rightRock.GetComponent<Rigidbody2D>().velocity = Vector2.right * rockSpeed;
+
+            // Adjust rock position so they spread out
+            leftRock.transform.position += new Vector3(-i * spacing, 0, 0);
+            rightRock.transform.position += new Vector3(i * spacing, 0, 0);
+        }
     }
 
     IEnumerator AttackCooldown()
