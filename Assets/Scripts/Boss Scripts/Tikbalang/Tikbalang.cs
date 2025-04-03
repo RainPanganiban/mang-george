@@ -42,6 +42,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
     private bool isInvincible = false;
     private Rigidbody2D rb;
     private AudioManager audioManager;
+    private Collider2D tikbalangCollider;
 
     void Start()
     {
@@ -54,6 +55,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         audioManager = FindObjectOfType<AudioManager>();
+        tikbalangCollider = GetComponent<Collider2D>();
         originalColor = spriteRenderer.color;
     }
 
@@ -183,9 +185,17 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
         // Unfreeze movement but keep rotation frozen
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        tikbalangCollider.isTrigger = true;
 
         isCharging = true;
-        chargeDirection = (spriteRenderer.flipX) ? Vector2.right : Vector2.left; // Charge in the direction it's facing
+
+        // Get player direction
+
+        Vector2 playerDirection = (player.position - transform.position).normalized;
+        chargeDirection = new Vector2(Mathf.Sign(playerDirection.x), 0); // Only use horizontal direction
+
+        // Update sprite direction based on charge direction
+        spriteRenderer.flipX = chargeDirection.x > 0;
 
         // Set charge velocity
         rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, rb.velocity.y);
@@ -207,6 +217,11 @@ public class Tikbalang : MonoBehaviour, IDamageable
                 (chargeDirection.x < 0 && transform.position.x <= leftEdge))
             {
                 StopCharge(); // Stop movement
+
+                // Reset attack timer and enable attacks again
+                attackTimer = 1.5f; // Shorter timer for quicker next attack
+                canAttack = true;   // Enable attacks again
+
                 yield break;  // Exit the coroutine
             }
 
