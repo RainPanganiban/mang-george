@@ -204,13 +204,25 @@ public class Tikbalang : MonoBehaviour, IDamageable
         StartCoroutine(CheckForEdge());
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isCharging && other.CompareTag("Player"))
+        {
+            PlayerController playerDamageable = other.GetComponent<PlayerController>();
+            if (playerDamageable != null)
+            {
+                playerDamageable.TakeDamage(20);
+            }
+        }
+    }
+
     private IEnumerator CheckForEdge()
     {
         while (isCharging)
         {
             // Get screen edges in world coordinates
-            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x + 1f;  // Buffer to prevent sticking
-            float rightEdge = Camera.main.ViewportToWorldPoint(Vector3.one).x - 1f;
+            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x + 3f;  // Buffer to prevent sticking
+            float rightEdge = Camera.main.ViewportToWorldPoint(Vector3.one).x - 3f;
 
             // Stop charging if it reaches an edge
             if ((chargeDirection.x > 0 && transform.position.x >= rightEdge) ||
@@ -271,15 +283,13 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     IEnumerator LandOnPlayer()
     {
-        yield return new WaitForSeconds(1f); // Stay off-screen for suspense
+        yield return new WaitForSeconds(1f);
 
         if (player == null) yield break;
 
-        // Move Tikbalang to the player's X position before falling
         transform.position = new Vector2(player.position.x, transform.position.y);
 
-        // Apply downward force to land
-        rb.velocity = new Vector2(0, -20f); // Fast downward movement
+        rb.velocity = new Vector2(0, -20f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -287,18 +297,16 @@ public class Tikbalang : MonoBehaviour, IDamageable
         if (collision.gameObject.CompareTag("Ground") && isJumping)
         {
             Debug.Log("Tikbalang landed!");
-            isJumping = false; // Allow jumping again
-            SpawnShockwave(); // Trigger shockwave
-            spriteRenderer.flipX = player.position.x > transform.position.x;
+            isJumping = false;
+            SpawnShockwave();
+            FacePlayer();
         }
     }
     public void SpawnShockwave()
     {
-        Debug.Log("Tikbalang is sending out a shockwave!");
-
-        float rockSpeed = 5f;
+        float rockSpeed = 3f;
         int numRocks = 5;
-        float spacing = 0.5f;
+        float spacing = 1f;
 
         for (int i = 0; i < numRocks; i++)
         {
