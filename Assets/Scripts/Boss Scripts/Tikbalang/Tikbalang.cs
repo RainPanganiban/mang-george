@@ -27,6 +27,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     [Header("Phase 2")]
     private bool isCharging = false;
+    private bool isJumping = false;
     private Vector2 chargeDirection;
     public float chargeSpeed = 12f;
     public float chargeDuration = 1.5f;
@@ -65,7 +66,6 @@ public class Tikbalang : MonoBehaviour, IDamageable
         if (!isTransitioning)
         {
             HandleAttacks();
-            FacePlayer();
         }
     }
 
@@ -183,14 +183,15 @@ public class Tikbalang : MonoBehaviour, IDamageable
     {
         Debug.Log("Tikbalang is charging!");
 
-        // Unfreeze movement but keep rotation frozen
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        // Freeze Y position to prevent falling, but allow X movement and keep rotation frozen
+        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
+        // Set collider to trigger mode (no physical collisions)
         tikbalangCollider.isTrigger = true;
 
         isCharging = true;
 
         // Get player direction
-
         Vector2 playerDirection = (player.position - transform.position).normalized;
         chargeDirection = new Vector2(Mathf.Sign(playerDirection.x), 0); // Only use horizontal direction
 
@@ -198,7 +199,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         spriteRenderer.flipX = chargeDirection.x > 0;
 
         // Set charge velocity
-        rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, 0); // Ensure no vertical movement
 
         // Start checking for the screen edge
         StartCoroutine(CheckForEdge());
@@ -235,25 +236,37 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
         isCharging = false;
         rb.velocity = Vector2.zero; // Stop movement
+
+        // Restore Rigidbody to normal mode
+        tikbalangCollider.isTrigger = false;
+
+        // Unfreeze movement but keep rotation frozen
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Stop Running Animation & Reset Charge Attack
         animator.SetBool("isCharging", false);
+        animator.ResetTrigger("Run Indicator");
+
         // Face the player
         spriteRenderer.flipX = player.position.x > transform.position.x;
+
+        // Allow a delay before attacking again
+        StartCoroutine(AttackCooldown());
     }
 
     public void JumpAttack()
     {
+        if (isJumping) return; // Prevents multiple jumps
+
         Debug.Log("Tikbalang is performing a Jump Attack!");
+        isJumping = true; // Set flag to prevent another jump
 
-        isCharging = false; // Stop charging if already moving
-        rb.velocity = Vector2.zero; // Stop movement before jumping
+        rb.velocity = Vector2.zero; // Reset velocity before jumping
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Ensure stable movement
 
-        // Unfreeze Y-axis to allow jumping
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        // Apply upward force for jumping
+        // Apply jump force to leap out of screen
         rb.velocity = new Vector2(0, 20f); // Adjust jump height as needed
 
-        // Wait 1 second in mid-air, then land on the player
         StartCoroutine(LandOnPlayer());
     }
 
@@ -263,25 +276,29 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
         if (player == null) yield break;
 
-        // Target player’s position
-        Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
+        // Move Tikbalang to the player's X position before falling
+        transform.position = new Vector2(player.position.x, transform.position.y);
 
-        // Land with force
+        // Apply downward force to land
         rb.velocity = new Vector2(0, -20f); // Fast downward movement
-
-        yield return new WaitForSeconds(0.5f); // Small delay before shockwave
-
-        // Spawn shockwave attack
-        SpawnShockwave();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && isJumping)
+        {
+            Debug.Log("Tikbalang landed!");
+            isJumping = false; // Allow jumping again
+            SpawnShockwave(); // Trigger shockwave
+        }
+    }
     public void SpawnShockwave()
     {
         Debug.Log("Tikbalang is sending out a shockwave!");
 
-        float rockSpeed = 5f; // Adjust speed as needed
-        int numRocks = 5; // How many rocks in each direction
-        float spacing = 0.5f; // Spacing between each rock
+        float rockSpeed = 5f;
+        int numRocks = 5;
+        float spacing = 0.5f;
 
         for (int i = 0; i < numRocks; i++)
         {
@@ -293,7 +310,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
             GameObject rightRock = Instantiate(rockPrefab, transform.position, Quaternion.identity);
             rightRock.GetComponent<Rigidbody2D>().velocity = Vector2.right * rockSpeed;
 
-            // Adjust rock position so they spread out
+            // Spread out the rocks
             leftRock.transform.position += new Vector3(-i * spacing, 0, 0);
             rightRock.transform.position += new Vector3(i * spacing, 0, 0);
         }
