@@ -191,15 +191,14 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
         isCharging = true;
 
-        // Get player direction
-        Vector2 playerDirection = (player.position - transform.position).normalized;
-        chargeDirection = new Vector2(Mathf.Sign(playerDirection.x), 0); // Only use horizontal direction
-
-        // Update sprite direction based on charge direction
-        spriteRenderer.flipX = chargeDirection.x > 0;
+        // Set charge direction based on current facing direction, NOT player
+        chargeDirection = spriteRenderer.flipX ? Vector2.right : Vector2.left;
 
         // Set charge velocity
-        rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, 0); // Ensure no vertical movement
+        rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, 0);
+
+        // DO NOT flip sprite during charge
+        // Wait until StopCharge() to face the player again
 
         // Start checking for the screen edge
         StartCoroutine(CheckForEdge());
@@ -290,6 +289,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
             Debug.Log("Tikbalang landed!");
             isJumping = false; // Allow jumping again
             SpawnShockwave(); // Trigger shockwave
+            spriteRenderer.flipX = player.position.x > transform.position.x;
         }
     }
     public void SpawnShockwave()
