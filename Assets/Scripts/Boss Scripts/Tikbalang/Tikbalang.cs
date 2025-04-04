@@ -5,18 +5,21 @@ using UnityEngine.UI;
 
 public class Tikbalang : MonoBehaviour, IDamageable
 {
+    [SerializeField]
     [Header("Health Settings")]
     public int maxHealth = 150;
     private float currentHealth;
     public Slider slider;
 
+    [SerializeField]
     [Header("Attack Settings")]
     public float attackInterval = 5f;
     private float attackTimer;
-    public float attackCooldownTime = 2f; // Cooldown time between attacks
-    private bool canAttack = true; // Controls whether the boss can attack
+    public float attackCooldownTime = 2f;
+    private bool canAttack = true;
     private int lastAttackChoice = -1;
 
+    [SerializeField]
     [Header("Phase 1")]
     public GameObject spearPrefab;
     public GameObject rockPrefab;
@@ -25,13 +28,27 @@ public class Tikbalang : MonoBehaviour, IDamageable
     public float spearSpeed = 7f;
     public float throwHeight = 4f;
 
+    [SerializeField]
     [Header("Phase 2")]
     private bool isCharging = false;
     private bool isJumping = false;
+    private bool isFalling;
     private Vector2 chargeDirection;
     public float chargeSpeed = 12f;
     public float chargeDuration = 1.5f;
+    public BoxCollider2D headCollider;
 
+    [SerializeField]
+    [Header("Phase 3")]
+    public GameObject lightningPrefab;
+    public GameObject lineIndicatorPrefab;
+    public float stormDelayBetweenStrikes = 0.6f;
+    public float indicatorDuration = 0.4f;
+    public float stormYPosition = 1f;
+    public float stormCallCooldownDuration = 10f;
+    private float nextStormCallTime = 0f;
+
+    [SerializeField]
     [Header("Phase Settings")]
     public int currentPhase = 1;
     private bool isTransitioning = false;
@@ -44,6 +61,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
     private AudioManager audioManager;
     private Collider2D tikbalangCollider;
+    
 
     void Start()
     {
@@ -117,7 +135,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
             switch (currentPhase)
             {
-                case 1: // Phase 1 Attacks
+                case 1:
                     if (Random.value < 0.7f)
                     {
                         attackChoice = (lastAttackChoice == 0) ? 1 : 0;
@@ -139,7 +157,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
                     }
                     break;
 
-                case 2: // Phase 2 Attacks (Placeholder)                    
+                case 2:                   
                     if (Random.value < 0.7f)
                     {
                         attackChoice = (lastAttackChoice == 0) ? 1 : 0;
@@ -161,9 +179,41 @@ public class Tikbalang : MonoBehaviour, IDamageable
                     }
                     break;
 
-                case 3: // Phase 3 Attacks (Placeholder)
-                    Debug.Log("Phase 3 Attack Placeholder");
-                    animator.SetTrigger("Phase3Attack");
+                case 3:
+                    if (Random.value < 0.7f)
+                    {
+                        attackChoice = 0;
+                    }
+                    else if (Random.value < 0.7f)
+                    {
+                        attackChoice = 1;
+                    }
+                    else
+                    {
+                        attackChoice = 2;
+                    }
+
+                    if (attackChoice == 2 && Time.time < nextStormCallTime)
+                    {
+                        attackChoice = (Random.value < 0.5f) ? 0 : 1;
+                    }
+
+                    lastAttackChoice = attackChoice;
+
+                    if (attackChoice == 0)
+                    {
+                        animator.SetBool("isStormCalling", true);
+                        nextStormCallTime = Time.time + stormCallCooldownDuration;
+                    }
+                    else if (attackChoice == 1)
+                    {
+
+                        animator.SetTrigger("Run Indicator");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Stomp");
+                    }
                     break;
             }
 
@@ -176,31 +226,23 @@ public class Tikbalang : MonoBehaviour, IDamageable
     public void StartChargeAttack()
     {
         animator.SetBool("isCharging", true);
-        Debug.Log("Tikbalang preparing to charge...");
+        audioManager.PlayEnemySFX(audioManager.attackingSound3);
     }
 
     public void ChargeMovement()
     {
         Debug.Log("Tikbalang is charging!");
 
-        // Freeze Y position to prevent falling, but allow X movement and keep rotation frozen
         rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
 
-        // Set collider to trigger mode (no physical collisions)
         tikbalangCollider.isTrigger = true;
-
+        headCollider.enabled = false;
         isCharging = true;
 
-        // Set charge direction based on current facing direction, NOT player
         chargeDirection = spriteRenderer.flipX ? Vector2.right : Vector2.left;
 
-        // Set charge velocity
         rb.velocity = new Vector2(chargeDirection.x * chargeSpeed, 0);
 
-        // DO NOT flip sprite during charge
-        // Wait until StopCharge() to face the player again
-
-        // Start checking for the screen edge
         StartCoroutine(CheckForEdge());
     }
 
@@ -243,13 +285,12 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     void StopCharge()
     {
-        Debug.Log("Tikbalang reached the edge and stopped!");
-
         isCharging = false;
         rb.velocity = Vector2.zero; // Stop movement
 
         // Restore Rigidbody to normal mode
         tikbalangCollider.isTrigger = false;
+        headCollider.enabled = true;
 
         // Unfreeze movement but keep rotation frozen
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -267,16 +308,15 @@ public class Tikbalang : MonoBehaviour, IDamageable
 
     public void JumpAttack()
     {
-        if (isJumping) return; // Prevents multiple jumps
+        if (isJumping) return;
 
-        Debug.Log("Tikbalang is performing a Jump Attack!");
-        isJumping = true; // Set flag to prevent another jump
+        isJumping = true;
+        canAttack = false;
 
-        rb.velocity = Vector2.zero; // Reset velocity before jumping
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Ensure stable movement
-
-        // Apply jump force to leap out of screen
-        rb.velocity = new Vector2(0, 20f); // Adjust jump height as needed
+        rb.velocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        
+        rb.velocity = new Vector2(0, 20f);
 
         StartCoroutine(LandOnPlayer());
     }
@@ -288,38 +328,55 @@ public class Tikbalang : MonoBehaviour, IDamageable
         if (player == null) yield break;
 
         transform.position = new Vector2(player.position.x, transform.position.y);
-
+        isFalling = true;
+        canAttack = true;
         rb.velocity = new Vector2(0, -20f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.CompareTag("Ground") && isJumping)
         {
-            Debug.Log("Tikbalang landed!");
             isJumping = false;
             SpawnShockwave();
             FacePlayer();
+            CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+            if (cameraShake != null)
+            {
+                StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
+            }
+            audioManager.PlayEnemySFX(audioManager.attackingSound5);
+        }
+
+        if (collision.gameObject.CompareTag("Player") && isFalling)
+        {
+            PlayerController playerDamageable = collision.gameObject.GetComponent<PlayerController>();
+            if (playerDamageable != null)
+            {
+                playerDamageable.TakeDamage(10);
+            }
+            isJumping = false;
+            isFalling = false;
         }
     }
     public void SpawnShockwave()
     {
-        float rockSpeed = 3f;
+        float rockSpeed = 0.5f;
         int numRocks = 5;
         float spacing = 1f;
+        float fixedY = -3.5f;
 
         for (int i = 0; i < numRocks; i++)
         {
-            // Spawn leftward rocks
-            GameObject leftRock = Instantiate(rockPrefab, transform.position, Quaternion.identity);
+            Vector3 basePosition = new Vector3(transform.position.x, fixedY, 0);
+
+            GameObject leftRock = Instantiate(rockPrefab, basePosition, Quaternion.identity);
             leftRock.GetComponent<Rigidbody2D>().velocity = Vector2.left * rockSpeed;
-
-            // Spawn rightward rocks
-            GameObject rightRock = Instantiate(rockPrefab, transform.position, Quaternion.identity);
-            rightRock.GetComponent<Rigidbody2D>().velocity = Vector2.right * rockSpeed;
-
-            // Spread out the rocks
             leftRock.transform.position += new Vector3(-i * spacing, 0, 0);
+
+            GameObject rightRock = Instantiate(rockPrefab, basePosition, Quaternion.identity);
+            rightRock.GetComponent<Rigidbody2D>().velocity = Vector2.right * rockSpeed;
             rightRock.transform.position += new Vector3(i * spacing, 0, 0);
         }
     }
@@ -359,6 +416,44 @@ public class Tikbalang : MonoBehaviour, IDamageable
         }
 
         audioManager.PlayEnemySFX(audioManager.attackingSound2);
+        animator.ResetTrigger("Stomp");
+    }
+
+    public void StartStormCall()
+    {
+        StartCoroutine(StormCallRoutine());
+    }
+
+    IEnumerator StormCallRoutine()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            // Choose a random x position within the screen
+            float xPosition = Random.Range(Camera.main.ViewportToWorldPoint(Vector3.zero).x + 1f,
+                                           Camera.main.ViewportToWorldPoint(Vector3.one).x - 1f);
+
+            Vector2 spawnPos = new Vector2(xPosition, stormYPosition);
+
+            // Spawn line indicator
+            GameObject line = Instantiate(lineIndicatorPrefab, spawnPos, Quaternion.identity);
+
+            // Wait for the duration of the indicator
+            yield return new WaitForSeconds(indicatorDuration);
+
+            // Destroy the line just before the lightning strike
+            Destroy(line);
+
+            // Spawn the lightning bolt
+            Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
+
+            // Wait before the next strike
+            yield return new WaitForSeconds(stormDelayBetweenStrikes);
+        }
+
+        // Reset attack cooldown
+        animator.SetBool("isStormCalling", false);
+        canAttack = false;
+        StartCoroutine(AttackCooldown());
     }
 
     public void TakeDamage(float damage)

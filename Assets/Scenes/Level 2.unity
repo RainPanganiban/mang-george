@@ -7060,6 +7060,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 8f9135d3c237e574d9afc5f3c7fa2776, type: 3}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: attackingSound3
+      value: 
+      objectReference: {fileID: 8300000, guid: 09ce573008c05fc458486e24b9e014b6, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: attackingSound5
+      value: 
+      objectReference: {fileID: 8300000, guid: eb753870ff7eb384abfd0cef017e077f, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: backgroundMusic
       value: 
       objectReference: {fileID: 8300000, guid: 41fbd855e439de649b07f9df3d21714c, type: 3}
@@ -12564,6 +12572,7 @@ GameObject:
   - component: {fileID: 1361774799}
   - component: {fileID: 1361774803}
   - component: {fileID: 1361774804}
+  - component: {fileID: 1361774805}
   m_Layer: 6
   m_Name: Tikbalang
   m_TagString: Enemy
@@ -12603,7 +12612,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.8333297, y: -6.0529633}
+  m_Offset: {x: -1.4708359, y: -6.952976}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -12614,7 +12623,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.451758, y: 18.50507}
+  m_Size: {x: 4.5766873, y: 16.705044}
   m_EdgeRadius: 0
 --- !u!50 &1361774800
 Rigidbody2D:
@@ -12733,8 +12742,16 @@ MonoBehaviour:
   throwForce: 12
   spearSpeed: 7
   throwHeight: 4
+  isCharging: 0
   chargeSpeed: 12
   chargeDuration: 1.5
+  headCollider: {fileID: 1361774805}
+  lightningPrefab: {fileID: 5014342171342761283, guid: b90d145d58e912944995b677d3a0873e, type: 3}
+  lineIndicatorPrefab: {fileID: 830419639518376704, guid: f281f69ee1911784aaf6fc349b9a6ccf, type: 3}
+  stormDelayBetweenStrikes: 0.6
+  indicatorDuration: 0.4
+  stormYPosition: -0.5
+  stormCallCooldownDuration: 10
   currentPhase: 2
 --- !u!95 &1361774804
 Animator:
@@ -12757,6 +12774,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &1361774805
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361774796}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.84, y: 8.04}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 17.12, y: 30.83708}
+    newSize: {x: 17.12, y: 30.83708}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 8.7, y: 8.8}
+  m_EdgeRadius: 0
 --- !u!1 &1381277959
 GameObject:
   m_ObjectHideFlags: 0
@@ -19220,7 +19282,7 @@ Transform:
   m_GameObject: {fileID: 1906859547}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.22, y: -3.96, z: 0}
+  m_LocalPosition: {x: -8.48, y: -3.46, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
