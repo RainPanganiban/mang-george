@@ -9,6 +9,7 @@ public class UpgradeManager : MonoBehaviour
 {
     public GameObject upgradePanel;
     public Button[] upgradeButtons;
+    public GameObject transition;
 
     
     private List<string> possibleUpgrades = new List<string> { "Health", "Speed", "Dash", "Damage" };
@@ -48,8 +49,6 @@ public class UpgradeManager : MonoBehaviour
 
     public void SelectUpgrade(string upgradeType)
     {
-
-        Debug.Log("Upgrade Selected: " + upgradeType);
 
         PlayerStats.Instance.ApplyUpgrade(upgradeType);
         upgradePanel.SetActive(false);

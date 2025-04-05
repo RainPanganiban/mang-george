@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4668454314989486706}
   - component: {fileID: 6924399129625502822}
   - component: {fileID: 5973659892715314570}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lightning
-  m_TagString: Untagged
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

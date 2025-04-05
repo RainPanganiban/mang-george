@@ -203,7 +203,6 @@ public class Tikbalang : MonoBehaviour, IDamageable
                     if (attackChoice == 0)
                     {
                         animator.SetBool("isStormCalling", true);
-                        nextStormCallTime = Time.time + stormCallCooldownDuration;
                     }
                     else if (attackChoice == 1)
                     {
