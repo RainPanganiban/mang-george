@@ -211,7 +211,7 @@ public class Enemy : MonoBehaviour , IDamageable
     IEnumerator HandleDeathSequence()
     {
         
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         
         UpgradeManager upgradeManager = FindAnyObjectByType<UpgradeManager>();
         if (upgradeManager != null)

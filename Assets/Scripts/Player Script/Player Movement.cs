@@ -11,12 +11,14 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 10f;
     public float dashTime = 0.2f;
     public float dashCooldown = 2f;
+    
 
     [Header("Health Settings")]
     public float playerHealth = 100;
     private float currentHealth;
     public Slider slider;
     public Slider dashSlider;
+    [SerializeField] private GameOverMenu gameOverMenu;
 
     private TrailRenderer trailRenderer;
     private Rigidbody2D rb;
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioManager = FindObjectOfType<AudioManager>();
+        gameOverMenu = GetComponent<GameOverMenu>();
 
         currentHealth = playerHealth;
         slider.maxValue = playerHealth;
@@ -187,13 +190,18 @@ public class PlayerController : MonoBehaviour
 
         // Disable player movement & actions
         GetComponent<PlayerController>().enabled = false;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Stops movement
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
         // Destroy the child object "Weapon"
         Transform weaponTransform = transform.Find("Weapon");
         if (weaponTransform != null)
         {
             Destroy(weaponTransform.gameObject);
+        }
+
+        if (gameOverMenu != null)
+        {
+            gameOverMenu.ShowGameOver();
         }
     }
 }
