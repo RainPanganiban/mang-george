@@ -238,6 +238,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         tikbalangCollider.isTrigger = true;
         headCollider.enabled = false;
         isCharging = true;
+        gameObject.layer = LayerMask.NameToLayer("Default");
 
         chargeDirection = spriteRenderer.flipX ? Vector2.right : Vector2.left;
 
@@ -291,6 +292,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         // Restore Rigidbody to normal mode
         tikbalangCollider.isTrigger = false;
         headCollider.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
 
         // Unfreeze movement but keep rotation frozen
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;

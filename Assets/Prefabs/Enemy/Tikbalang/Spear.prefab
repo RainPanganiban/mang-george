@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3894517818931799895}
   - component: {fileID: 5094960951901757754}
   - component: {fileID: 294817214696638523}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spear
-  m_TagString: Untagged
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f116365719e9e724193a24bcb0192e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spearHealth: 5
   damageBeforeLanding: 15
   hazardDamage: 3
   hazardDamageInterval: 0.2

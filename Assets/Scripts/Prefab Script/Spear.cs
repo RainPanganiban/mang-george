@@ -1,13 +1,16 @@
 using UnityEngine;
 using System.Collections;
+using Unity.PlasticSCM.Editor.WebApi;
 
-public class Spear : MonoBehaviour
+public class Spear : MonoBehaviour, IDamageable
 {
     private Rigidbody2D rb;
     private Collider2D spearCollider;
     private bool hasLanded = false;
     private bool isHazard = false;
 
+    public float spearHealth = 5f;
+    private float currentHealth;
     public int damageBeforeLanding = 15;
     public int hazardDamage = 1;
     public float hazardDamageInterval = 0.2f;
@@ -16,6 +19,7 @@ public class Spear : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spearCollider = GetComponent<Collider2D>();
+        currentHealth = spearHealth;
 
     }
 
@@ -93,6 +97,15 @@ public class Spear : MonoBehaviour
                 playerHealth.TakeDamage(hazardDamage);
                 nextDamageTime = Time.time + hazardDamageInterval; // Apply cooldown
             }
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if ( currentHealth <= 0)
+        {
+            Debug.Log("The Spear is Destroyed");
+            DestroySpear();
         }
     }
 

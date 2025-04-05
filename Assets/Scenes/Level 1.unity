@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 326486832}
   - component: {fileID: 326486833}
   - component: {fileID: 326486834}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Manananggal
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -799,7 +799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416615353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wind FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3640,7 +3640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448340758}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3730,7 +3730,7 @@ GameObject:
   - component: {fileID: 1462523048}
   - component: {fileID: 1462523050}
   - component: {fileID: 1462523049}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3938,7 +3938,7 @@ GameObject:
   - component: {fileID: 1567510495}
   - component: {fileID: 1567510498}
   - component: {fileID: 1567510499}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Manananggal_LowerBody
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4907,7 +4907,7 @@ GameObject:
   - component: {fileID: 2041401684}
   - component: {fileID: 2041401683}
   - component: {fileID: 2041401682}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5308,7 +5308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2129674290}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5468,7 +5468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5148186146231194653}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5695,7 +5695,7 @@ GameObject:
   - component: {fileID: 6072903282913734043}
   - component: {fileID: 2485509851794459125}
   - component: {fileID: 1342811093299123669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Manananggal_UpperBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
