@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,8 +8,16 @@ public class GameOverMenu : MonoBehaviour
 
     public void ShowGameOver()
     {
+        StartCoroutine(DelayShowGameOver());
+    }
+
+    IEnumerator DelayShowGameOver()
+    {
+        yield return new WaitForSeconds(2f);
+
         gameOverUI.SetActive(true);
         Time.timeScale = 0f;
+
     }
 
     public void Restart()
@@ -21,5 +30,11 @@ public class GameOverMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
+    }
+
+    public void RestartFromTutorial()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Tutorial");
     }
 }
