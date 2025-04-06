@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Enemy Bullet
   - Audio
+  - Tutorial
   layers:
   - Default
   - TransparentFX
@@ -72,6 +73,9 @@ TagManager:
     locked: 0
   - name: ground
     uniqueID: 2322979357
+    locked: 0
+  - name: bg-9
+    uniqueID: 1743585851
     locked: 0
   - name: foreground
     uniqueID: 3386491325

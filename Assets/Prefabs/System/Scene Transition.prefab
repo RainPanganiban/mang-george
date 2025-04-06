@@ -111,10 +111,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  enemy: {fileID: 0}
   healthUI: {fileID: 0}
   countdown: {fileID: 3178325372564936568}
   weapon: {fileID: 0}
+  currentBoss: {fileID: 0}
 --- !u!1 &1019279443502104609
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,10 +638,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  enemy: {fileID: 0}
   healthUI: {fileID: 0}
   countdown: {fileID: 0}
   weapon: {fileID: 0}
+  currentBoss: {fileID: 0}
 --- !u!1 &4167139282735083648
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.4509804}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -9,11 +9,11 @@ public class ActivateGame : MonoBehaviour
     public GameObject healthUI;
     public GameObject countdown;
     public GameObject weapon;
+    
 
     [SerializeField]
     [Header("Enemies")]
     public GameObject currentBoss;
-
 
     public void Start()
     {
