@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class ActivateGame : MonoBehaviour
 {
@@ -9,7 +11,8 @@ public class ActivateGame : MonoBehaviour
     public GameObject healthUI;
     public GameObject countdown;
     public GameObject weapon;
-    
+    public GameObject tutorialOverlay;
+
 
     [SerializeField]
     [Header("Enemies")]
@@ -28,6 +31,16 @@ public class ActivateGame : MonoBehaviour
         player.GetComponent<PlayerController>().enabled = true;
         weapon.GetComponent<Weapon>().enabled = true;
         currentBoss.GetComponent<MonoBehaviour>().enabled = true;
+
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            tutorialOverlay.SetActive(true);
+        }
+        else
+        {
+            tutorialOverlay.SetActive(false);
+        }
+
     }
 
 }

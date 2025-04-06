@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour , IDamageable
 
     [Header("Phase Settings")]
     public int currentPhase = 1;
+    public GameObject tutorialOverlay;
 
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -203,6 +204,7 @@ public class Enemy : MonoBehaviour , IDamageable
     {
         audioManager.PlayEnemySFX(audioManager.deathEnemy);
         GetComponent<Enemy>().enabled = false;
+        tutorialOverlay.SetActive(false);
 
         StartCoroutine(HandleDeathSequence());
 
