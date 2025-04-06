@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 10f;
     public float dashTime = 0.2f;
     public float dashCooldown = 2f;
+    public ParticleSystem dust;
     
 
     [Header("Health Settings")]
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
         if (moveInput != 0)
         {
             lastMoveDirection = moveInput;
+            dust.Play();
         }
         if (!isDashing)
         {
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
             audioManager.PlaySFX(audioManager.jump);
+            dust.Play();
 
             if (!animator.GetBool("isJumping")) // Set only if it's not already playing
             {

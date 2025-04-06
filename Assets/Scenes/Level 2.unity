@@ -528,6 +528,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &118207212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118207213}
+  m_Layer: 0
+  m_Name: Overlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &118207213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118207212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.40652156, y: 0.4949153, z: -0.041070323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &125567020
 GameObject:
   m_ObjectHideFlags: 0
@@ -13327,6 +13358,10 @@ PrefabInstance:
       propertyPath: currentBoss
       value: 
       objectReference: {fileID: 1361774796}
+    - target: {fileID: 3961556299778955650, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
+      propertyPath: tutorialOverlay
+      value: 
+      objectReference: {fileID: 118207212}
     - target: {fileID: 5676299369248226845, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: m_text
       value: ANINO NG MALING YAPAK
@@ -20307,3 +20342,4 @@ SceneRoots:
   - {fileID: 1967243095}
   - {fileID: 640136870}
   - {fileID: 1829743351}
+  - {fileID: 118207213}
