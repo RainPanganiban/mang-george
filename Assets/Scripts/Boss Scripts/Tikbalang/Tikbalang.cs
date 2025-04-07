@@ -44,7 +44,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
     public GameObject lineIndicatorPrefab;
     public float stormDelayBetweenStrikes = 0.6f;
     public float indicatorDuration = 0.4f;
-    public float stormYPosition = 1f;
+    public float stormYPosition = 2f;
     public float stormCallCooldownDuration = 10f;
     private float nextStormCallTime = 0f;
 

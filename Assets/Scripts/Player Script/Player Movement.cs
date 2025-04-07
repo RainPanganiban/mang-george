@@ -75,19 +75,26 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        if (isDashing) return;
+
         float moveInput = Input.GetAxis("Horizontal");
 
+        // Always update lastMoveDirection when there's input
         if (moveInput != 0)
         {
             lastMoveDirection = moveInput;
-            dust.Play();
+
+            if (isGrounded && !dust.isPlaying)
+                dust.Play();
         }
-        if (!isDashing)
+        else
         {
-            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-            animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-            animator.SetFloat("yVelocity", rb.velocity.y);
+            dust.Stop();
         }
+
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        animator.SetFloat("xVelocity", Mathf.Abs(rb.velocity.x));
+        animator.SetFloat("yVelocity", rb.velocity.y);
     }
 
     void Jump()
@@ -97,13 +104,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
             audioManager.PlaySFX(audioManager.jump);
-            dust.Play();
+            dust.Stop();
 
-            if (!animator.GetBool("isJumping")) // Set only if it's not already playing
+            if (!animator.GetBool("isJumping"))
             {
                 animator.SetBool("isJumping", true);
             }
-
         }
     }
 
