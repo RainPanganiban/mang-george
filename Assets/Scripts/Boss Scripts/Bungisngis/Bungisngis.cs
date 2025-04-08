@@ -120,11 +120,11 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
                     if (attackChoice == 0)
                     {
-                        animator.SetTrigger("ThrowSpear");
+
                     }
                     else
                     {
-                        animator.SetTrigger("Stomp");
+
                     }
                     break;
 
@@ -142,11 +142,11 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
                     if (attackChoice == 0)
                     {
-                        animator.SetTrigger("Run Indicator");
+
                     }
                     else
                     {
-                        animator.SetTrigger("Jump");
+
                     }
                     break;
 
@@ -164,11 +164,11 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
                     if (attackChoice == 0)
                     {
-                        animator.SetTrigger("Run Indicator");
+
                     }
                     else
                     {
-                        animator.SetTrigger("Jump");
+
                     }
                     break;
             }

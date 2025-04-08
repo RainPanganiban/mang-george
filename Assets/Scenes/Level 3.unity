@@ -679,6 +679,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3178325372564936568, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3961556299778955650, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: player
       value: 
@@ -690,7 +694,7 @@ PrefabInstance:
     - target: {fileID: 3961556299778955650, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: healthUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 985490709}
     - target: {fileID: 3961556299778955650, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: currentBoss
       value: 
@@ -973,6 +977,34 @@ PrefabInstance:
     - target: {fileID: 4299185465790293943, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299185465790293943, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913731552795276717, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913731552795276717, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890606522413021224, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890606522413021224, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758208497054987259, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758208497054987259, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15410,7 +15442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: musicVolume
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: attackingSound1
