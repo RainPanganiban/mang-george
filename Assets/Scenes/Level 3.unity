@@ -719,7 +719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6899424313130189213, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7546113411860890923, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7785,7 +7785,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 64.416664, y: 56.083332}
+    oldSize: {x: 77.3, y: 67.3}
     newSize: {x: 17.12, y: 30.83708}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7917,7 +7917,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892475105}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8407eae80fd873443aa29dd8649b9654, type: 3}
   m_Name: 
