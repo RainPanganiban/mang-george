@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Bungisngis : MonoBehaviour, IDamageable
 {
@@ -18,6 +19,11 @@ public class Bungisngis : MonoBehaviour, IDamageable
     public float attackCooldownTime = 2f;
     private bool canAttack = true;
     private int lastAttackChoice = -1;
+
+    [SerializeField]
+    [Header("Phase 1")]
+    public GameObject soundWavePrefab;
+    public Transform spawnPoint;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -107,24 +113,15 @@ public class Bungisngis : MonoBehaviour, IDamageable
             switch (currentPhase)
             {
                 case 1:
-                    if (Random.value < 0.7f)
+                    int randomAttack = Random.Range(0, 2);
+
+                    if (randomAttack == 0)
                     {
-                        attackChoice = (lastAttackChoice == 0) ? 1 : 0;
+                        animator.SetTrigger("Stomp Quake");
                     }
                     else
                     {
-                        attackChoice = lastAttackChoice;
-                    }
-
-                    lastAttackChoice = attackChoice;
-
-                    if (attackChoice == 0)
-                    {
-
-                    }
-                    else
-                    {
-
+                        animator.SetTrigger("Sound Waves");
                     }
                     break;
 
@@ -204,5 +201,12 @@ public class Bungisngis : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
         FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+    }
+
+    public void PerformSoundWave()
+    {
+        Vector2 direction = (player.position - spawnPoint.position).normalized;
+        GameObject wave = Instantiate(soundWavePrefab, spawnPoint.position, Quaternion.identity);
+        wave.GetComponent<SoundWave>().SetDirection(direction);
     }
 }

@@ -719,7 +719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6899424313130189213, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7546113411860890923, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7368,7 +7368,7 @@ Transform:
   m_GameObject: {fileID: 748968319}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.48, y: 3.56, z: 0}
+  m_LocalPosition: {x: -11.25, y: 4.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7785,7 +7785,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 77.3, y: 67.3}
+    oldSize: {x: 64.416664, y: 56.083332}
     newSize: {x: 17.12, y: 30.83708}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7924,8 +7924,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 150
   slider: {fileID: 326699350}
-  attackInterval: 5
+  attackInterval: 2
   attackCooldownTime: 2
+  soundWavePrefab: {fileID: 1819227435785094262, guid: 2925ccd24a8425542bd6f7745aed7987, type: 3}
+  spawnPoint: {fileID: 748968320}
   currentPhase: 1
 --- !u!1 &897916952
 GameObject:
