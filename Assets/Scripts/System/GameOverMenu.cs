@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameOverMenu : MonoBehaviour
 {
     public GameObject gameOverUI;
+    private Animator animator;
 
     public void ShowGameOver()
     {
@@ -16,6 +17,7 @@ public class GameOverMenu : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         gameOverUI.SetActive(true);
+        animator.Play("Game Over");
         Time.timeScale = 0f;
 
     }
