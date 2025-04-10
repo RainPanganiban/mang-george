@@ -208,5 +208,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
         Vector2 direction = (player.position - spawnPoint.position).normalized;
         GameObject wave = Instantiate(soundWavePrefab, spawnPoint.position, Quaternion.identity);
         wave.GetComponent<SoundWave>().SetDirection(direction);
+
+        animator.ResetTrigger("Sound Waves");
     }
 }
