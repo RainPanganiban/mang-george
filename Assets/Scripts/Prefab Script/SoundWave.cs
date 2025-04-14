@@ -1,12 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundWave : MonoBehaviour
 {
     public float speed = 10f;
     public float lifeTime = 2f;
-    public float stunDuration = 0.4f;
+    public float stunDuration = 0.1f;
     private Vector2 direction;
 
     void Start()
@@ -33,20 +32,8 @@ public class SoundWave : MonoBehaviour
             PlayerController player = collision.GetComponent<PlayerController>();
             if (player != null)
             {
-                // Disable player movement
-                player.enabled = false;
-
-                // Disable weapon (assumes weapon is child GameObject named "Weapon")
-                Transform weapon = player.transform.Find("Weapon");
-                if (weapon != null) weapon.gameObject.SetActive(false);
-
-                // Change color to gray
-                SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-                if (sr != null) sr.color = Color.gray;
-
-                StartCoroutine(ReEnablePlayer(player, sr, weapon));
+                StartCoroutine(ApplyStunToPlayer(player));
             }
-
             Destroy(gameObject);
         }
         else if (!collision.isTrigger && !collision.CompareTag("Enemy"))
@@ -55,19 +42,41 @@ public class SoundWave : MonoBehaviour
         }
     }
 
-    IEnumerator ReEnablePlayer(PlayerController player, SpriteRenderer sr, Transform weapon)
+    IEnumerator ApplyStunToPlayer(PlayerController player)
     {
+        // Disable player movement
+        player.enabled = false;
+
+        // Gray out player sprite
+        SpriteRenderer playerSR = player.GetComponent<SpriteRenderer>();
+        if (playerSR != null)
+        {
+            playerSR.color = Color.gray;
+        }
+
+        // Handle weapon component + sprite
+        Transform weaponTransform = player.transform.Find("Weapon");
+        Weapon weaponScript = null;
+        SpriteRenderer weaponSR = null;
+
+        if (weaponTransform != null)
+        {
+            weaponScript = weaponTransform.GetComponent<Weapon>();
+            weaponSR = weaponTransform.GetComponent<SpriteRenderer>();
+
+            if (weaponScript != null) weaponScript.enabled = false;
+            if (weaponSR != null) weaponSR.color = Color.gray;
+        }
+
+        // Wait during stun
         yield return new WaitForSeconds(stunDuration);
 
-        if (player != null)
-        {
-            player.enabled = true;
+        // Restore player
+        player.enabled = true;
+        if (playerSR != null) playerSR.color = Color.white;
 
-            // Re-enable weapon
-            if (weapon != null) weapon.gameObject.SetActive(true);
-
-            // Restore original color
-            if (sr != null) sr.color = Color.white;
-        }
+        // Restore weapon
+        if (weaponScript != null) weaponScript.enabled = true;
+        if (weaponSR != null) weaponSR.color = Color.white;
     }
 }

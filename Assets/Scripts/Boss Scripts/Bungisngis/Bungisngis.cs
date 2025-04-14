@@ -24,6 +24,8 @@ public class Bungisngis : MonoBehaviour, IDamageable
     [Header("Phase 1")]
     public GameObject soundWavePrefab;
     public Transform spawnPoint;
+    public GameObject shockwavePrefab;
+    public Transform stompSpawnPoint;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -210,5 +212,13 @@ public class Bungisngis : MonoBehaviour, IDamageable
         wave.GetComponent<SoundWave>().SetDirection(direction);
 
         animator.ResetTrigger("Sound Waves");
+    }
+
+    public void PerformStompShockwave() 
+    {
+        GameObject wave = Instantiate(shockwavePrefab, stompSpawnPoint.position, Quaternion.identity);
+
+        Vector2 dir = spriteRenderer.flipX ? Vector2.right : Vector2.left;
+        wave.GetComponent<StompShockwave>().SetDirection(dir);
     }
 }
