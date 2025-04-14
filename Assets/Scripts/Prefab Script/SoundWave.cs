@@ -9,6 +9,9 @@ public class SoundWave : MonoBehaviour
     public float stunDuration = 0.4f;
     private Vector2 direction;
 
+    public GameObject player;
+    public GameObject weapon;
+
     void Start()
     {
         Destroy(gameObject, lifeTime);
@@ -33,18 +36,18 @@ public class SoundWave : MonoBehaviour
             PlayerController player = collision.GetComponent<PlayerController>();
             if (player != null)
             {
-                // Disable player movement
                 player.enabled = false;
 
-                // Disable weapon (assumes weapon is child GameObject named "Weapon")
                 Transform weapon = player.transform.Find("Weapon");
-                if (weapon != null) weapon.gameObject.SetActive(false);
+                if (weapon != null) weapon.GetComponent<Weapon>().enabled = false;
 
-                // Change color to gray
-                SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-                if (sr != null) sr.color = Color.gray;
+                SpriteRenderer player_color = player.GetComponent<SpriteRenderer>();
+                if (player_color != null) player_color.color = Color.gray;
 
-                StartCoroutine(ReEnablePlayer(player, sr, weapon));
+                SpriteRenderer weapon_color = weapon.GetComponent<SpriteRenderer>();
+                if (weapon_color != null) weapon_color.color = Color.gray;
+
+                StartCoroutine(ReEnablePlayer(player, player_color, weapon));
             }
 
             Destroy(gameObject);
@@ -55,7 +58,7 @@ public class SoundWave : MonoBehaviour
         }
     }
 
-    IEnumerator ReEnablePlayer(PlayerController player, SpriteRenderer sr, Transform weapon)
+    IEnumerator ReEnablePlayer(PlayerController player, SpriteRenderer player_color, Transform weapon)
     {
         yield return new WaitForSeconds(stunDuration);
 
@@ -67,7 +70,7 @@ public class SoundWave : MonoBehaviour
             if (weapon != null) weapon.gameObject.SetActive(true);
 
             // Restore original color
-            if (sr != null) sr.color = Color.white;
+            if (player_color != null) player_color.color = Color.white;
         }
     }
 }
