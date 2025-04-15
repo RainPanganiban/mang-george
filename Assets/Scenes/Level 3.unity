@@ -7925,8 +7925,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 150
   slider: {fileID: 326699350}
-  attackInterval: 2
-  attackCooldownTime: 2
+  attackInterval: 0.5
+  attackCooldownTime: 0.5
   soundWavePrefab: {fileID: 1819227435785094262, guid: 2925ccd24a8425542bd6f7745aed7987, type: 3}
   spawnPoint: {fileID: 748968320}
   shockwavePrefab: {fileID: 7209423818584882914, guid: ec067b1e4dd6a5c478496b4017dd27a0, type: 3}

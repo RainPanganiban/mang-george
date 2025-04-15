@@ -115,7 +115,13 @@ public class Bungisngis : MonoBehaviour, IDamageable
             switch (currentPhase)
             {
                 case 1:
-                    int randomAttack = Random.Range(0, 2);
+                    int randomAttack;
+                    do
+                    {
+                        randomAttack = Random.Range(0, 2);
+                    } while (randomAttack == lastAttackChoice);
+
+                    lastAttackChoice = randomAttack;
 
                     if (randomAttack == 0)
                     {
@@ -172,9 +178,16 @@ public class Bungisngis : MonoBehaviour, IDamageable
                     break;
             }
 
-            attackTimer = attackInterval;
-            canAttack = false;
+            StartCoroutine(AttackCooldown());
         }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackCooldownTime);
+        attackTimer = attackInterval;
+        canAttack = true;
     }
 
     public void TakeDamage(float damage)
