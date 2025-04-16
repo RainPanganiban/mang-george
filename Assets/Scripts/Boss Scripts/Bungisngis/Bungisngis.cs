@@ -8,7 +8,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
 {
     [SerializeField]
     [Header("Health Settings")]
-    public int maxHealth = 150;
+    public int maxHealth = 200;
     private float currentHealth;
     public Slider slider;
 
@@ -37,9 +37,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
     private Animator animator;
     private Color originalColor;
     private bool isInvincible = false;
-    private Rigidbody2D rb;
-    private AudioManager audioManager;
-    private Collider2D tikbalangCollider;
 
 
     void Start()
@@ -51,9 +48,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        audioManager = FindObjectOfType<AudioManager>();
-        tikbalangCollider = GetComponent<Collider2D>();
         originalColor = spriteRenderer.color;
     }
 

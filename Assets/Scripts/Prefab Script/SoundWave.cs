@@ -34,7 +34,6 @@ public class SoundWave : MonoBehaviour
             {
                 StartCoroutine(ApplyStunToPlayer(player));
             }
-            Destroy(gameObject);
         }
         else if (!collision.isTrigger && !collision.CompareTag("Enemy"))
         {
@@ -44,17 +43,11 @@ public class SoundWave : MonoBehaviour
 
     IEnumerator ApplyStunToPlayer(PlayerController player)
     {
-        // Disable player movement
         player.enabled = false;
 
-        // Gray out player sprite
         SpriteRenderer playerSR = player.GetComponent<SpriteRenderer>();
-        if (playerSR != null)
-        {
-            playerSR.color = Color.gray;
-        }
+        if (playerSR != null) playerSR.color = Color.gray;
 
-        // Handle weapon component + sprite
         Transform weaponTransform = player.transform.Find("Weapon");
         Weapon weaponScript = null;
         SpriteRenderer weaponSR = null;
@@ -63,20 +56,21 @@ public class SoundWave : MonoBehaviour
         {
             weaponScript = weaponTransform.GetComponent<Weapon>();
             weaponSR = weaponTransform.GetComponent<SpriteRenderer>();
-
             if (weaponScript != null) weaponScript.enabled = false;
             if (weaponSR != null) weaponSR.color = Color.gray;
         }
 
-        // Wait during stun
-        yield return new WaitForSeconds(stunDuration);
+        yield return new WaitForSeconds(2f);
 
-        // Restore player
-        player.enabled = true;
+        if (player != null)
+        {
+            player.enabled = true;
+        }
+
         if (playerSR != null) playerSR.color = Color.white;
-
-        // Restore weapon
         if (weaponScript != null) weaponScript.enabled = true;
         if (weaponSR != null) weaponSR.color = Color.white;
+
+        Destroy(gameObject);
     }
 }
