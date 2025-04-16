@@ -110,13 +110,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
             {
                 case 1:
                     int randomAttack;
-                    do
-                    {
-                        randomAttack = Random.Range(0, 2);
-                    } while (randomAttack == lastAttackChoice);
-
-                    lastAttackChoice = randomAttack;
-
+                    randomAttack = Random.Range(0, 2);
                     if (randomAttack == 0)
                     {
                         animator.SetTrigger("Stomp Quake");
@@ -217,8 +211,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         Vector2 direction = (player.position - spawnPoint.position).normalized;
         GameObject wave = Instantiate(soundWavePrefab, spawnPoint.position, Quaternion.identity);
         wave.GetComponent<SoundWave>().SetDirection(direction);
-
-        animator.ResetTrigger("Sound Waves");
     }
 
     public void PerformStompShockwave() 

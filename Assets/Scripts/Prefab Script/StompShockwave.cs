@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class StompShockwave : MonoBehaviour
 {
-    public float speed = 15f;
+    public float speed = 10f;
     public float maxScaleY = 2f;
+    public float maxScaleX = 1.2f;
     public float scaleSpeed = 1f;
     public float lifeTime = 3f;
     public float damage = 1f;
@@ -29,10 +30,28 @@ public class StompShockwave : MonoBehaviour
         transform.Translate(direction * speed * Time.deltaTime, Space.World);
 
         Vector3 currentScale = transform.localScale;
+
+        bool changed = false;
+
+        // Scale up Y axis
+        float newY = currentScale.y;
         if (currentScale.y < maxScaleY)
         {
-            float newY = Mathf.Min(maxScaleY, currentScale.y + scaleSpeed * Time.deltaTime);
-            transform.localScale = new Vector3(currentScale.x, newY, currentScale.z);
+            newY = Mathf.Min(maxScaleY, currentScale.y + scaleSpeed * Time.deltaTime);
+            changed = true;
+        }
+
+        // Slightly scale up X axis (width)
+        float newX = currentScale.x;
+        if (currentScale.x < maxScaleX)
+        {
+            newX = Mathf.Min(maxScaleX, currentScale.x + (scaleSpeed * 0.3f) * Time.deltaTime); // 0.3f to scale width slower
+            changed = true;
+        }
+
+        if (changed)
+        {
+            transform.localScale = new Vector3(newX, newY, currentScale.z);
         }
     }
 
@@ -45,8 +64,6 @@ public class StompShockwave : MonoBehaviour
             {
                 player.TakeDamage(damage);
             }
-
-            Destroy(gameObject);
         }
         else if (!collision.CompareTag("Enemy") && !collision.isTrigger)
         {

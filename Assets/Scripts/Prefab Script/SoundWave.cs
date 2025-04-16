@@ -6,6 +6,7 @@ public class SoundWave : MonoBehaviour
     public float speed = 10f;
     public float lifeTime = 2f;
     public float stunDuration = 0.1f;
+    public float damage = 5;
     private Vector2 direction;
 
     void Start()
