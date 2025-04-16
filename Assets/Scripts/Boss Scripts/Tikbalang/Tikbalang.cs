@@ -262,24 +262,24 @@ public class Tikbalang : MonoBehaviour, IDamageable
     {
         while (isCharging)
         {
-            // Get screen edges in world coordinates
-            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x + 3f;  // Buffer to prevent sticking
+
+            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x + 3f;
             float rightEdge = Camera.main.ViewportToWorldPoint(Vector3.one).x - 3f;
 
-            // Stop charging if it reaches an edge
+
             if ((chargeDirection.x > 0 && transform.position.x >= rightEdge) ||
                 (chargeDirection.x < 0 && transform.position.x <= leftEdge))
             {
-                StopCharge(); // Stop movement
+                StopCharge();
 
-                // Reset attack timer and enable attacks again
-                attackTimer = 1.5f; // Shorter timer for quicker next attack
-                canAttack = true;   // Enable attacks again
 
-                yield break;  // Exit the coroutine
+                attackTimer = 1.5f;
+                canAttack = true;
+
+                yield break;
             }
 
-            yield return null; // Wait for the next frame
+            yield return null;
         }
     }
 
