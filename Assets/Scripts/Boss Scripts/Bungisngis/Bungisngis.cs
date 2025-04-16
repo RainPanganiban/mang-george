@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -8,7 +9,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
 {
     [SerializeField]
     [Header("Health Settings")]
-    public int maxHealth = 200;
+    public int maxHealth = 250;
     private float currentHealth;
     public Slider slider;
 
@@ -215,8 +216,10 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
     public void PerformStompShockwave() 
     {
-        GameObject wave = Instantiate(shockwavePrefab, stompSpawnPoint.position, Quaternion.identity);
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
 
+        GameObject wave = Instantiate(shockwavePrefab, stompSpawnPoint.position, Quaternion.identity);
+        StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
         Vector2 dir = spriteRenderer.flipX ? Vector2.right : Vector2.left;
         wave.GetComponent<StompShockwave>().SetDirection(dir);
     }

@@ -6,7 +6,7 @@ public class SoundWave : MonoBehaviour
     public float speed = 10f;
     public float lifeTime = 2f;
     public float stunDuration = 0.1f;
-    public float damage = 5;
+    public float damage = 5f;
     private Vector2 direction;
 
     void Start()
@@ -33,6 +33,7 @@ public class SoundWave : MonoBehaviour
             PlayerController player = collision.GetComponent<PlayerController>();
             if (player != null)
             {
+                player.TakeDamage(damage);
                 StartCoroutine(ApplyStunToPlayer(player));
             }
         }
@@ -61,13 +62,9 @@ public class SoundWave : MonoBehaviour
             if (weaponSR != null) weaponSR.color = Color.gray;
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.7f);
 
-        if (player != null)
-        {
-            player.enabled = true;
-        }
-
+        if (player != null) player.enabled = true;
         if (playerSR != null) playerSR.color = Color.white;
         if (weaponScript != null) weaponScript.enabled = true;
         if (weaponSR != null) weaponSR.color = Color.white;

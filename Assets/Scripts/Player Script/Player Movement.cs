@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 10f;
     public float dashTime = 0.2f;
     public float dashCooldown = 2f;
+    public float dashDistance = 5f;
     public ParticleSystem dust;
     
 
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         UpdateDashCooldown();
+        ClampToCameraBounds();
 
         animator.SetFloat("yVelocity", rb.velocity.y);
 
@@ -79,7 +81,6 @@ public class PlayerController : MonoBehaviour
 
         float moveInput = Input.GetAxis("Horizontal");
 
-        // Always update lastMoveDirection when there's input
         if (moveInput != 0)
         {
             lastMoveDirection = moveInput;
@@ -120,11 +121,25 @@ public class PlayerController : MonoBehaviour
         trailRenderer.enabled = true;
         audioManager.PlaySFX(audioManager.dash);
         GetComponent<Collider2D>().enabled = false;
+
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
 
-        rb.velocity = new Vector2(lastMoveDirection * dashSpeed, rb.velocity.y);
-        yield return new WaitForSeconds(dashTime);
+        // Ensure direction is never zero
+        float direction = (lastMoveDirection == 0f) ? 1f : Mathf.Sign(lastMoveDirection);
+
+        Vector2 dashStart = transform.position;
+        Vector2 dashEnd = dashStart + new Vector2(direction * dashDistance, 0);
+
+        float elapsed = 0f;
+        while (elapsed < dashTime)
+        {
+            transform.position = Vector2.Lerp(dashStart, dashEnd, elapsed / dashTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = dashEnd;
 
         rb.gravityScale = originalGravity;
         isDashing = false;
@@ -143,8 +158,8 @@ public class PlayerController : MonoBehaviour
             dashSlider.value = dashCooldownTimer;
             yield return null;
         }
-        canDash = true;
 
+        canDash = true;
     }
 
     void UpdateDashCooldown()
@@ -188,6 +203,19 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.07f);
         spriteRenderer.color = originalColor;
+    }
+
+    void ClampToCameraBounds()
+    {
+        Vector3 pos = transform.position;
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(pos);
+
+        // Clamp X and optionally Y if you want vertical boundaries too
+        viewPos.x = Mathf.Clamp01(viewPos.x);
+        viewPos.y = Mathf.Clamp01(viewPos.y);
+
+        pos = Camera.main.ViewportToWorldPoint(viewPos);
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
     }
 
     void Die()

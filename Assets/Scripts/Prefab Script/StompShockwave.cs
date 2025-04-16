@@ -6,9 +6,9 @@ public class StompShockwave : MonoBehaviour
     public float speed = 10f;
     public float maxScaleY = 2f;
     public float maxScaleX = 1.2f;
-    public float scaleSpeed = 1f;
+    public float scaleSpeed = 0.5f;
     public float lifeTime = 3f;
-    public float damage = 1f;
+    public float damage = 10f;
 
     private Vector2 direction = Vector2.right;
 
