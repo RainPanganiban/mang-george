@@ -1,21 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class Bungisngis : MonoBehaviour, IDamageable
 {
-    [SerializeField]
-    [Header("Health Settings")]
-    public int maxHealth = 250;
+    [SerializeField][Header("Health Settings")] public int maxHealth = 250;
     private float currentHealth;
     public Slider slider;
 
-    [SerializeField]
-    [Header("Attack Settings")]
-    public float attackInterval = 5f;
+    [SerializeField][Header("Attack Settings")] public float attackInterval = 5f;
     private float attackTimer;
     public float attackCooldownTime = 2f;
     private bool canAttack = true;
@@ -29,7 +23,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     public Transform stompSpawnPoint;
 
     [SerializeField]
-    [Header("Phase 2 - Ground Smash")]
+    [Header("Phase 2")]
     public float walkSpeed = 2f;
     public float smashRange = 3f;
     public float smashWindUpTime = 1f;
@@ -37,7 +31,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
     public Transform smashPoint;
     public float smashRadius = 1.5f;
     public LayerMask playerLayer;
-    private Rigidbody2D rb;
     public GameObject clubPrefab;
     public Transform clubSpawnPoint;
 
@@ -53,7 +46,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
     private bool isInvincible = false;
     private bool isAttacking = false;
 
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -63,7 +55,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
         originalColor = spriteRenderer.color;
     }
 
@@ -74,7 +65,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         {
             HandleAttacks();
         }
-
         FacePlayer();
     }
 
@@ -86,32 +76,20 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 175)
+        if (currentHealth > 175 && currentPhase != 1)
         {
-            if (currentPhase != 1)
-            {
-                currentPhase = 1;
-                animator.SetInteger("Phase", currentPhase);
-                Debug.Log("Entered Phase 1");
-            }
+            currentPhase = 1;
+            animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth > 75)
+        else if (currentHealth > 75 && currentHealth <= 175 && currentPhase != 2)
         {
-            if (currentPhase != 2)
-            {
-                currentPhase = 2;
-                animator.SetInteger("Phase", currentPhase);
-                Debug.Log("Entered Phase 2");
-            }
+            currentPhase = 2;
+            animator.SetInteger("Phase", currentPhase);
         }
-        else
+        else if (currentHealth <= 75 && currentPhase != 3)
         {
-            if (currentPhase != 3)
-            {
-                currentPhase = 3;
-                animator.SetInteger("Phase", currentPhase);
-                Debug.Log("Entered Phase 3");
-            }
+            currentPhase = 3;
+            animator.SetInteger("Phase", currentPhase);
         }
     }
 
@@ -123,55 +101,27 @@ public class Bungisngis : MonoBehaviour, IDamageable
         if (attackTimer <= 0)
         {
             int attackChoice;
+            int randomAttack;
 
             switch (currentPhase)
             {
                 case 1:
-                    int randomAttack;
                     randomAttack = Random.Range(0, 2);
-                    if (randomAttack == 0)
-                    {
-                        animator.SetTrigger("Stomp Quake");
-                    }
-                    else
-                    {
-                        animator.SetTrigger("Sound Waves");
-                    }
+                    animator.SetTrigger(randomAttack == 0 ? "Stomp Quake" : "Sound Waves");
                     break;
 
                 case 2:
                     randomAttack = Random.Range(0, 2);
                     if (randomAttack == 0)
-                    {
-                        animator.SetBool("isWalking", true);
                         StartCoroutine(ApproachAndSmash());
-                    }
                     else
-                    {
                         StartCoroutine(ClubThrowRoutine());
-                    }
                     break;
 
                 case 3:
-                    if (Random.value < 0.7f)
-                    {
-                        attackChoice = (lastAttackChoice == 0) ? 1 : 0;
-                    }
-                    else
-                    {
-                        attackChoice = lastAttackChoice;
-                    }
-
+                    attackChoice = (Random.value < 0.7f) ? ((lastAttackChoice == 0) ? 1 : 0) : lastAttackChoice;
                     lastAttackChoice = attackChoice;
-
-                    if (attackChoice == 0)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
+                    // Add Phase 3 logic here
                     break;
             }
 
@@ -197,9 +147,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
         StartCoroutine(FlashRed());
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
     IEnumerator FlashRed()
@@ -222,10 +170,9 @@ public class Bungisngis : MonoBehaviour, IDamageable
         wave.GetComponent<SoundWave>().SetDirection(direction);
     }
 
-    public void PerformStompShockwave() 
+    public void PerformStompShockwave()
     {
         CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
-
         GameObject wave = Instantiate(shockwavePrefab, stompSpawnPoint.position, Quaternion.identity);
         StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
         Vector2 dir = spriteRenderer.flipX ? Vector2.right : Vector2.left;
@@ -249,26 +196,41 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
         animator.SetBool("isWalking", false);
         animator.SetTrigger("Ground Smash");
-
-        yield return new WaitForSeconds(smashWindUpTime);
-
-        // Reset via animation event instead ideally
-        isAttacking = false;
-
-        StartCoroutine(AttackCooldown());
     }
 
     public void GroundSmashDamage()
     {
         Collider2D hit = Physics2D.OverlapCircle(smashPoint.position, smashRadius, playerLayer);
 
-        if (hit != null)
+        if (hit != null && hit.TryGetComponent<PlayerController>(out var playerHealth))
         {
-            if (hit.TryGetComponent<PlayerController>(out var playerHealth))
-            {
-                playerHealth.TakeDamage(smashDamage);
-            }
+            playerHealth.TakeDamage(smashDamage);
         }
+    }
+
+    public void EndGroundSmash()
+    {
+        isAttacking = false;
+        StartCoroutine(AttackCooldown());
+    }
+
+    public void PerformClubThrow()
+    {
+        GameObject club = Instantiate(clubPrefab, clubSpawnPoint.position, Quaternion.identity);
+        club.GetComponent<Club>().Initialize(clubSpawnPoint.position, this.transform);
+    }
+
+    public void EndClubThrow()
+    {
+        isAttacking = false;
+        StartCoroutine(AttackCooldown());
+    }
+
+    IEnumerator ClubThrowRoutine()
+    {
+        isAttacking = true;
+        animator.SetTrigger("Club Throw");
+        yield return null;
     }
 
     void OnDrawGizmosSelected()
@@ -278,26 +240,5 @@ public class Bungisngis : MonoBehaviour, IDamageable
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(smashPoint.position, smashRadius);
         }
-    }
-
-    public void PerformClubThrow()
-    {
-        GameObject club = Instantiate(clubPrefab, clubSpawnPoint.position, Quaternion.identity);
-        club.GetComponent<Club>().Initialize(clubSpawnPoint.position, this.transform);
-    }
-
-    IEnumerator ClubThrowRoutine()
-    {
-        isAttacking = true;
-
-        animator.SetTrigger("Club Throw");
-        yield return new WaitForSeconds(0.5f); // Sync with animation
-
-        PerformClubThrow();
-
-        // Reset AFTER throw animation — use animation event ideally
-        isAttacking = false;
-
-        StartCoroutine(AttackCooldown());
     }
 }
