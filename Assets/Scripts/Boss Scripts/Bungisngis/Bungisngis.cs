@@ -26,7 +26,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     [Header("Phase 2")]
     public float walkSpeed = 2f;
     public float smashRange = 3f;
-    public float smashWindUpTime = 1f;
+    public float smashWindUpTime = 1.5f;
     public float smashDamage = 10f;
     public Transform smashPoint;
     public float smashRadius = 1.5f;
@@ -61,10 +61,12 @@ public class Bungisngis : MonoBehaviour, IDamageable
     void Update()
     {
         HandlePhases();
+
         if (!isTransitioning && !isAttacking)
         {
             HandleAttacks();
         }
+
         FacePlayer();
     }
 
@@ -108,10 +110,12 @@ public class Bungisngis : MonoBehaviour, IDamageable
                 case 1:
                     randomAttack = Random.Range(0, 2);
                     animator.SetTrigger(randomAttack == 0 ? "Stomp Quake" : "Sound Waves");
+                    StartCoroutine(AttackCooldown());
                     break;
 
                 case 2:
                     randomAttack = Random.Range(0, 2);
+                    Debug.Log("Phase 2 attack chosen: " + randomAttack);
                     if (randomAttack == 0)
                         StartCoroutine(ApproachAndSmash());
                     else
@@ -121,20 +125,20 @@ public class Bungisngis : MonoBehaviour, IDamageable
                 case 3:
                     attackChoice = (Random.value < 0.7f) ? ((lastAttackChoice == 0) ? 1 : 0) : lastAttackChoice;
                     lastAttackChoice = attackChoice;
-                    // Add Phase 3 logic here
+                    
                     break;
             }
-
-            StartCoroutine(AttackCooldown());
         }
     }
 
     IEnumerator AttackCooldown()
     {
         canAttack = false;
+        Debug.Log("Attack Cooldown started");
         yield return new WaitForSeconds(attackCooldownTime);
         attackTimer = attackInterval;
         canAttack = true;
+        Debug.Log("Attack Cooldown ended, ready to attack again");
     }
 
     public void TakeDamage(float damage)
@@ -196,10 +200,22 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
         animator.SetBool("isWalking", false);
         animator.SetTrigger("Ground Smash");
+
+        yield return new WaitForSeconds(smashWindUpTime); // wait for windup animation
+
+        GroundSmashDamage();
+
+        yield return new WaitForSeconds(0.5f);
+
+        isAttacking = false;
+        StartCoroutine(AttackCooldown());
     }
+
 
     public void GroundSmashDamage()
     {
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+        StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
         Collider2D hit = Physics2D.OverlapCircle(smashPoint.position, smashRadius, playerLayer);
 
         if (hit != null && hit.TryGetComponent<PlayerController>(out var playerHealth))
@@ -208,29 +224,21 @@ public class Bungisngis : MonoBehaviour, IDamageable
         }
     }
 
-    public void EndGroundSmash()
-    {
-        isAttacking = false;
-        StartCoroutine(AttackCooldown());
-    }
-
     public void PerformClubThrow()
     {
         GameObject club = Instantiate(clubPrefab, clubSpawnPoint.position, Quaternion.identity);
         club.GetComponent<Club>().Initialize(clubSpawnPoint.position, this.transform);
     }
 
-    public void EndClubThrow()
-    {
-        isAttacking = false;
-        StartCoroutine(AttackCooldown());
-    }
-
     IEnumerator ClubThrowRoutine()
     {
         isAttacking = true;
         animator.SetTrigger("Club Throw");
-        yield return null;
+
+        yield return new WaitForSeconds(2.5f);
+
+        isAttacking = false;
+        StartCoroutine(AttackCooldown());
     }
 
     void OnDrawGizmosSelected()

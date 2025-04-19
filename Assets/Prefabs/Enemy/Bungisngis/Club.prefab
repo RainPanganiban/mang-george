@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1537336214365076044}
   - component: {fileID: 1952923631907481390}
   - component: {fileID: 79898986084897089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Club
-  m_TagString: Untagged
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -146,7 +146,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.72199714, y: 0.1719141}
+  m_Offset: {x: 1.022015, y: 0.2094245}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -157,7 +157,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9297578, y: 7.9120016}
+  m_Size: {x: 1.3297223, y: 5.836873}
   m_EdgeRadius: 0
 --- !u!114 &79898986084897089
 MonoBehaviour:
@@ -171,5 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93edb198f9f01f84ab4f107413ebc69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  speed: 15
   maxDistance: 20
+  rotationSpeed: 800

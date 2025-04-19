@@ -5,36 +5,48 @@ using UnityEngine;
 public class Club : MonoBehaviour
 {
     private Vector2 startPos;
-    private Vector2 returnTarget;
     private Transform bungisngis;
     private Rigidbody2D rb;
     private bool returning = false;
+    private Transform player;
 
     [SerializeField] private float speed = 10f;
     [SerializeField] private float maxDistance = 8f;
+    [SerializeField] private float rotationSpeed = 500f;
 
     public void Initialize(Vector2 startPosition, Transform boss)
     {
         startPos = startPosition;
         bungisngis = boss;
-        returnTarget = boss.position;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Vector2 dir = (returnTarget - startPos).normalized;
-        rb.velocity = dir * speed;
+
+        Vector2 targetDirection = Vector2.right;
+        if (player != null)
+        {
+            targetDirection = ((Vector2)player.position - startPos).normalized;
+        }
+
+        rb.velocity = targetDirection * speed;
     }
 
     private void Update()
     {
+        // Spin the club
+        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+
+        // Switch to returning mode after reaching max distance
         if (!returning && Vector2.Distance(transform.position, startPos) >= maxDistance)
         {
             returning = true;
         }
 
-        if (returning)
+        // If returning, update direction toward Bungisngis
+        if (returning && bungisngis != null)
         {
             Vector2 dir = ((Vector2)bungisngis.position - rb.position).normalized;
             rb.velocity = dir * speed;
@@ -45,8 +57,7 @@ public class Club : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // Damage player
-            collision.GetComponent<PlayerController>()?.TakeDamage(10);
+            collision.GetComponent<PlayerController>()?.TakeDamage(3);
         }
 
         if (returning && collision.CompareTag("Enemy"))
@@ -54,5 +65,4 @@ public class Club : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
