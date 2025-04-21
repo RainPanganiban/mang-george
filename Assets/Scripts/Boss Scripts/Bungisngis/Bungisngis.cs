@@ -188,6 +188,8 @@ public class Bungisngis : MonoBehaviour, IDamageable
         Vector2 direction = (player.position - spawnPoint.position).normalized;
         GameObject wave = Instantiate(soundWavePrefab, spawnPoint.position, Quaternion.identity);
         wave.GetComponent<SoundWave>().SetDirection(direction);
+
+        StartCoroutine(AttackCooldown());
     }
 
     public void PerformStompShockwave()
@@ -274,10 +276,14 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
         GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
         laser.GetComponent<EyeLaser>().moveUpwards = !topToBottom;
+
+        StartCoroutine(AttackCooldown());
     }
 
     public void PerformBoulderThrow()
     {
         Instantiate(boulderPrefab, boulderSpawnPoint.position, Quaternion.identity);
+
+        StartCoroutine(AttackCooldown());
     }
 }
