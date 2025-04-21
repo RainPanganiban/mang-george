@@ -131,10 +131,10 @@ public class Bungisngis : MonoBehaviour, IDamageable
                     switch (randomAttack)
                     {
                         case 0:
-                            animator.SetTrigger("Laser Eyes");
+                            animator.SetTrigger("Laser");
                             break;
                         case 1:
-                            animator.SetTrigger("Boulder Throw");
+                            animator.SetTrigger("Boulder");
                             break;
                         case 2:
                             animator.SetTrigger("Sound Waves");
