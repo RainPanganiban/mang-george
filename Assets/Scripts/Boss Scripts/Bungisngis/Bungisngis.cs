@@ -38,6 +38,8 @@ public class Bungisngis : MonoBehaviour, IDamageable
     [Header("Phase 3")]
     public GameObject eyeLaserPrefab;
     public Transform eyeLaserSpawnPoint;
+    public GameObject boulderPrefab;
+    public Transform boulderSpawnPoint;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -272,5 +274,10 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
         GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
         laser.GetComponent<EyeLaser>().moveUpwards = !topToBottom;
+    }
+
+    public void PerformBoulderThrow()
+    {
+        Instantiate(boulderPrefab, boulderSpawnPoint.position, Quaternion.identity);
     }
 }

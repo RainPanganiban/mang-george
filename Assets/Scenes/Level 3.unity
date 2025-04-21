@@ -7902,6 +7902,8 @@ MonoBehaviour:
   clubSpawnPoint: {fileID: 264262080}
   eyeLaserPrefab: {fileID: 280492997520180400, guid: 6503686709ce66d4fb587ede87a65675, type: 3}
   eyeLaserSpawnPoint: {fileID: 1169021895}
+  boulderPrefab: {fileID: 0}
+  boulderSpawnPoint: {fileID: 0}
   currentPhase: 1
 --- !u!1 &897916952
 GameObject:
