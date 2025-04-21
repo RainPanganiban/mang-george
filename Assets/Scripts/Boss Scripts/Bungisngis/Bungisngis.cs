@@ -35,6 +35,11 @@ public class Bungisngis : MonoBehaviour, IDamageable
     public Transform clubSpawnPoint;
 
     [SerializeField]
+    [Header("Phase 3")]
+    public GameObject eyeLaserPrefab;
+    public Transform eyeLaserSpawnPoint;
+
+    [SerializeField]
     [Header("Phase Settings")]
     public int currentPhase = 1;
     private bool isTransitioning = false;
@@ -115,7 +120,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
                 case 2:
                     randomAttack = Random.Range(0, 2);
-                    Debug.Log("Phase 2 attack chosen: " + randomAttack);
                     if (randomAttack == 0)
                         StartCoroutine(ApproachAndSmash());
                     else
@@ -123,9 +127,19 @@ public class Bungisngis : MonoBehaviour, IDamageable
                     break;
 
                 case 3:
-                    attackChoice = (Random.value < 0.7f) ? ((lastAttackChoice == 0) ? 1 : 0) : lastAttackChoice;
-                    lastAttackChoice = attackChoice;
-                    
+                    randomAttack = Random.Range(0, 3);
+                    switch (randomAttack)
+                    {
+                        case 0:
+                            animator.SetTrigger("Laser Eyes");
+                            break;
+                        case 1:
+                            animator.SetTrigger("Boulder Throw");
+                            break;
+                        case 2:
+                            animator.SetTrigger("Sound Waves");
+                            break;
+                    }
                     break;
             }
         }
@@ -186,6 +200,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     IEnumerator ApproachAndSmash()
     {
         isAttacking = true;
+        animator.ResetTrigger("Club Throw");
 
         while (Vector2.Distance(transform.position, player.position) > smashRange)
         {
@@ -237,6 +252,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
         yield return new WaitForSeconds(2.5f);
 
+        animator.ResetTrigger("Club Throw");
         isAttacking = false;
         StartCoroutine(AttackCooldown());
     }
@@ -248,5 +264,13 @@ public class Bungisngis : MonoBehaviour, IDamageable
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(smashPoint.position, smashRadius);
         }
+    }
+
+    public void SpawnEyeLaser()
+    {
+        bool topToBottom = Random.value > 0.5f;
+
+        GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
+        laser.GetComponent<EyeLaser>().moveUpwards = !topToBottom;
     }
 }
