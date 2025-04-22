@@ -23,7 +23,7 @@ public class EyeLaser : MonoBehaviour
         }
 
         // Set a gentle downward angle at the start
-        float initialAngle = faceRight ? -5f : 5f;
+        float initialAngle = faceRight ? 30f : -30f;
         transform.rotation = Quaternion.Euler(0f, 0f, initialAngle);
     }
 

@@ -37,10 +37,6 @@ public class SoundWave : MonoBehaviour
                 StartCoroutine(ApplyStunToPlayer(player));
             }
         }
-        else if (!collision.isTrigger && !collision.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-        }
     }
 
     IEnumerator ApplyStunToPlayer(PlayerController player)

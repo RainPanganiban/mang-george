@@ -78,6 +78,10 @@ public class Boulder : MonoBehaviour
                 collision.collider.GetComponent<PlayerController>()?.TakeDamage(damage);
                 Destroy(gameObject);
             }
+            else
+            {
+                Destroy(gameObject, 10f);
+            }
         }
     }
 

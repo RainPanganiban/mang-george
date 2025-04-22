@@ -40,6 +40,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     public Transform eyeLaserSpawnPoint;
     public GameObject boulderPrefab;
     public Transform boulderSpawnPoint;
+    public Transform phase3TeleportPoint;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -105,6 +106,11 @@ public class Bungisngis : MonoBehaviour, IDamageable
         {
             currentPhase = 3;
             animator.SetInteger("Phase", currentPhase);
+
+            if (phase3TeleportPoint != null)
+            {
+                transform.position = phase3TeleportPoint.position;
+            }
         }
     }
 
