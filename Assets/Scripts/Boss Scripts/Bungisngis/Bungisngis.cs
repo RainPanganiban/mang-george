@@ -129,19 +129,9 @@ public class Bungisngis : MonoBehaviour, IDamageable
                     break;
 
                 case 3:
-                    randomAttack = Random.Range(0, 3);
-                    switch (randomAttack)
-                    {
-                        case 0:
-                            animator.SetTrigger("Laser");
-                            break;
-                        case 1:
-                            animator.SetTrigger("Boulder");
-                            break;
-                        case 2:
-                            animator.SetTrigger("Sound Waves");
-                            break;
-                    }
+                    randomAttack = Random.Range(0, 2);
+                    animator.SetTrigger(randomAttack == 0 ? "Laser" : "Boulder");
+                    StartCoroutine(AttackCooldown());
                     break;
             }
         }
@@ -276,14 +266,10 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
         GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
         laser.GetComponent<EyeLaser>().moveUpwards = !topToBottom;
-
-        StartCoroutine(AttackCooldown());
     }
 
     public void PerformBoulderThrow()
     {
         Instantiate(boulderPrefab, boulderSpawnPoint.position, Quaternion.identity);
-
-        StartCoroutine(AttackCooldown());
     }
 }

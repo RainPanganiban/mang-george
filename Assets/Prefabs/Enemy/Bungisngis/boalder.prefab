@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6698894310512960675}
   - component: {fileID: 1995266196144881996}
   - component: {fileID: 5987877995501434419}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: boalder
-  m_TagString: Untagged
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
