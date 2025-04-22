@@ -12,8 +12,9 @@ public class EyeLaser : MonoBehaviour
 
     void Start()
     {
-        rotationDirection = rotateUpwards ? 1f : -1f;
+        rotationDirection = -1f; // Always rotate downward
 
+        // Flip the visual sprite if facing right
         if (faceRight)
         {
             Vector3 scale = transform.localScale;
@@ -21,19 +22,9 @@ public class EyeLaser : MonoBehaviour
             transform.localScale = scale;
         }
 
-        if (rotateUpwards)
-        {
-            // Steep angle for upward rotation
-            float initialAngle = faceRight ? -45f : 45f;
-            transform.rotation = Quaternion.Euler(0f, 0f, initialAngle);
-        }
-
-        if (!rotateUpwards)
-        {
-            // Gentle angle for downward rotation
-            float initialAngle = faceRight ? -10f : 10f;
-            transform.rotation = Quaternion.Euler(0f, 0f, initialAngle);
-        }
+        // Set a gentle downward angle at the start
+        float initialAngle = faceRight ? -5f : 5f;
+        transform.rotation = Quaternion.Euler(0f, 0f, initialAngle);
     }
 
     void Update()
