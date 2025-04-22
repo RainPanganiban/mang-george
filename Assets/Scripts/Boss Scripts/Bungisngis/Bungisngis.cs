@@ -80,7 +80,13 @@ public class Bungisngis : MonoBehaviour, IDamageable
     void FacePlayer()
     {
         if (player == null) return;
+
+        bool isFacingRight = player.position.x > transform.position.x;
         spriteRenderer.flipX = player.position.x > transform.position.x;
+
+        Vector3 anchorScale = eyeLaserSpawnPoint.localScale;
+        anchorScale.x = isFacingRight ? 1 : -1;
+        eyeLaserSpawnPoint.localScale = anchorScale;
     }
 
     void HandlePhases()
@@ -263,9 +269,13 @@ public class Bungisngis : MonoBehaviour, IDamageable
     public void SpawnEyeLaser()
     {
         bool topToBottom = Random.value > 0.5f;
+        bool isFacingRight = spriteRenderer.flipX;
 
         GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
-        laser.GetComponent<EyeLaser>().moveUpwards = !topToBottom;
+
+        EyeLaser eyeLaser = laser.GetComponent<EyeLaser>();
+        eyeLaser.rotateUpwards = !topToBottom;
+        eyeLaser.faceRight = isFacingRight;
     }
 
     public void PerformBoulderThrow()

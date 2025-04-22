@@ -2,27 +2,47 @@ using UnityEngine;
 
 public class EyeLaser : MonoBehaviour
 {
-    public float speed = 5f;
-    public float duration = 2f;
-    public bool moveUpwards = true; // false = top-to-bottom
+    public float rotationSpeed = 200f;
+    public bool rotateUpwards = true;
+    public bool faceRight = false;
+    public float damage = 15f;
 
-    private float timer;
+    private float totalRotated = 0f;
+    private float rotationDirection;
+
+    void Start()
+    {
+        rotationDirection = rotateUpwards ? 1f : -1f;
+
+        if (faceRight)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x *= -1f;
+            transform.localScale = scale;
+        }
+    }
 
     void Update()
     {
-        float direction = moveUpwards ? 1f : -1f;
-        transform.position += Vector3.up * speed * direction * Time.deltaTime;
+        float rotationStep = rotationSpeed * Time.deltaTime;
+        transform.Rotate(0f, 0f, rotationStep * rotationDirection);
+        totalRotated += rotationStep;
 
-        timer += Time.deltaTime;
-        if (timer >= duration)
+        if (totalRotated >= 75f)
+        {
             Destroy(gameObject);
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>()?.TakeDamage(15f);
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
         }
     }
 }
