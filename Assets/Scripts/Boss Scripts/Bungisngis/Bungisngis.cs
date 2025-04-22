@@ -267,15 +267,16 @@ public class Bungisngis : MonoBehaviour, IDamageable
     }
 
     public void SpawnEyeLaser()
-    {
-        bool topToBottom = Random.value > 0.5f;
-        bool isFacingRight = spriteRenderer.flipX;
+{
+    bool topToBottom = Random.value > 0.5f;
+    bool isFacingRight = spriteRenderer.flipX;
 
-        GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
+    GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
 
-        EyeLaser eyeLaser = laser.GetComponent<EyeLaser>();
-        eyeLaser.faceRight = isFacingRight;
-    }
+    EyeLaser eyeLaser = laser.GetComponent<EyeLaser>();
+    eyeLaser.rotateUpwards = !topToBottom;
+    eyeLaser.faceRight = isFacingRight;
+}
 
     public void PerformBoulderThrow()
     {

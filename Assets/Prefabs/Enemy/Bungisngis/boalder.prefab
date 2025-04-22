@@ -161,6 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2585d6c7bb6d7242953a9ea5897380b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobForce: 10
-  rollSpeed: 5
+  lobHeight: 5
+  rollSpeed: 7
   damage: 10

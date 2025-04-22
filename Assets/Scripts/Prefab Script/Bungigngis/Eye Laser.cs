@@ -3,8 +3,9 @@ using UnityEngine;
 public class EyeLaser : MonoBehaviour
 {
     public float rotationSpeed = 200f;
-    public bool rotateUpwards = false;
+    public bool rotateUpwards = true;
     public bool faceRight = false;
+    public float damage = 15f;
 
     private float totalRotated = 0f;
     private float rotationDirection;
@@ -19,6 +20,20 @@ public class EyeLaser : MonoBehaviour
             scale.x *= -1f;
             transform.localScale = scale;
         }
+
+        if (rotateUpwards)
+        {
+            // Steep angle for upward rotation
+            float initialAngle = faceRight ? -45f : 45f;
+            transform.rotation = Quaternion.Euler(0f, 0f, initialAngle);
+        }
+
+        if (!rotateUpwards)
+        {
+            // Gentle angle for downward rotation
+            float initialAngle = faceRight ? -10f : 10f;
+            transform.rotation = Quaternion.Euler(0f, 0f, initialAngle);
+        }
     }
 
     void Update()
@@ -30,6 +45,18 @@ public class EyeLaser : MonoBehaviour
         if (totalRotated >= 75f)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
         }
     }
 }
