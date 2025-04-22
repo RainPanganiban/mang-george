@@ -274,7 +274,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         GameObject laser = Instantiate(eyeLaserPrefab, eyeLaserSpawnPoint.position, Quaternion.identity);
 
         EyeLaser eyeLaser = laser.GetComponent<EyeLaser>();
-        eyeLaser.rotateUpwards = !topToBottom;
         eyeLaser.faceRight = isFacingRight;
     }
 

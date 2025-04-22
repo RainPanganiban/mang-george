@@ -163,3 +163,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lobForce: 10
   rollSpeed: 5
+  damage: 10

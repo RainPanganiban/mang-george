@@ -3,9 +3,8 @@ using UnityEngine;
 public class EyeLaser : MonoBehaviour
 {
     public float rotationSpeed = 200f;
-    public bool rotateUpwards = true;
+    public bool rotateUpwards = false;
     public bool faceRight = false;
-    public float damage = 15f;
 
     private float totalRotated = 0f;
     private float rotationDirection;
@@ -31,18 +30,6 @@ public class EyeLaser : MonoBehaviour
         if (totalRotated >= 75f)
         {
             Destroy(gameObject);
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            PlayerController player = other.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                player.TakeDamage(damage);
-            }
         }
     }
 }

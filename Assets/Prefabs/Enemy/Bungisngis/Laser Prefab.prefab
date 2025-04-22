@@ -173,3 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 30
   rotateUpwards: 1
+  faceRight: 0
+  damage: 15
