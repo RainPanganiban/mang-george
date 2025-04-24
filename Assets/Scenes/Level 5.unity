@@ -1214,17 +1214,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &326699350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4526088319225470780, guid: a7603618d68d325488f0f49d5a0408c3, type: 3}
-  m_PrefabInstance: {fileID: 205612954}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &451020681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,90 +1719,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &511186563
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 511186565}
-  - component: {fileID: 511186564}
-  m_Layer: 0
-  m_Name: sample
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &511186564
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511186563}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e592065fbf832b546991316701d28c71, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 19.2, y: 10.8}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &511186565
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511186563}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.175953, y: 0.79606086, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &527284448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,7 +2177,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777737128}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f05a878516b9494389940c4ed1365d2, type: 3}
   m_Name: 
@@ -7276,14 +7181,13 @@ GameObject:
   - component: {fileID: 892475110}
   - component: {fileID: 892475109}
   - component: {fileID: 892475113}
-  - component: {fileID: 892475114}
   m_Layer: 6
-  m_Name: Bungisngis
+  m_Name: Kapre
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &892475109
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7316,18 +7220,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.9031162, y: -2.4112134}
+  m_Offset: {x: 9.806043, y: -13.973997}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 64.416664, y: 56.083332}
+    oldSize: {x: 79.416664, y: 78.5}
     newSize: {x: 17.12, y: 30.83708}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 13.747559, y: 32.775887}
+  m_Size: {x: 21.818228, y: 38.518475}
   m_EdgeRadius: 0
 --- !u!50 &892475110
 Rigidbody2D:
@@ -7397,7 +7301,7 @@ SpriteRenderer:
   m_SortingLayerID: -1241894755
   m_SortingLayer: 12
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 05727a76a20a5af41868b6e09b34d3cb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b88db447027a2547a0fa68bde9ce302, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7417,7 +7321,7 @@ Transform:
   m_GameObject: {fileID: 892475105}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.43, y: -1.28, z: 0}
+  m_LocalPosition: {x: 5.85, y: 2.07, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7437,7 +7341,7 @@ Animator:
   m_GameObject: {fileID: 892475105}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4e5f56c0854d222498a89c60db701a5f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 05530be056125d244ba8de6b88bd1040, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -7448,43 +7352,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &892475114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892475105}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8407eae80fd873443aa29dd8649b9654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 250
-  slider: {fileID: 326699350}
-  attackInterval: 0.3
-  attackCooldownTime: 0.3
-  soundWavePrefab: {fileID: 1819227435785094262, guid: 2925ccd24a8425542bd6f7745aed7987, type: 3}
-  spawnPoint: {fileID: 748968320}
-  shockwavePrefab: {fileID: 7209423818584882914, guid: ec067b1e4dd6a5c478496b4017dd27a0, type: 3}
-  stompSpawnPoint: {fileID: 1571230690}
-  walkSpeed: 4
-  smashRange: 3
-  smashWindUpTime: 0.5
-  smashDamage: 10
-  smashPoint: {fileID: 1034412088}
-  smashRadius: 3.2
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  clubPrefab: {fileID: 3393190111719791557, guid: 2d3d19a700174604b874a3fe52a7fb92, type: 3}
-  clubSpawnPoint: {fileID: 264262080}
-  eyeLaserPrefab: {fileID: 0}
-  eyeLaserSpawnPoint: {fileID: 0}
-  boulderPrefab: {fileID: 0}
-  boulderSpawnPoint: {fileID: 0}
-  phase3TeleportPoint: {fileID: 0}
-  currentPhase: 1
 --- !u!1 &974352114
 GameObject:
   m_ObjectHideFlags: 0
@@ -14561,7 +14428,6 @@ SceneRoots:
   - {fileID: 892475112}
   - {fileID: 1778592731}
   - {fileID: 1215609589}
-  - {fileID: 511186565}
   - {fileID: 2095894887}
   - {fileID: 974352116}
   - {fileID: 1691843887}
