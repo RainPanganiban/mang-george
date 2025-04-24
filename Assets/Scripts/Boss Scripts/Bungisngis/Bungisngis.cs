@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class Bungisngis : MonoBehaviour, IDamageable
 {
-    [SerializeField][Header("Health Settings")] public int maxHealth = 250;
+    [SerializeField]
+    [Header("Health Settings")] 
+    public int maxHealth = 250;
     private float currentHealth;
     public Slider slider;
 
-    [SerializeField][Header("Attack Settings")] public float attackInterval = 5f;
+    [SerializeField]
+    [Header("Attack Settings")] 
+    public float attackInterval = 5f;
     private float attackTimer;
     public float attackCooldownTime = 2f;
     private bool canAttack = true;
-    private int lastAttackChoice = -1;
 
     [SerializeField]
     [Header("Phase 1")]
@@ -121,7 +124,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            int attackChoice;
             int randomAttack;
 
             switch (currentPhase)

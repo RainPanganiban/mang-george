@@ -1,0 +1,210 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Kapre : MonoBehaviour, IDamageable
+{
+    [SerializeField]
+    [Header("Health Settings")]
+    public int maxHealth = 250;
+    private float currentHealth;
+    public Slider slider;
+
+    [SerializeField]
+    [Header("Attack Settings")]
+    public float attackInterval = 5f;
+    private float attackTimer;
+    public float attackCooldownTime = 2f;
+    private bool canAttack = true;
+
+    [SerializeField]
+    [Header("Phase 1")]
+    public GameObject smokePrefab;
+    public Transform smokePoint;
+    public GameObject spikePrefab;
+    public int spikeCount = 5;
+    public float spikeSpacing = 1.5f;
+    public LayerMask groundLayer;
+
+    [SerializeField]
+    [Header("Phase Settings")]
+    public int currentPhase = 1;
+    private bool isTransitioning = false;
+
+    private Transform player;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    private Color originalColor;
+    private bool isInvincible = false;
+    private bool isAttacking = false;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+        slider.maxValue = maxHealth;
+        slider.value = currentHealth;
+        attackTimer = attackInterval;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        originalColor = spriteRenderer.color;
+    }
+
+    void Update()
+    {
+        HandlePhases();
+
+        if (!isTransitioning && !isAttacking)
+        {
+            HandleAttacks();
+        }
+
+        FacePlayer();
+    }
+
+    void FacePlayer()
+    {
+        if (player == null) return;
+
+        bool isFacingRight = player.position.x > transform.position.x;
+        spriteRenderer.flipX = player.position.x > transform.position.x;
+    }
+
+    void HandlePhases()
+    {
+        if (currentHealth > 175 && currentPhase != 1)
+        {
+            currentPhase = 1;
+            animator.SetInteger("Phase", currentPhase);
+        }
+        else if (currentHealth > 75 && currentHealth <= 175 && currentPhase != 2)
+        {
+            currentPhase = 2;
+            animator.SetInteger("Phase", currentPhase);
+        }
+        else if (currentHealth <= 75 && currentPhase != 3)
+        {
+            currentPhase = 3;
+            animator.SetInteger("Phase", currentPhase);
+
+        }
+    }
+
+    void HandleAttacks()
+    {
+        if (!canAttack) return;
+
+        attackTimer -= Time.deltaTime;
+        if (attackTimer <= 0)
+        {
+            int randomAttack;
+
+            switch (currentPhase)
+            {
+                case 1:
+                    randomAttack = Random.Range(0, 2);
+                    animator.SetTrigger(randomAttack == 0 ? "Smoke" : "Spike");
+                    StartCoroutine(AttackCooldown());
+                    break;
+
+                case 2:
+                    randomAttack = Random.Range(0, 2);
+                    animator.SetTrigger(randomAttack == 0 ? "Laser" : "Boulder");
+                    StartCoroutine(AttackCooldown());
+                    break;
+
+                case 3:
+                    randomAttack = Random.Range(0, 2);
+                    animator.SetTrigger(randomAttack == 0 ? "Laser" : "Boulder");
+                    StartCoroutine(AttackCooldown());
+                    break;
+            }
+        }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        Debug.Log("Attack Cooldown started");
+        yield return new WaitForSeconds(attackCooldownTime);
+        attackTimer = attackInterval;
+        canAttack = true;
+        Debug.Log("Attack Cooldown ended, ready to attack again");
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (isInvincible) return;
+
+        currentHealth -= damage;
+        slider.value = currentHealth;
+
+        StartCoroutine(FlashRed());
+
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    IEnumerator FlashRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.07f);
+        spriteRenderer.color = originalColor;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+    }
+
+    public void PerformSmoke()
+    {
+        Instantiate(smokePrefab, smokePoint.position, Quaternion.identity);
+    }
+
+    public void PerformSpikeWave()
+    {
+        Vector2 startPos = transform.position;
+        Vector2 playerPos = player.position;
+        Vector2 direction = (playerPos - startPos).normalized;
+
+        RaycastHit2D[] groundHits = Physics2D.RaycastAll(startPos, Vector2.down, 10f);
+        Vector3 spawnBasePos = transform.position;
+
+        foreach (var hit in groundHits)
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                spawnBasePos.y = hit.point.y + 0.1f;
+                break;
+            }
+        }
+
+        StartCoroutine(SpawnSpikesWave(spawnBasePos, direction));
+    }
+
+    IEnumerator SpawnSpikesWave(Vector3 startPos, Vector2 direction)
+    {
+        bool facingRight = player.position.x > transform.position.x;
+        float dir = facingRight ? 1f : -1f;
+
+        for (int i = 0; i < spikeCount; i++)
+        {
+            Vector3 offset = new Vector3(i * spikeSpacing * dir, 0, 0);
+            Vector3 spawnPos = startPos + offset;
+
+            // Raycast downward to find ground
+            RaycastHit2D hit = Physics2D.Raycast(spawnPos + Vector3.up * 5f, Vector2.down, 10f, groundLayer);
+            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            {
+                Vector3 groundPos = new Vector3(spawnPos.x, hit.point.y + 0.1f, 0);
+                Instantiate(spikePrefab, groundPos, Quaternion.identity);
+            }
+
+            yield return new WaitForSeconds(0.1f); // Wave delay
+        }
+    }
+
+}
