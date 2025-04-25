@@ -38,15 +38,13 @@ public class Shockwave : MonoBehaviour
     {
         direction = dir.normalized;
 
-        // Ensure the scale of the shockwave stays consistent, regardless of direction.
+        // Flip the visual only (assuming the default faces right)
         if (dir.x < 0)
         {
-            // Flip the shockwave when moving left but do not change its size.
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            // Ensure the shockwave is facing right without flipping its size.
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }

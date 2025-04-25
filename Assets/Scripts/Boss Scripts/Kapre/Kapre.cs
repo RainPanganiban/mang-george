@@ -292,6 +292,9 @@ public class Kapre : MonoBehaviour, IDamageable
 
     public void SpawnShockwaveLine()
     {
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+        StartCoroutine(cameraShake.Shake(0.5f, 0.5f));
+
         GameObject wave = Instantiate(shockwaveLinePrefab, shockwaveSpawnPoint.position, Quaternion.identity);
         Vector2 dir = spriteRenderer.flipX ? Vector2.right : Vector2.left;
         wave.GetComponent<Shockwave>().SetDirection(dir);

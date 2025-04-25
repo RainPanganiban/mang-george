@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20b5c5d8fb836f408cd056bf32a3503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   damage: 20
   direction: {x: 0, y: 0}
   impactRadius: 2.8
