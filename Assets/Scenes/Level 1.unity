@@ -1551,6 +1551,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scene Transition
       objectReference: {fileID: 0}
+    - target: {fileID: 7546113411860890923, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 997.4701
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546113411860890923, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546113411860890923, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

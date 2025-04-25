@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Top Down Shooter
+  companyName: BNB Studio
+  productName: MANG GEORGE
   defaultCursor: {fileID: 2800000, guid: 63bdfb49da3475249a9b4505b20e856b, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -286,7 +286,14 @@ PlayerSettings:
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 68f51eed8572c164b991cdea8c990d89, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons: []
   m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
@@ -710,11 +717,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: fbe57bf5-1f6d-4904-a523-0e4b36b6076e
+  cloudProjectId: 1704898f-9056-404f-8865-146debc61037
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Top Down Shooter
-  organizationId: riaatoshima
+  projectName: EMC_GameProg2
+  organizationId: jaydieldfuriscal
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

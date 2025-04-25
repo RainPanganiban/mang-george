@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class KaprePhase3 : MonoBehaviour, IDamageable
 {
+    public string sceneToLoad = "EndingScene";
     [SerializeField]
     [Header("Health Settings")]
     public int maxHealth = 600;
@@ -31,7 +33,7 @@ public class KaprePhase3 : MonoBehaviour, IDamageable
     public int currentPhase = 3;
     private bool isTransitioning = false;
     public float duration = 3f;
-    private bool hasFistsCollided = false;
+    //private bool hasFistsCollided = false;
     private Vector3 initialLeftFistPosition;
     private Vector3 initialRightFistPosition;
 
@@ -101,8 +103,6 @@ public class KaprePhase3 : MonoBehaviour, IDamageable
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            int randomAttack;
-
             switch (currentPhase)
             {
                 case 1:
@@ -152,7 +152,8 @@ public class KaprePhase3 : MonoBehaviour, IDamageable
     void Die()
     {
         Destroy(gameObject);
-        FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+        SceneManager.LoadScene(sceneToLoad);
+
     }
 
     public void ShakeCamera(float duration)

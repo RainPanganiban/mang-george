@@ -45,7 +45,7 @@ public class PlayerStats : MonoBehaviour
                 dashCooldown -= 0.5f; // Decrease dash cooldown
                 break;
             case "Damage":
-                damageMultiplier += 0.5f; // Increase damage output
+                damageMultiplier += 1.5f; // Increase damage output
                 break;
         }
 

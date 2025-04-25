@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using Unity.PlasticSCM.Editor.WebApi;
 
 public class Spear : MonoBehaviour, IDamageable
 {

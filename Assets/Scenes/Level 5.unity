@@ -7710,7 +7710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c5530d7ba8f2145acf676fa37e8751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 600
+  maxHealth: 400
   slider: {fileID: 1869691768}
   attackInterval: 0.5
   attackCooldownTime: 0.5
@@ -8574,6 +8574,10 @@ PrefabInstance:
     - target: {fileID: 395775225048234592, guid: 1e2832519e2c7a24298a587a03f6ef16, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987210125855009830, guid: 1e2832519e2c7a24298a587a03f6ef16, type: 3}
+      propertyPath: damageMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5720763358100724339, guid: 1e2832519e2c7a24298a587a03f6ef16, type: 3}
       propertyPath: m_Name
@@ -14231,6 +14235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b54c3f83812aae41bbb1a96d854d9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneToLoad: EndingScene
   maxHealth: 600
   slider: {fileID: 1869691768}
   attackInterval: 0.5

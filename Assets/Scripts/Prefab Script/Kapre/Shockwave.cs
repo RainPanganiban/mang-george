@@ -7,11 +7,11 @@ public class Shockwave : MonoBehaviour
     public float damage = 10f;
     public Vector2 direction = Vector2.right;
 
-    private PolygonCollider2D collider2D;
+    private PolygonCollider2D myCollider;
 
     void Start()
     {
-        collider2D = GetComponent<PolygonCollider2D>();
+        myCollider = GetComponent<PolygonCollider2D>();
         Destroy(gameObject, lifetime);
     }
 

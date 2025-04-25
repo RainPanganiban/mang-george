@@ -206,11 +206,16 @@ public class Enemy : MonoBehaviour , IDamageable
         GetComponent<Enemy>().enabled = false;
         tutorialOverlay.SetActive(false);
 
-        StartCoroutine(HandleDeathSequence());
+        UpgradeManager upgradeManager = FindAnyObjectByType<UpgradeManager>();
+        if (upgradeManager != null)
+        {
+            upgradeManager.ShowUpgradeOptions();
+        }
 
+        Destroy(gameObject);
     }
 
-    IEnumerator HandleDeathSequence()
+    /*IEnumerator HandleDeathSequence()
     {
         
         yield return new WaitForSeconds(4f);
@@ -222,6 +227,6 @@ public class Enemy : MonoBehaviour , IDamageable
         }
 
         Destroy(gameObject);
-    }
+    }*/
 
 }

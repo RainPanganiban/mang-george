@@ -15,7 +15,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     private float attackTimer;
     public float attackCooldownTime = 2f;
     private bool canAttack = true;
-    private int lastAttackChoice = -1;
+    //private int lastAttackChoice = -1;
 
     [SerializeField]
     [Header("Phase 1")]
@@ -125,7 +125,6 @@ public class Bungisngis : MonoBehaviour, IDamageable
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            int attackChoice;
             int randomAttack;
 
             switch (currentPhase)

@@ -7,7 +7,7 @@ public class Kapre : MonoBehaviour, IDamageable
 {
     [SerializeField]
     [Header("Health Settings")]
-    public int maxHealth = 600;
+    public int maxHealth = 400;
     private float currentHealth;
     public Slider slider;
 
@@ -99,17 +99,17 @@ public class Kapre : MonoBehaviour, IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 450 && currentPhase != 1)
+        if (currentHealth > 300 && currentPhase != 1)
         {
             currentPhase = 1;
             animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth <= 450 && currentHealth > 250 && currentPhase != 2)
+        else if (currentHealth <= 300 && currentHealth > 150 && currentPhase != 2)
         {
             currentPhase = 2;
             animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth <= 250 && currentPhase != 3)
+        else if (currentHealth <= 150 && currentPhase != 3)
         {
             currentPhase = 3;
             animator.SetInteger("Phase", currentPhase);
