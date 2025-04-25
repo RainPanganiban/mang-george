@@ -40,6 +40,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     public float wingAttackRange = 3f;
     public int wingAttackDamage = 10;
     public float knockbackForce = 5f;
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -48,6 +49,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         originalColor = spriteRenderer.color;
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        audioManager = FindObjectOfType<AudioManager>();
 
         randomOffset = Random.Range(0f, Mathf.PI * 2f);
 
@@ -143,6 +145,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
         FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+        audioManager.PlayEnemySFX(audioManager.deathEnemy);
     }
 
     IEnumerator AttackLoop()
@@ -200,6 +203,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
         canAttack = false;
         canMove = false;
         animator.SetTrigger("WingAttack");
+        
     }
 
     public void TriggerWingAttack()
@@ -208,6 +212,7 @@ public class ManananggalUpperBody : MonoBehaviour, IDamageable
 
         Vector3 targetPosition = player.position;
         GameObject wind = Instantiate(windPrefab, windSpawnPoint.position, Quaternion.identity);
+        audioManager.PlayEnemySFX(audioManager.attackingSound2);
         WindProjectile windScript = wind.GetComponent<WindProjectile>();
         if (windScript != null)
         {

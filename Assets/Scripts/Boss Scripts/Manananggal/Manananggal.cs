@@ -30,6 +30,7 @@ public class Manananggal : MonoBehaviour, IDamageable
     private Animator animator;
     private Color originalColor;
     private bool isInvincible = false;
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -41,6 +42,10 @@ public class Manananggal : MonoBehaviour, IDamageable
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         originalColor = spriteRenderer.color;
+        audioManager = FindObjectOfType<AudioManager>();
+        audioManager.PlayEnemySFX(audioManager.intro);
+
+
     }
 
     void Update()
@@ -84,6 +89,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         isInvincible = true;
 
         animator.SetTrigger("Split"); // Play splitting animation
+        audioManager.PlayEnemySFX(audioManager.transition);
 
         yield return new WaitForSeconds(2f);
 
@@ -120,6 +126,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         if (animator != null)
         {
             animator.SetTrigger("Bat Summon"); // Play summon animation
+            
         }
 
         StartCoroutine(SummonBatsAfterAnimation());
@@ -130,6 +137,7 @@ public class Manananggal : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         HomingPaniki();
         animator.SetBool("isAttacking", false);
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
     }
 
     void HomingPaniki()
@@ -191,5 +199,6 @@ public class Manananggal : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
         FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+        
     }
 }
