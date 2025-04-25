@@ -7,7 +7,7 @@ public class Kapre : MonoBehaviour, IDamageable
 {
     [SerializeField]
     [Header("Health Settings")]
-    public int maxHealth = 250;
+    public int maxHealth = 400;
     private float currentHealth;
     public Slider slider;
 
@@ -37,6 +37,12 @@ public class Kapre : MonoBehaviour, IDamageable
     public float smashRadius = 1.5f;
     public LayerMask playerLayer;
     public float teleportDistance = 2f;
+
+    [SerializeField]
+    [Header("Phase 3")]
+    public GameObject shockwaveLinePrefab;
+    public Transform shockwaveSpawnPoint;
+    public GameObject meteorPrefab;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -84,21 +90,25 @@ public class Kapre : MonoBehaviour, IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 175 && currentPhase != 1)
+        if (currentHealth > 300 && currentPhase != 1)
         {
             currentPhase = 1;
             animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth > 75 && currentHealth <= 175 && currentPhase != 2)
+        else if (currentHealth <= 300 && currentHealth > 200 && currentPhase != 2)
         {
             currentPhase = 2;
             animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth <= 75 && currentPhase != 3)
+        else if (currentHealth <= 200 && currentHealth > 100 && currentPhase != 3)
         {
             currentPhase = 3;
             animator.SetInteger("Phase", currentPhase);
-
+        }
+        else if (currentHealth <= 100 && currentPhase != 4)
+        {
+            currentPhase = 4;
+            animator.SetInteger("Phase", currentPhase);
         }
     }
 
@@ -129,7 +139,7 @@ public class Kapre : MonoBehaviour, IDamageable
 
                 case 3:
                     randomAttack = Random.Range(0, 2);
-                    animator.SetTrigger(randomAttack == 0 ? "Laser" : "Boulder");
+                    animator.SetTrigger(randomAttack == 0 ? "Fireball" : "Hand Smash Wave");
                     StartCoroutine(AttackCooldown());
                     break;
             }
@@ -279,5 +289,36 @@ public class Kapre : MonoBehaviour, IDamageable
         transform.position = teleportPos;
         animator.SetTrigger("Smash2");
     }
+
+    public void SpawnShockwaveLine()
+    {
+        GameObject wave = Instantiate(shockwaveLinePrefab, shockwaveSpawnPoint.position, Quaternion.identity);
+        Vector2 dir = spriteRenderer.flipX ? Vector2.right : Vector2.left;
+        wave.GetComponent<Shockwave>().SetDirection(dir);
+    }
+
+    public void MeteorFallAttack()
+    {
+        // Trigger shout animation
+        animator.SetTrigger("Fireball");
+
+        // Wait for shout animation to finish, then spawn meteor
+        StartCoroutine(SpawnMeteorAfterShout());
+    }
+
+    IEnumerator SpawnMeteorAfterShout()
+    {
+        // Wait for the shout animation to complete (you can adjust this based on the length of your shout animation)
+        yield return new WaitForSeconds(1f); // Assuming the shout lasts 1 second
+
+        // Spawn the meteor at the top of the screen or at a random position
+        GameObject meteor = Instantiate(meteorPrefab, new Vector3(Random.Range(-10f, 10f), 10f, 0), Quaternion.identity);
+        Meteor meteorScript = meteor.GetComponent<Meteor>();
+
+        // You can also add a random angle or adjust the direction if needed
+        meteorScript.direction = (player.position - meteor.transform.position).normalized; // Direction toward the player
+    }
+
+
 
 }

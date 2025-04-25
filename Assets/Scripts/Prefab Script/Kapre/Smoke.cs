@@ -87,9 +87,12 @@ public class SmokeProjectile : MonoBehaviour
             {
                 player.TakeDamage(damage);
             }
-
             isActive = false;
             Destroy(gameObject); // Remove projectile
+        }
+        else
+        {
+            Destroy(gameObject, 7f);
         }
     }
 }

@@ -457,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6677160771273712738, guid: fe144dfb0e398e041a8a4f3a73718faa, type: 3}
       propertyPath: m_text
-      value: 'Kabanata 04:
+      value: 'Kabanata 05:
 
 '
       objectReference: {fileID: 0}
@@ -2307,6 +2307,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &792706389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792706390}
+  m_Layer: 6
+  m_Name: Shockwave Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &792706390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792706389}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.4, y: -8.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 892475112}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824169649
 GameObject:
   m_ObjectHideFlags: 0
@@ -7297,6 +7328,7 @@ Transform:
   m_Children:
   - {fileID: 748968320}
   - {fileID: 1694444111}
+  - {fileID: 792706390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &892475113
@@ -7332,7 +7364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c5530d7ba8f2145acf676fa37e8751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 250
+  maxHealth: 400
   slider: {fileID: 1869691768}
   attackInterval: 0.5
   attackCooldownTime: 0.5
@@ -7354,6 +7386,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   teleportDistance: 2
+  shockwaveLinePrefab: {fileID: 7559041127951040501, guid: b0c3a5cc75215c9488b59f08df189a79, type: 3}
+  shockwaveSpawnPoint: {fileID: 792706390}
+  meteorPrefab: {fileID: 5115882230631059685, guid: 4c49dcc991c2cc2459a412e9319aabad, type: 3}
   currentPhase: 1
 --- !u!1 &974352114
 GameObject:
