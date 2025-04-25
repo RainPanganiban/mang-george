@@ -34,7 +34,7 @@ public class CutscenePlayer : MonoBehaviour
 
     IEnumerator BlinkSkipButton()
     {
-        Debug.Log("Blink coroutine started");
+        
         CanvasGroup canvasGroup = skipButton.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {

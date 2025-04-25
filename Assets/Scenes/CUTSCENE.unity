@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 1854130913}
   sceneToLoad: Tutorial
-  skipButton: {fileID: 0}
+  skipButton: {fileID: 1357813539}
 --- !u!4 &174848537
 Transform:
   m_ObjectHideFlags: 0
