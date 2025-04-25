@@ -6988,25 +6988,53 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: hurt1
+      value: 
+      objectReference: {fileID: 8300000, guid: bbf8fe73743ec714babbc04d5cd51956, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: hurt2
+      value: 
+      objectReference: {fileID: 8300000, guid: a704eff33469ef94fbf55233a816c999, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: hurt3
+      value: 
+      objectReference: {fileID: 8300000, guid: e92a8483c76cd6249a764ea77ae9564c, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: intro
+      value: 
+      objectReference: {fileID: 8300000, guid: 00c801a860680774cb6dbafbde6603d2, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: deathEnemy
+      value: 
+      objectReference: {fileID: 8300000, guid: 25a7fc712bbf3f346ab136ded3041106, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c1863c45cac7b846b5a52e2fa2ced5d, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: musicVolume
       value: 0.493
       objectReference: {fileID: 0}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: attackingSound1
       value: 
-      objectReference: {fileID: 8300000, guid: 0dc7d0b440dad184dae7a6fa2bbb885a, type: 3}
+      objectReference: {fileID: 8300000, guid: 09cc10f5f3a724e499aaba1fe63c5a74, type: 3}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: attackingSound2
       value: 
-      objectReference: {fileID: 8300000, guid: 8f9135d3c237e574d9afc5f3c7fa2776, type: 3}
+      objectReference: {fileID: 8300000, guid: df2f0a443f838fa4d91c6fad9ddc5617, type: 3}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: attackingSound3
       value: 
-      objectReference: {fileID: 8300000, guid: 09ce573008c05fc458486e24b9e014b6, type: 3}
+      objectReference: {fileID: 8300000, guid: 00c801a860680774cb6dbafbde6603d2, type: 3}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: attackingSound5
       value: 
-      objectReference: {fileID: 8300000, guid: eb753870ff7eb384abfd0cef017e077f, type: 3}
+      objectReference: {fileID: 8300000, guid: bd2e2f2638dccd941a783a7c35600d26, type: 3}
+    - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
+      propertyPath: attackingSound6
+      value: 
+      objectReference: {fileID: 8300000, guid: 17d7dacd3be714449a3df9e559dc1110, type: 3}
     - target: {fileID: 8659444354491560492, guid: b034b96d023c2344397c17363f4e060c, type: 3}
       propertyPath: backgroundMusic
       value: 
@@ -18885,6 +18913,7 @@ MonoBehaviour:
   dashSpeed: 30
   dashTime: 0.15
   dashCooldown: 1.5
+  dashDistance: 5
   dust: {fileID: 777549140}
   playerHealth: 100
   slider: {fileID: 349000589}

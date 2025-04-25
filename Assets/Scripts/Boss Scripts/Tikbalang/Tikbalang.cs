@@ -76,6 +76,8 @@ public class Tikbalang : MonoBehaviour, IDamageable
         audioManager = FindObjectOfType<AudioManager>();
         tikbalangCollider = GetComponent<Collider2D>();
         originalColor = spriteRenderer.color;
+
+        audioManager.PlayEnemySFX(audioManager.intro);
     }
 
     void Update()
@@ -402,6 +404,7 @@ public class Tikbalang : MonoBehaviour, IDamageable
         }
 
         audioManager.PlayEnemySFX(audioManager.attackingSound1);
+        audioManager.PlayEnemySFX(audioManager.attackingSound6);
     }
 
     public void StompAttack()
@@ -483,5 +486,6 @@ public class Tikbalang : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
         FindAnyObjectByType<UpgradeManager>().ShowUpgradeOptions();
+        audioManager.PlayEnemySFX(audioManager.deathEnemy);
     }
 }
