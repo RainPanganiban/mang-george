@@ -58,10 +58,18 @@ MonoBehaviour:
   hurt2: {fileID: 8300000, guid: f13b38a409191be4e98fec84e6a3238b, type: 3}
   hurt3: {fileID: 8300000, guid: 759aaf7fc53e794488041ff61836de97, type: 3}
   sfxVolume: 1
-  attackingSound: {fileID: 0}
+  attackingSound1: {fileID: 0}
+  attackingSound2: {fileID: 0}
+  attackingSound3: {fileID: 0}
+  attackingSound5: {fileID: 0}
+  attackingSound6: {fileID: 0}
   transition: {fileID: 0}
   deathEnemy: {fileID: 0}
+  intro: {fileID: 0}
   enemySFXVolume: 1
+  maghanda: {fileID: 8300000, guid: f85a55f10a4664446bf942eb17e5fef4, type: 3}
+  puksain: {fileID: 8300000, guid: 3f34b5b02ff0c75448532adfaf74dd2a, type: 3}
+  uiSFX: 1
 --- !u!1 &4220974383609930885
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,6 +31,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip intro;
     [Range(0f, 1f)] public float enemySFXVolume = 1.0f;
 
+    [Header("UI FX")]
+    public AudioClip maghanda;
+    public AudioClip puksain;
+    [Range(0f, 1f)] public float uiSFX = 1.0f;
+
     private void Start()
     {
         if (backgroundMusic != null)
