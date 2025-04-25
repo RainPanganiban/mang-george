@@ -7,7 +7,7 @@ public class Kapre : MonoBehaviour, IDamageable
 {
     [SerializeField]
     [Header("Health Settings")]
-    public int maxHealth = 400;
+    public int maxHealth = 600;
     private float currentHealth;
     public Slider slider;
 
@@ -27,7 +27,7 @@ public class Kapre : MonoBehaviour, IDamageable
     public float spikeSpacing = 1.5f;
     public LayerMask groundLayer;
 
-    [SerializeField]
+    /*[SerializeField]
     [Header("Phase 2")]
     public float walkSpeed = 2f;
     public float smashRange = 3f;
@@ -36,10 +36,10 @@ public class Kapre : MonoBehaviour, IDamageable
     public Transform smashPoint;
     public float smashRadius = 1.5f;
     public LayerMask playerLayer;
-    public float teleportDistance = 2f;
+    public float teleportDistance = 2f;*/
 
     [SerializeField]
-    [Header("Phase 3")]
+    [Header("Phase 2")]
     public GameObject shockwaveLinePrefab;
     public Transform shockwaveSpawnPoint;
     public GameObject lightningPrefab;
@@ -48,7 +48,10 @@ public class Kapre : MonoBehaviour, IDamageable
     public float indicatorDuration = 0.4f;
     public float stormYPosition = 2f;
     public float stormCallCooldownDuration = 10f;
-    private float nextStormCallTime = 0f;
+
+    [SerializeField]
+    [Header("Phase 3")]
+    public GameObject giantKaprePrefab;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -96,24 +99,19 @@ public class Kapre : MonoBehaviour, IDamageable
 
     void HandlePhases()
     {
-        if (currentHealth > 300 && currentPhase != 1)
+        if (currentHealth > 450 && currentPhase != 1)
         {
             currentPhase = 1;
             animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth <= 300 && currentHealth > 200 && currentPhase != 2)
+        else if (currentHealth <= 450 && currentHealth > 250 && currentPhase != 2)
         {
             currentPhase = 2;
             animator.SetInteger("Phase", currentPhase);
         }
-        else if (currentHealth <= 200 && currentHealth > 100 && currentPhase != 3)
+        else if (currentHealth <= 250 && currentPhase != 3)
         {
             currentPhase = 3;
-            animator.SetInteger("Phase", currentPhase);
-        }
-        else if (currentHealth <= 100 && currentPhase != 4)
-        {
-            currentPhase = 4;
             animator.SetInteger("Phase", currentPhase);
         }
     }
@@ -138,17 +136,13 @@ public class Kapre : MonoBehaviour, IDamageable
                 case 2:
                     randomAttack = Random.Range(0, 2);
                     if (randomAttack == 0)
-                        StartCoroutine(ApproachAndSmash());
-                    else
-                        animator.SetTrigger("Laugh");
-                    break;
-
-                case 3:
-                    randomAttack = Random.Range(0, 2);
-                    if (randomAttack == 0)
                         animator.SetTrigger("Fireball");
                     else
                         animator.SetTrigger("Hand Smash Wave");
+                    break;
+
+                case 3:
+                    Phase3Transition();
                     break;
             }
         }
@@ -238,7 +232,7 @@ public class Kapre : MonoBehaviour, IDamageable
         }
     }
 
-    IEnumerator ApproachAndSmash()
+    /*IEnumerator ApproachAndSmash()
     {
         isAttacking = true;
 
@@ -296,7 +290,7 @@ public class Kapre : MonoBehaviour, IDamageable
 
         transform.position = teleportPos;
         animator.SetTrigger("Smash2");
-    }
+    }*/
 
     public void SpawnShockwaveLine()
     {
@@ -323,7 +317,6 @@ public class Kapre : MonoBehaviour, IDamageable
         {
             float xPosition;
 
-            // Try to find a new x position far enough from previous strikes
             int attempts = 0;
             do
             {
@@ -337,14 +330,12 @@ public class Kapre : MonoBehaviour, IDamageable
 
             Vector2 spawnPos = new Vector2(xPosition, stormYPosition);
 
-            // Spawn line indicator
             GameObject line = Instantiate(lineIndicatorPrefab, spawnPos, Quaternion.identity);
 
             yield return new WaitForSeconds(indicatorDuration);
 
             Destroy(line);
 
-            // Spawn lightning
             Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
 
             yield return new WaitForSeconds(stormDelayBetweenStrikes);
@@ -352,6 +343,17 @@ public class Kapre : MonoBehaviour, IDamageable
 
         canAttack = false;
         StartCoroutine(AttackCooldown());
+    }
+
+    public void Phase3Transition()
+    {
+        isTransitioning = true;
+        isInvincible = true;
+
+        giantKaprePrefab.SetActive(true);
+        giantKaprePrefab.transform.position = transform.position;
+
+        gameObject.SetActive(false);
     }
 
 

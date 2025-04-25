@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5603213285982167763}
   - component: {fileID: 8485733399063875762}
   - component: {fileID: -6578495412708310283}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shockwave
-  m_TagString: Untagged
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
