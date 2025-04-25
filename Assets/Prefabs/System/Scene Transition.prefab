@@ -114,6 +114,7 @@ MonoBehaviour:
   healthUI: {fileID: 0}
   countdown: {fileID: 3178325372564936568}
   weapon: {fileID: 0}
+  tutorialOverlay: {fileID: 0}
   currentBoss: {fileID: 0}
 --- !u!1 &1019279443502104609
 GameObject:
@@ -641,6 +642,7 @@ MonoBehaviour:
   healthUI: {fileID: 0}
   countdown: {fileID: 0}
   weapon: {fileID: 0}
+  tutorialOverlay: {fileID: 0}
   currentBoss: {fileID: 0}
 --- !u!1 &4167139282735083648
 GameObject:

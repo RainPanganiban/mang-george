@@ -12,6 +12,7 @@ public class ActivateGame : MonoBehaviour
     public GameObject countdown;
     public GameObject weapon;
     public GameObject tutorialOverlay;
+    private AudioManager audioManager;
 
 
     [SerializeField]
@@ -21,6 +22,7 @@ public class ActivateGame : MonoBehaviour
     public void Start()
     {
         currentBoss = GameObject.FindGameObjectWithTag("Enemy");
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public void ActivatePlayerAndUI()
@@ -41,6 +43,16 @@ public class ActivateGame : MonoBehaviour
             tutorialOverlay.SetActive(false);
         }
 
+    }
+
+    public void PlayMaghanda()
+    {
+        audioManager.PlayEnemySFX(audioManager.maghanda);
+    }
+
+    public void PlayPuksain()
+    {
+        audioManager.PlayEnemySFX(audioManager.puksain);
     }
 
 }

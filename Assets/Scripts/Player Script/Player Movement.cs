@@ -39,9 +39,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 
-        moveSpeed = PlayerStats.Instance.moveSpeed;
-        dashCooldown = PlayerStats.Instance.dashCooldown;
-        currentHealth = PlayerStats.Instance.currentHealth;
+        moveSpeed = PlayerStats.Instance.moveSpeed;  // Reflect the speed upgrade
+        dashCooldown = PlayerStats.Instance.dashCooldown;  // Reflect the dash cooldown upgrade
+        currentHealth = PlayerStats.Instance.currentHealth;  // Reflect the health upgrade
 
         trailRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();

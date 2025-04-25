@@ -6,7 +6,7 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
 
-    public float damage = 10;
+    public float damage = 0.5f;
     public float lifetime = 3f;
     public int finalDamage;
 
@@ -23,6 +23,7 @@ public class Damage : MonoBehaviour
         }
         
         Destroy(gameObject, lifetime);
+        
         finalDamage = Mathf.RoundToInt(damage * PlayerStats.Instance.damageMultiplier);
 
     }

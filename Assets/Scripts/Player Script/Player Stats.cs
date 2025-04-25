@@ -9,6 +9,7 @@ public class PlayerStats : MonoBehaviour
     public float moveSpeed = 5f;
     public float dashCooldown = 2f;
     public float damageMultiplier = 1.0f;
+    public bool hasTripleShot = false;  // Flag to track if player has Triple Shot
 
     void Awake()
     {
@@ -31,7 +32,6 @@ public class PlayerStats : MonoBehaviour
 
     public void ApplyUpgrade(string upgradeType)
     {
-
         Debug.Log("Applying Upgrade: " + upgradeType);
 
         // Applies the upgrade based on type
@@ -50,8 +50,11 @@ public class PlayerStats : MonoBehaviour
             case "Damage":
                 damageMultiplier += 0.5f; // Increase damage output
                 break;
+            case "TripleShot":  // Add this case to handle Triple Shot
+                hasTripleShot = true;  // Unlock the Triple Shot
+                break;
         }
 
-        Debug.Log("New Stats -> Health: " + maxHealth + ", Speed: " + moveSpeed + ", Dash Cooldown: " + dashCooldown + ", Damage Multiplier: " + damageMultiplier);
+        Debug.Log("New Stats -> Health: " + maxHealth + ", Speed: " + moveSpeed + ", Dash Cooldown: " + dashCooldown + ", Damage Multiplier: " + damageMultiplier + ", TripleShot: " + hasTripleShot);
     }
 }
