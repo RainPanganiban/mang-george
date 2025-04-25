@@ -5,18 +5,17 @@ using UnityEngine.UI;
 
 public class Bungisngis : MonoBehaviour, IDamageable
 {
-    [SerializeField]
-    [Header("Health Settings")] 
-    public int maxHealth = 250;
+    private AudioManager audioManager;
+    
+    [SerializeField][Header("Health Settings")] public int maxHealth = 250;
     private float currentHealth;
     public Slider slider;
 
-    [SerializeField]
-    [Header("Attack Settings")] 
-    public float attackInterval = 5f;
+    [SerializeField][Header("Attack Settings")] public float attackInterval = 5f;
     private float attackTimer;
     public float attackCooldownTime = 2f;
     private bool canAttack = true;
+    private int lastAttackChoice = -1;
 
     [SerializeField]
     [Header("Phase 1")]
@@ -59,6 +58,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
 
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         currentHealth = maxHealth;
         slider.maxValue = maxHealth;
         slider.value = currentHealth;
@@ -67,6 +67,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         originalColor = spriteRenderer.color;
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
     }
 
     void Update()
@@ -124,6 +125,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
+            int attackChoice;
             int randomAttack;
 
             switch (currentPhase)
@@ -132,20 +134,25 @@ public class Bungisngis : MonoBehaviour, IDamageable
                     randomAttack = Random.Range(0, 2);
                     animator.SetTrigger(randomAttack == 0 ? "Stomp Quake" : "Sound Waves");
                     StartCoroutine(AttackCooldown());
+                    
                     break;
 
                 case 2:
                     randomAttack = Random.Range(0, 2);
+                    
                     if (randomAttack == 0)
                         StartCoroutine(ApproachAndSmash());
+
                     else
                         StartCoroutine(ClubThrowRoutine());
+
                     break;
 
                 case 3:
                     randomAttack = Random.Range(0, 2);
                     animator.SetTrigger(randomAttack == 0 ? "Laser" : "Boulder");
                     StartCoroutine(AttackCooldown());
+                    
                     break;
             }
         }
@@ -192,6 +199,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
         Vector2 direction = (player.position - spawnPoint.position).normalized;
         GameObject wave = Instantiate(soundWavePrefab, spawnPoint.position, Quaternion.identity);
         wave.GetComponent<SoundWave>().SetDirection(direction);
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
 
         StartCoroutine(AttackCooldown());
     }
@@ -200,6 +208,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     {
         CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
         GameObject wave = Instantiate(shockwavePrefab, stompSpawnPoint.position, Quaternion.identity);
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
         StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
         Vector2 dir = spriteRenderer.flipX ? Vector2.right : Vector2.left;
         wave.GetComponent<StompShockwave>().SetDirection(dir);
@@ -209,6 +218,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     {
         isAttacking = true;
         animator.ResetTrigger("Club Throw");
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
 
         while (Vector2.Distance(transform.position, player.position) > smashRange)
         {
@@ -257,6 +267,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
     {
         isAttacking = true;
         animator.SetTrigger("Club Throw");
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
 
         yield return new WaitForSeconds(2.5f);
 
@@ -283,6 +294,7 @@ public class Bungisngis : MonoBehaviour, IDamageable
         EyeLaser eyeLaser = laser.GetComponent<EyeLaser>();
         eyeLaser.rotateUpwards = false; // Always top to bottom
         eyeLaser.faceRight = isFacingRight;
+        audioManager.PlayEnemySFX(audioManager.attackingSound1);
     }
 
     public void PerformBoulderThrow()
