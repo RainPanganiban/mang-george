@@ -36,6 +36,7 @@ public class Kapre : MonoBehaviour, IDamageable
     public Transform smashPoint;
     public float smashRadius = 1.5f;
     public LayerMask playerLayer;
+    public float teleportDistance = 2f;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -123,7 +124,7 @@ public class Kapre : MonoBehaviour, IDamageable
                     if (randomAttack == 0)
                         StartCoroutine(ApproachAndSmash());
                     else
-                        animator.SetTrigger("Smash2");
+                        animator.SetTrigger("Laugh");
                     break;
 
                 case 3:
@@ -250,7 +251,7 @@ public class Kapre : MonoBehaviour, IDamageable
     public void GroundSmashDamage()
     {
         CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
-        StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
+        StartCoroutine(cameraShake.Shake(0.2f, 0.2f));
         Collider2D hit = Physics2D.OverlapCircle(smashPoint.position, smashRadius, playerLayer);
 
         if (hit != null && hit.TryGetComponent<PlayerController>(out var playerHealth))
@@ -266,6 +267,17 @@ public class Kapre : MonoBehaviour, IDamageable
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(smashPoint.position, smashRadius);
         }
+    }
+
+    public void TeleportAndSmash()
+    {
+        if (player == null) return;
+
+        Vector2 direction = (player.position - transform.position).normalized;
+        Vector2 teleportPos = (Vector2)player.position - direction * teleportDistance;
+
+        transform.position = teleportPos;
+        animator.SetTrigger("Smash2");
     }
 
 }
