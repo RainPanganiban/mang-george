@@ -2,22 +2,20 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public static PlayerStats Instance; // Singleton: Makes this accessible from anywhere
+    public static PlayerStats Instance;
 
     public int maxHealth = 100;
     public int currentHealth;
     public float moveSpeed = 5f;
     public float dashCooldown = 2f;
     public float damageMultiplier = 1.0f;
-    public bool hasTripleShot = false;  // Flag to track if player has Triple Shot
 
     void Awake()
     {
-        // Make sure there is only ONE instance of PlayerStats that carries across levels
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Keeps stats when loading a new scene
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -27,34 +25,31 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth; // Set starting health
+        currentHealth = maxHealth;
     }
 
     public void ApplyUpgrade(string upgradeType)
     {
         Debug.Log("Applying Upgrade: " + upgradeType);
 
-        // Applies the upgrade based on type
         switch (upgradeType)
         {
             case "Health":
-                maxHealth += 20; // Increase max HP
-                currentHealth = maxHealth; // Heal player
+                maxHealth += 100;
+                currentHealth = maxHealth; // Heal the player
                 break;
             case "Speed":
                 moveSpeed += 1.5f; // Increase movement speed
                 break;
             case "Dash":
-                dashCooldown -= 0.5f; // Reduce dash cooldown
+                dashCooldown -= 0.5f; // Decrease dash cooldown
                 break;
             case "Damage":
                 damageMultiplier += 0.5f; // Increase damage output
                 break;
-            case "TripleShot":  // Add this case to handle Triple Shot
-                hasTripleShot = true;  // Unlock the Triple Shot
-                break;
         }
 
-        Debug.Log("New Stats -> Health: " + maxHealth + ", Speed: " + moveSpeed + ", Dash Cooldown: " + dashCooldown + ", Damage Multiplier: " + damageMultiplier + ", TripleShot: " + hasTripleShot);
+        // Output the new stats to the console (for debugging purposes)
+        Debug.Log("New Stats -> Health: " + maxHealth + ", Speed: " + moveSpeed + ", Dash Cooldown: " + dashCooldown + ", Damage Multiplier: " + damageMultiplier);
     }
 }
