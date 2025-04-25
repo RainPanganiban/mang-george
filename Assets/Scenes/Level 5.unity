@@ -7388,7 +7388,13 @@ MonoBehaviour:
   teleportDistance: 2
   shockwaveLinePrefab: {fileID: 7559041127951040501, guid: b0c3a5cc75215c9488b59f08df189a79, type: 3}
   shockwaveSpawnPoint: {fileID: 792706390}
-  meteorPrefab: {fileID: 5115882230631059685, guid: 4c49dcc991c2cc2459a412e9319aabad, type: 3}
+  lightningPrefab: {fileID: 5014342171342761283, guid: b90d145d58e912944995b677d3a0873e, type: 3}
+  lineIndicatorPrefab: {fileID: 830419639518376704, guid: f281f69ee1911784aaf6fc349b9a6ccf, type: 3}
+  stormDelayBetweenStrikes: 0.6
+  indicatorDuration: 0.25
+  stormYPosition: 0.1
+  stormCallCooldownDuration: 10
+  giantKaprePrefab: {fileID: 1813438236}
   currentPhase: 1
 --- !u!1 &974352114
 GameObject:
@@ -13736,9 +13742,9 @@ GameObject:
   - component: {fileID: 1813438239}
   - component: {fileID: 1813438238}
   - component: {fileID: 1813438237}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Kapre p4
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

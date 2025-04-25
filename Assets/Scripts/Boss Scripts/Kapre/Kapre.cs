@@ -42,7 +42,13 @@ public class Kapre : MonoBehaviour, IDamageable
     [Header("Phase 3")]
     public GameObject shockwaveLinePrefab;
     public Transform shockwaveSpawnPoint;
-    public GameObject meteorPrefab;
+    public GameObject lightningPrefab;
+    public GameObject lineIndicatorPrefab;
+    public float stormDelayBetweenStrikes = 0.6f;
+    public float indicatorDuration = 0.4f;
+    public float stormYPosition = 2f;
+    public float stormCallCooldownDuration = 10f;
+    private float nextStormCallTime = 0f;
 
     [SerializeField]
     [Header("Phase Settings")]
@@ -139,8 +145,10 @@ public class Kapre : MonoBehaviour, IDamageable
 
                 case 3:
                     randomAttack = Random.Range(0, 2);
-                    animator.SetTrigger(randomAttack == 0 ? "Fireball" : "Hand Smash Wave");
-                    StartCoroutine(AttackCooldown());
+                    if (randomAttack == 0)
+                        animator.SetTrigger("Fireball");
+                    else
+                        animator.SetTrigger("Hand Smash Wave");
                     break;
             }
         }
@@ -300,28 +308,51 @@ public class Kapre : MonoBehaviour, IDamageable
         wave.GetComponent<Shockwave>().SetDirection(dir);
     }
 
-    public void MeteorFallAttack()
+    public void StartStormCall()
     {
-        // Trigger shout animation
-        animator.SetTrigger("Fireball");
-
-        // Wait for shout animation to finish, then spawn meteor
-        StartCoroutine(SpawnMeteorAfterShout());
+        StartCoroutine(StormCallRoutine());
     }
 
-    IEnumerator SpawnMeteorAfterShout()
+    IEnumerator StormCallRoutine()
     {
-        // Wait for the shout animation to complete (you can adjust this based on the length of your shout animation)
-        yield return new WaitForSeconds(1f); // Assuming the shout lasts 1 second
+        List<float> usedPositions = new List<float>();
+        int numberOfStrikes = Random.Range(6, 10);
+        float minSpacing = 2.5f;
 
-        // Spawn the meteor at the top of the screen or at a random position
-        GameObject meteor = Instantiate(meteorPrefab, new Vector3(Random.Range(-10f, 10f), 10f, 0), Quaternion.identity);
-        Meteor meteorScript = meteor.GetComponent<Meteor>();
+        for (int i = 0; i < numberOfStrikes; i++)
+        {
+            float xPosition;
 
-        // You can also add a random angle or adjust the direction if needed
-        meteorScript.direction = (player.position - meteor.transform.position).normalized; // Direction toward the player
+            // Try to find a new x position far enough from previous strikes
+            int attempts = 0;
+            do
+            {
+                xPosition = Random.Range(Camera.main.ViewportToWorldPoint(Vector3.zero).x + 1f,
+                                         Camera.main.ViewportToWorldPoint(Vector3.one).x - 1f);
+                attempts++;
+            }
+            while (usedPositions.Exists(x => Mathf.Abs(x - xPosition) < minSpacing) && attempts < 10);
+
+            usedPositions.Add(xPosition);
+
+            Vector2 spawnPos = new Vector2(xPosition, stormYPosition);
+
+            // Spawn line indicator
+            GameObject line = Instantiate(lineIndicatorPrefab, spawnPos, Quaternion.identity);
+
+            yield return new WaitForSeconds(indicatorDuration);
+
+            Destroy(line);
+
+            // Spawn lightning
+            Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
+
+            yield return new WaitForSeconds(stormDelayBetweenStrikes);
+        }
+
+        canAttack = false;
+        StartCoroutine(AttackCooldown());
     }
-
 
 
 }
