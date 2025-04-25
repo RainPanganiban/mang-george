@@ -144,6 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokeSpeed: 10
-  visibleDuration: 0.2
-  retractSpeed: 15
+  visibleDuration: 0.5
+  retractSpeed: 20
   damageAmount: 10

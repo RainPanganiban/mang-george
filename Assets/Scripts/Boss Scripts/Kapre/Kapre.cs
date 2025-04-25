@@ -28,6 +28,16 @@ public class Kapre : MonoBehaviour, IDamageable
     public LayerMask groundLayer;
 
     [SerializeField]
+    [Header("Phase 2")]
+    public float walkSpeed = 2f;
+    public float smashRange = 3f;
+    public float smashWindUpTime = 1.5f;
+    public float smashDamage = 10f;
+    public Transform smashPoint;
+    public float smashRadius = 1.5f;
+    public LayerMask playerLayer;
+
+    [SerializeField]
     [Header("Phase Settings")]
     public int currentPhase = 1;
     private bool isTransitioning = false;
@@ -110,8 +120,10 @@ public class Kapre : MonoBehaviour, IDamageable
 
                 case 2:
                     randomAttack = Random.Range(0, 2);
-                    animator.SetTrigger(randomAttack == 0 ? "Laser" : "Boulder");
-                    StartCoroutine(AttackCooldown());
+                    if (randomAttack == 0)
+                        StartCoroutine(ApproachAndSmash());
+                    else
+                        animator.SetTrigger("Smash2");
                     break;
 
                 case 3:
@@ -204,6 +216,55 @@ public class Kapre : MonoBehaviour, IDamageable
             }
 
             yield return new WaitForSeconds(0.1f); // Wave delay
+        }
+    }
+
+    IEnumerator ApproachAndSmash()
+    {
+        isAttacking = true;
+
+        while (Vector2.Distance(transform.position, player.position) > smashRange)
+        {
+            animator.SetBool("isWalking", true);
+            FacePlayer();
+
+            Vector2 direction = (player.position - transform.position).normalized;
+            transform.position += (Vector3)direction * walkSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("Smash");
+
+        yield return new WaitForSeconds(smashWindUpTime);
+
+        GroundSmashDamage();
+
+        yield return new WaitForSeconds(0.5f);
+
+        isAttacking = false;
+        StartCoroutine(AttackCooldown());
+    }
+
+    public void GroundSmashDamage()
+    {
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+        StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
+        Collider2D hit = Physics2D.OverlapCircle(smashPoint.position, smashRadius, playerLayer);
+
+        if (hit != null && hit.TryGetComponent<PlayerController>(out var playerHealth))
+        {
+            playerHealth.TakeDamage(smashDamage);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (smashPoint != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(smashPoint.position, smashRadius);
         }
     }
 
